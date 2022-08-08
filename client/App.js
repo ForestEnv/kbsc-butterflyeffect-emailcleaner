@@ -1,14 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-const App = () => {
+import { NavigationContainer } from '@react-navigation/native';
+
+import RootStack from './src/navigation/RootStack';
+
+function App() {
   return (
-    <View>
-      <Text>AWS PULL TEST!</Text>
-    </View>
+    <NavigationContainer>
+      <RootStack/>
+    </NavigationContainer>
   )
 }
 
-export default App
+export default App;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
+
