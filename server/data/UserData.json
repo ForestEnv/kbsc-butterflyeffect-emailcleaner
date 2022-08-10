@@ -1,0 +1,15 @@
+{
+    "UserName": "username",
+    "Emails":[
+        {
+            "domain": "naver.com",
+            "email_address": "naverID@naver.com",
+            "password": "naverPassword"
+        },
+        {
+            "domain": "gmail.com",
+            "email_address": "gmailID@naver.com",
+            "password": "gmailPassword"
+        }
+    ]
+}
