@@ -4,7 +4,7 @@ import { AuthResult, User } from "./types";
 //회원가입 API
 export async function register(params: RegisterParams) {
     const res = await client.post<AuthResult>(
-        '/auth/local/register',
+        '/api/users/register',
         params,
     );
     return res.data;
@@ -12,7 +12,7 @@ export async function register(params: RegisterParams) {
 
 //로그인 API
 export async function login(params: LoginParams) {
-    const res = await client.post<AuthResult>('/auth/local', params);
+    const res = await client.post<AuthResult>('/api/users/login', params);
     return res.data;
 }
 
