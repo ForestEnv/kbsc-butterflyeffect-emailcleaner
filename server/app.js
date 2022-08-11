@@ -2,11 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-//const passport = require('passport');
+const passport = require('passport');
 
 const models = require('./models');
-//const passportConfig = require('./passport');
-//const apiRouter = require('./routes');
+const passportConfig = require('./passport');
+const apiRouter = require('./routes');
 
 const app = express();
 
@@ -22,8 +22,8 @@ models.sequelize.sync().then(() => {
     });
 });
 
-//app.use(passport.initialize());
-//passportConfig();
+app.use(passport.initialize());
+passportConfig();
 
-//app.use('/api',apiRouter);
+app.use('/api',apiRouter);
 module.exports = app;

@@ -1,24 +1,23 @@
 const { ExtractJwt } = require('passport-jwt');
-const db = require('../application/db/user');
-const Learner = require('../models').Learner;
+const db = require('../services/db/user');
 
 const jwtConfig = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken('Bearer'),
-    secretOrKey: process.env.JWT_ACCESS_TOKEN_SECRET,
-}
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_ACCESS_TOKEN_SECRET,
+};
 
-const jwtVerify = async(jwtPayload, done) => {
-    try{
-        const user = await db.selectUser(jwtPayload.id);
-        if(user){
-            done(null, user);
-        }else{
-            done(null, false, {reason: "FUCKING AUTH!"});
-        }
-    } catch(error){
-        console.error(error);
-        done(error);
+const jwtVerify = async (jwtPayload, done) => {
+  
+  try {
+    const user = await db.selectUserFromPassport(jwtPayload.id);
+    if (user) {
+      done(null, user);
+    } else {
+      done(null, false);
     }
+  } catch (error) {
+    done(error);
+  }
 };
 
 module.exports = { jwtConfig, jwtVerify };
