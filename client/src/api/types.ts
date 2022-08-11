@@ -1,6 +1,6 @@
 export interface User {
-    email: string;
-    username: string;
+    id: string;
+    name: string;
 }
 
 export interface AuthResult {
