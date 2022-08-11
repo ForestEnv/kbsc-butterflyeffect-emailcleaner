@@ -17,13 +17,13 @@ export async function login(params: LoginParams) {
 }
 
 interface RegisterParams {
-    username: string;
-    email: string;
+    id: string;
+    name: string;
     password: string;
 }
 
 interface LoginParams {
-    email: string;
+    id: string;
     password: string;
 }
 
