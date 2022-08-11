@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const MainTab = () => {
+const RewardStack = () => {
   return (
     <View>
-      <Text>MainTab</Text>
+      <Text>RewardStack</Text>
     </View>
   )
 }
 
-export default MainTab
+export default RewardStack
 
 const styles = StyleSheet.create({})
