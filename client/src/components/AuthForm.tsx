@@ -12,11 +12,16 @@ import {
 import useLogin from '../hooks/useLogin';
 import useRegister from '../hooks/useRegister';
 
+import { useNavigation } from '@react-navigation/core';
+import { RootStackNavigationProp } from '../stacks/types';
+
 export interface AuthFormProps {
     isRegister?: boolean;
 }
 
 function AuthForm({isRegister}: AuthFormProps) {
+    const navigation = useNavigation<RootStackNavigationProp>();
+
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
