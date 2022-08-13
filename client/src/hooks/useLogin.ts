@@ -14,10 +14,10 @@ export default function useLogin() {
     const mutation = useMutation(login, {
         onSuccess: (data) => {
             setUser(data.user);
-            navigation.pop();
-            applyToken(data.jwt);
+            //navigation.navigate('Connection');
+            applyToken(data.accesstoken);
             authStorage.set(data);
-            console.log(data);
+            console.log('로그인 사용자 정보',data);
         },
         onError: (error) => {
             console.log(error);

@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 /* MainTab */
 export type MainTabParamList = {
     Home: undefined;
+    MyProfile: undefined;
 }
 export type MainTabNavigationScreenParams = NavigatorScreenParams<MainTabParamList>;
 export type MainTabNavigationProp = CompositeNavigationProp<

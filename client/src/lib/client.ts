@@ -8,11 +8,11 @@ const client = axios.create({
     baseURL,
 });
 
-export function applyToken(jwt: string) {
-    client.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+export function applyToken(accesstoken: string) {
+    client.defaults.headers.common['Authorization'] = `Bearer ${accesstoken}`;
 }
 
-export function clearToken(jwt: string) {
+export function clearToken() {
     client.defaults.headers.common['Authorization'];
 }
 

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { applyToken } from "../lib/client";
 import { useUserState } from "../contexts/UserContext";
+
 import authStorage from "../storages/authStorage";
 
 export default function useAuthLoadEffect() {
@@ -13,7 +14,7 @@ export default function useAuthLoadEffect() {
                 return;
             }
             setUser(auth.user);
-            applyToken(auth.jwt);
+            applyToken(auth.accesstoken);
         };
         fn();
     }, [setUser]);

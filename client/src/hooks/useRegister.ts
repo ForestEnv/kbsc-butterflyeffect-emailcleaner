@@ -15,7 +15,7 @@ export default function useRegister() {
         onSuccess: (data) => {
             setUser(data.user);
             navigation.pop();
-            applyToken(data.jwt);
+            applyToken(data.accesstoken);
             authStorage.set(data);
             console.log(data);
         },

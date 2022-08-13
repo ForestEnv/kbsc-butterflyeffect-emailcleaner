@@ -11,6 +11,10 @@ exports.login = async (req, res, next) => {
         console.log(accessToken)
         res.status(CREATED).json({
             message: '로그인 성공!',
+            user: {
+                id: req.user.no,
+                name: req.user.name,
+            },
             accessToken
         });
     } catch(error){
