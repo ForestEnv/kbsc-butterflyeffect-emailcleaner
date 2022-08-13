@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { register } from '../api/auth';
 import { applyToken } from "../lib/client";
+import authStorage from "../storages/authStorage";
 
 import { useNavigation } from "@react-navigation/core";
 import { useUserState } from "../contexts/UserContext";
@@ -15,6 +16,7 @@ export default function useRegister() {
             setUser(data.user);
             navigation.pop();
             applyToken(data.jwt);
+            authStorage.set(data);
             console.log(data);
         },
         onError: (error) => {
