@@ -4,6 +4,6 @@ export interface User {
 }
 
 export interface AuthResult {
-    jwt: string;
+    accesstoken: string;
     user: User;
 }

@@ -8,4 +8,12 @@ const client = axios.create({
     baseURL,
 });
 
+export function applyToken(accesstoken: string) {
+    client.defaults.headers.common['Authorization'] = `Bearer ${accesstoken}`;
+}
+
+export function clearToken() {
+    client.defaults.headers.common['Authorization'];
+}
+
 export default client;
