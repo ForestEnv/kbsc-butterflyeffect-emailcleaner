@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('users', {
-        user_no: {
+        no: {
             autoIncrement: true,
             type: DataTypes.BIGINT,
             allowNull: false,
@@ -13,14 +13,16 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
            
         },
-        password: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
+       
         name: {
             type: DataTypes.STRING(50),
             allowNull: false,
             unique: true,
+        },
+
+        password: {
+            type: DataTypes.STRING(100),
+            allowNull: false,
         },
         
     }, 
