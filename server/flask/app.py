@@ -34,7 +34,7 @@ def isEnglishOrKorean(input_s):
     else:
         return "o"  # 영어
 
-@app.route('/')
+@app.route('/') # 연동 -> 데이터 : 전체 매일 수
 def main():
     return render_template('home.html')
 
