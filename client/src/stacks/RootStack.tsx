@@ -20,8 +20,9 @@ function RootStack() {
     useAuthLoadEffect();
     return (
         <Stack.Navigator>
-            {user ? (
+            { user && !user?.isConnectionEmail ? (
                 <>
+                    <Stack.Screen name='Connection' component={ConnectionEmailScreen}/>
                     <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}}/>
                 </>
             ) : (
@@ -29,7 +30,6 @@ function RootStack() {
                     <Stack.Screen name='Landing' component={LandingScreen}/>
                     <Stack.Screen name='Register' component={RegisterScreen}/>
                     <Stack.Screen name='Login' component={LoginScreen}/>
-                    {/* <Stack.Screen name='Connection' component={ConnectionEmailScreen}/> */}
                 </>
             )}
         </Stack.Navigator>
