@@ -1,0 +1,31 @@
+<html>
+
+    <body bgcolor=#a3cfb4>
+    
+        <center>
+    
+            <h1>  PREDICTION :  </h1>
+        {%if data == 0%}
+        <h1>광고</h1>  
+
+        {%elif data == 1%}
+        <h1>뉴스레터</h1>
+
+        {%elif data == 2%}
+        <h1>알림</h1>
+
+        {%elif data == 3%}
+        <h1>개인</h1>
+
+        {%else %}
+        <h1>오류</h1>
+        
+        {%endif%}
+    
+            <br><br>
+        <a href='/'>go back to home page</a>
+        </center>
+    
+    </body>
+    
+    </html>
