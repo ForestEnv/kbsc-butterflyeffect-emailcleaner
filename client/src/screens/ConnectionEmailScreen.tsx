@@ -27,7 +27,7 @@ function ConnectionEmailScreen() {
     <View>
       <Text>이메일 연동하기</Text>
       <TextInput style={{borderWidth:2}}value={email} onChangeText={setEmail} placeholder="연동할 이메일 주소를 입력하세요"/>
-      <TouchableOpacity style={{alignItems:'center',backgroundColor:'grey', marginTop:10, borderWidth:2}}onPress={onConnectionSubmit}>
+      <TouchableOpacity style={{alignItems:'center',backgroundColor:'grey', marginTop:10, borderWidth:2}}onPress={() => navigation.navigate('MainTab', {screen:'Home'})}>
         <Text>추가</Text>
       </TouchableOpacity>
     </View>

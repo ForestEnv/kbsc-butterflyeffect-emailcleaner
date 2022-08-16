@@ -14,7 +14,7 @@ import ConnectionEmailScreen from '../screens/ConnectionEmailScreen';
 import MainTab from './MainTab';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
+//&& !user?.isConnectionEmail
 function RootStack() {
     const [user, setUser] = useUserState();
     useAuthLoadEffect();
