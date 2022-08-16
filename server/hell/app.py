@@ -3,13 +3,16 @@
 from flask import Flask, render_template, request
 import pickle
 import pandas as pd
+import os
 
-eg_loaded_model = pickle.load(open('./eg_model_NB.pkl', 'rb'))
-eg_tdmvector = pickle.load(open('./eg_tdmvector.pkl','rb')) 
-eg_tfidf_transformer = pickle.load(open('./eg_tfidf_transformer.pkl','rb'))
-kr_loaded_model = pickle.load(open('./kr_model_NB.pkl', 'rb'))
-kr_tdmvector = pickle.load(open('./kr_tdmvector.pkl','rb')) 
-kr_tfidf_transformer = pickle.load(open('./kr_tfidf_transformer.pkl','rb'))
+PATH = os.getcwd()
+
+eg_loaded_model = pickle.load(open(PATH + '/pkl/eg_model_NB.pkl', 'rb'))
+eg_tdmvector = pickle.load(open(PATH + '/pkl/eg_tdmvector.pkl','rb')) 
+eg_tfidf_transformer = pickle.load(open(PATH + '/pkl/eg_tfidf_transformer.pkl','rb'))
+kr_loaded_model = pickle.load(open(PATH + '/pkl/kr_model_NB.pkl', 'rb'))
+kr_tdmvector = pickle.load(open(PATH + '/pkl/kr_tdmvector.pkl','rb')) 
+kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','rb'))
 
 app = Flask(__name__)
 
