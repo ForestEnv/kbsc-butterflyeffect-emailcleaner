@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
 exports.login = async (req, res, next) => {
     try{
         const user = req.body;
-        const accessToken = createJwtAccessToken(user.id);
-        console.log(accessToken)
+        const accesstoken = createJwtAccessToken(user.id);
+        //console.log(accesstoken)
         res.status(CREATED).json({
             message: '로그인 성공!',
             user: {
@@ -17,7 +17,7 @@ exports.login = async (req, res, next) => {
                 name: req.user.name,
                 isConnectionEmail: false
             },
-            accessToken
+            accesstoken
         });
     } catch(error){
         res.status(BAD_REQUEST).json({
