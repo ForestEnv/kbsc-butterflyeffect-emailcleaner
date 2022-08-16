@@ -1,9 +1,10 @@
 #pip install flask
 
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, request,render_template
 import pickle
 import pandas as pd
 import os
+from email_module import isEnglishOrKorean, count_inbox
 
 PATH = os.getcwd()
 
@@ -16,33 +17,36 @@ kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','
 
 app = Flask(__name__)
 
-#### 추후에 모듈화 필요 ####
-def isEnglishOrKorean(input_s):
-    k_count = 0
-    e_count = 0
-    o_count = 0
-    if input_s != input_s:
-        return "o"
-    for c in input_s:
-        if ord('가') <= ord(c) <= ord('힣'):
-            k_count+=1
-        elif ord('a') <= ord(c.lower()) <= ord('z'):
-            e_count+=1
-        else:
-            o_count+=1
-    if k_count>1:
-        return "k"  # 한글
-    elif e_count>1:
-        return "e"  # 기타
-    else:
-        return "o"  # 영어
-
-@app.route('/') # 연동 -> 데이터 : 전체 매일 수
+# 기본
+@app.route('/') 
 def main():
-    return render_template('home.html')
+    success_message = "flask connect"
+    return jsonify({
+        'success_message' : success_message
+    })
 
-@app.route('/predict', methods=['POST'])
-def home():
+# 연동 후 보관함 메일 수 return
+@app.route('/count', methods = ['POST']) 
+def count():
+    try:
+        req = request.get_json()
+        emailList = []
+        for em in req['Emails']:
+            emailId = em['email_address']
+            emailPw = em['password']
+            emailCount = count_inbox(emailId , emailPw)
+            emailList.append({'email_address' : emailId , 'emailCount' : emailCount})
+        result = {'success_message' : "flask connect", 'Result' : emailList}
+
+        return jsonify(result)
+    except :
+        return jsonify({
+            'fail_message' : 'fail_message'
+        })
+                
+# 이메일 분류
+@app.route('/predict', methods=['POST']) 
+def predict():
 
     data1 = request.form['a']
     test_email = [{'email_title' : data1}]
@@ -60,6 +64,14 @@ def home():
         test_x_tfidfv = eg_tfidf_transformer.transform(test_x_tdm)
         pred = eg_loaded_model.predict(test_x_tfidfv)
     return render_template('after.html', data= pred)
+
+# 삭제
+@app.route('/delete') 
+def delete():
+    success_message = "flask connect"
+    return jsonify({
+        'success_message' : success_message
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)

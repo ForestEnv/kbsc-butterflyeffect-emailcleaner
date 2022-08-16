@@ -140,3 +140,24 @@ def delete_email(email_address, password, mail_list):
     obj.logout()
 
     return res, len(deleted), df_mail_list
+
+# 이메일 언어 분류
+def isEnglishOrKorean(input_s):
+    k_count = 0
+    e_count = 0
+    o_count = 0
+    if input_s != input_s:
+        return "o"
+    for c in input_s:
+        if ord('가') <= ord(c) <= ord('힣'):
+            k_count+=1
+        elif ord('a') <= ord(c.lower()) <= ord('z'):
+            e_count+=1
+        else:
+            o_count+=1
+    if k_count>1:
+        return "k"  # 한글
+    elif e_count>1:
+        return "e"  # 기타
+    else:
+        return "o"  # 영어
