@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
 
 import { useNavigation } from '@react-navigation/core';
@@ -7,11 +7,13 @@ import { MainTabNavigationProp } from '../stacks/types';
 import { useUserState } from "../contexts/UserContext";
 
 import useConnection from '../hooks/useConnection';
+import authStorage from '../storages/authStorage';
 
 function ConnectionEmailScreen() {
   const navigation = useNavigation<MainTabNavigationProp>();
   const [user, setUser] = useUserState();
   const [email, setEmail] = useState('');
+  const [emailPassword, setEmailPassword] = useState('');
 
   const {mutate: emailConnction} = useConnection();
   
@@ -27,6 +29,7 @@ function ConnectionEmailScreen() {
     <View>
       <Text>이메일 연동하기</Text>
       <TextInput style={{borderWidth:2}}value={email} onChangeText={setEmail} placeholder="연동할 이메일 주소를 입력하세요"/>
+      <TextInput style={{borderWidth:2}}value={emailPassword} onChangeText={setEmailPassword} placeholder="연동할 이메일 비밀번호를 입력하세요"/>
       <TouchableOpacity style={{alignItems:'center',backgroundColor:'grey', marginTop:10, borderWidth:2}}onPress={() => navigation.navigate('MainTab', {screen:'Home'})}>
         <Text>추가</Text>
       </TouchableOpacity>

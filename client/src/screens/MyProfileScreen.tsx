@@ -7,6 +7,7 @@ import authStorage from '../storages/authStorage';
 
 function MyProfileScreen() {
     const [hser, setUser] = useUserState();
+    
     const onLogout = () => {
         setUser(null);
         clearToken();

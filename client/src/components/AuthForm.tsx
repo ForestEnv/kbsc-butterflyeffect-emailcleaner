@@ -15,6 +15,8 @@ import useRegister from '../hooks/useRegister';
 import { useNavigation } from '@react-navigation/core';
 import { RootStackNavigationProp } from '../stacks/types';
 
+import authStorage from '../storages/authStorage';
+
 export interface AuthFormProps {
     isRegister?: boolean;
 }
@@ -30,7 +32,7 @@ function AuthForm({isRegister}: AuthFormProps) {
     const {mutate: register, isLoading: registerLoading} = useRegister();
 
     const isLoading = loginLoading || registerLoading;
-
+    
     const onPress = () => {
         if(isLoading) {
             return;
