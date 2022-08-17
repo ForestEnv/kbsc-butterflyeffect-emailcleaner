@@ -1,4 +1,5 @@
-const { OK, CREATED, BAD_REQUEST } = require('../../config/statusCode').statusCode;
+const { OK, CREATED, BAD_REQUEST } =
+  require("../../config/statusCode").statusCode;
 //import axios from "axios";
 const axios = require("axios");
 
@@ -17,20 +18,22 @@ const axios = require("axios");
     @params {string} info: 가족 구성원의 닉네임
 */
 exports.connectionEmail = async (req, res, next) => {
-    const {UserName, email_address, password} = req.body
-    try{
-        const response = await axios.post('http://127.0.0.1:5000/count', {
-            UserName: "username",
-            Emails:[
-                {
-                    email_address: "huiyy9211@gmail.com",
-                    password: "kfjjmemkpjjxuioe"
-                }
-            ]
-        });
-        console.log(response.data)
-        res.status(CREATED).json({result: response.emailCount})
-    } catch(error) {
-        console.log(error);
-    }
-}
+  const { UserName, email_address, password } = req.body;
+  try {
+    const response = await axios.post("http://127.0.0.1:5000/count", {
+      UserName: "username",
+      Emails: [
+        {
+          email_address: "huiyy9211@gmail.com",
+          password: "kfjjmemkpjjxuioe",
+        },
+      ],
+    });
+    console.log(response.data);
+    res.status(CREATED).json({ result: response.emailCount });
+  } catch (error) {
+    res.status(BAD_REQUEST).json({
+      message: "연동 실패!",
+    });
+  }
+};
