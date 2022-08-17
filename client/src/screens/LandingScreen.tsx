@@ -8,7 +8,7 @@ import { useUserState } from "../contexts/UserContext";
 function LandingScreen() {
     const navigation = useNavigation<RootStackNavigationProp>();
     const [user, setUser] = useUserState();
-    console.log(user)
+    
     return (
         <View>
             <TouchableOpacity onPress={() => { navigation.navigate('Register') }}>

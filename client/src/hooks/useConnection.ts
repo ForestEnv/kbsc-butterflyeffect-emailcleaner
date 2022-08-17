@@ -11,7 +11,7 @@ export default function useConnection() {
     const mutation = useMutation(emailConnection, {
         onSuccess: (data) => {
             setUser(data.user);
-            authStorage.set(data);
+            //authStorage.set(data);
             console.log(data);
         },
         onError: (error) => {

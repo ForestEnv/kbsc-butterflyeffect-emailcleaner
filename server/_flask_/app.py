@@ -9,7 +9,7 @@ from email_module import count_inbox, fetch_emails
 app = Flask(__name__)
 
 # 기본
-@app.route('/') 
+@app.route('/test') 
 def main():
     success_message = "flask connect"
     return jsonify({
@@ -20,7 +20,10 @@ def main():
 @app.route('/count', methods = ['POST']) 
 def count():
     try:
+        print("debugTEST1");
         req = request.get_json()
+        print("FROM NODE:", req);
+        print("debugTEST2");
         emailList = []
         for em in req['Emails']:
             emailId = em['email_address']
@@ -28,6 +31,7 @@ def count():
             emailCount = count_inbox(emailId , emailPw)
             emailList.append({'email_address' : emailId , 'emailCount' : emailCount})
         result = {'success_message' : "flask connect", 'Result' : emailList}
+        print("debugTEST3");
 
         return jsonify(result)
     except :

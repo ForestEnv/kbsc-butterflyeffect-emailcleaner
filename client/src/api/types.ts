@@ -9,6 +9,7 @@ export interface User {
 export interface AuthResult {
     accesstoken: string;
     user: User;
+    isRegistered: boolean;
 }
 
 export interface EmailConnectionResult {
