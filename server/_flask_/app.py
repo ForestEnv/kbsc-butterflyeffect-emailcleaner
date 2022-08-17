@@ -1,19 +1,10 @@
-#pip install flask
+# pip install flask
+# pip install pandas
+# pip install scikit-learn
 
 from flask import Flask, jsonify, request,render_template
-import pickle
 import pandas as pd
-import os
-from email_module import isEnglishOrKorean, count_inbox
-
-PATH = os.getcwd()
-
-eg_loaded_model = pickle.load(open(PATH + '/pkl/eg_model_NB.pkl', 'rb'))
-eg_tdmvector = pickle.load(open(PATH + '/pkl/eg_tdmvector.pkl','rb')) 
-eg_tfidf_transformer = pickle.load(open(PATH + '/pkl/eg_tfidf_transformer.pkl','rb'))
-kr_loaded_model = pickle.load(open(PATH + '/pkl/kr_model_NB.pkl', 'rb'))
-kr_tdmvector = pickle.load(open(PATH + '/pkl/kr_tdmvector.pkl','rb')) 
-kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','rb'))
+from email_module import count_inbox, fetch_emails
 
 app = Flask(__name__)
 
@@ -47,23 +38,10 @@ def count():
 # 이메일 분류
 @app.route('/predict', methods=['POST']) 
 def predict():
-
-    data1 = request.form['a']
-    test_email = [{'email_title' : data1}]
-    df_test_email = pd.DataFrame(test_email)
-    lang = isEnglishOrKorean(data1)
-    print(lang)
-    if lang == 'k':
-        test_x_email = df_test_email['email_title']
-        test_x_tdm = kr_tdmvector.transform(test_x_email)
-        test_x_tfidfv = kr_tfidf_transformer.transform(test_x_tdm)
-        pred = kr_loaded_model.predict(test_x_tfidfv)
-    elif lang == 'e':
-        test_x_email = df_test_email['email_title']
-        test_x_tdm = eg_tdmvector.transform(test_x_email)
-        test_x_tfidfv = eg_tfidf_transformer.transform(test_x_tdm)
-        pred = eg_loaded_model.predict(test_x_tfidfv)
-    return render_template('after.html', data= pred)
+    success_message = "flask connect"
+    return jsonify({
+        'success_message' : success_message
+    })
 
 # 삭제
 @app.route('/delete') 
