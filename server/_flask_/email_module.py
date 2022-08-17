@@ -4,6 +4,18 @@
 import pandas as pd
 import imaplib, email
 from email.header import decode_header, make_header
+import os
+import pickle
+
+PATH = os.getcwd()
+
+eg_loaded_model = pickle.load(open(PATH + '/pkl/eg_model_NB.pkl', 'rb'))
+eg_tdmvector = pickle.load(open(PATH + '/pkl/eg_tdmvector.pkl','rb')) 
+eg_tfidf_transformer = pickle.load(open(PATH + '/pkl/eg_tfidf_transformer.pkl','rb'))
+kr_loaded_model = pickle.load(open(PATH + '/pkl/kr_model_NB.pkl', 'rb'))
+kr_tdmvector = pickle.load(open(PATH + '/pkl/kr_tdmvector.pkl','rb')) 
+kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','rb'))
+
 
 def count_inbox(email_address, password):
 
@@ -70,6 +82,24 @@ def fetch_emails(email_address, password):
         df_mail_list = pd.concat([df_mail_list, df])
 
     return df_mail_list
+
+def emailClassification(dataset):
+    data1 = dataset
+    test_email = [{'email_title' : data1}]
+    df_test_email = pd.DataFrame(test_email)
+    lang = isEnglishOrKorean(data1)
+    print(lang)
+    if lang == 'k':
+        test_x_email = df_test_email['email_title']
+        test_x_tdm = kr_tdmvector.transform(test_x_email)
+        test_x_tfidfv = kr_tfidf_transformer.transform(test_x_tdm)
+        pred = kr_loaded_model.predict(test_x_tfidfv)
+    elif lang == 'e':
+        test_x_email = df_test_email['email_title']
+        test_x_tdm = eg_tdmvector.transform(test_x_email)
+        test_x_tfidfv = eg_tfidf_transformer.transform(test_x_tdm)
+        pred = eg_loaded_model.predict(test_x_tfidfv)
+        return dataset
 
 def delete_email(email_address, password, mail_list):
     imap_host = 'imap.'+ email_address.split("@")[1]
