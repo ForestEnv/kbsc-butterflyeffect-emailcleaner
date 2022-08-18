@@ -121,7 +121,7 @@ def isEnglishOrKorean(input_s):
     else:
         return "o"  # 영어
 
-def delete_email(email_address, password, mail_list):
+def delete_email(email_address, password, emailList):
     imap_host = 'imap.'+ email_address.split("@")[1]
     obj = imaplib.IMAP4_SSL(imap_host, 993)
     obj.login(email_address, password)
@@ -131,15 +131,13 @@ def delete_email(email_address, password, mail_list):
     _, search_data = obj.search(None, 'ALL')
     all_email = search_data[0].split()
     all_email.reverse()
-
     #get email data
     mail_numbers = ""
-    for n, i in enumerate(mail_list):
+    for n, i in enumerate(emailList):
         if(n != 0): 
             mail_numbers += ","
         mail_numbers += str(len(all_email) - i)
     
-    print(mail_numbers)
     _, all_data = obj.fetch(mail_numbers , '(RFC822)')
 
     #Remove Bytes & Reverse
@@ -163,7 +161,7 @@ def delete_email(email_address, password, mail_list):
             except TypeError:
                 subject_= make_header(decode_header(str(email_message['Subject'])))
                 break
-        
+        '''
         body_ = ""
 
         for part in email_message.walk():
@@ -175,12 +173,13 @@ def delete_email(email_address, password, mail_list):
                 html_body = part.get_payload(decode=True)
                 email_data = html_body.decode()
                 body_ += email_data + "\n"
-        
-        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
+          '''    
+        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
+        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_)}, index=[n])
         df_mail_list = pd.concat([df_mail_list, df])
-
+        emailRsult = df_mail_list.to_dict('records')
     #delete email
-    for i in mail_list:
+    for i in emailList:
         #obj.store(all_email[i], '+FLAGS', '\\Deleted')
         pass
 
@@ -188,5 +187,5 @@ def delete_email(email_address, password, mail_list):
 
     obj.close()
     obj.logout()
-
-    return res, len(deleted), df_mail_list
+    
+    return res, len(deleted), emailRsult
