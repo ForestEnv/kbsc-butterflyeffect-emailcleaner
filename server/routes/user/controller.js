@@ -40,3 +40,19 @@ exports.register = async (req, res, next) => {
         });
     }
 };
+
+exports.getIsConnectionEmail = async (req, res, next) => {
+    try{
+        const { no } = req.params;
+        console.log(no);
+        const isConnectionEmail = await userServices.getIsConnectionEmail(no);
+        res.status(OK).json({
+            message: '조회 확인 성공',
+            isConnectionEmail
+        })
+    } catch (error) {
+        res.status(BAD_REQUEST).json({
+            message: "조회 실패"
+        })
+    }
+}

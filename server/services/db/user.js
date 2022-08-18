@@ -24,6 +24,11 @@ exports.insertUser = async ({id, name, password }) => {
   return result;
 };
 
+exports.updateIsConnectionEmail = async(no) => {
+  const result = await User.update({is_connection_email: true}, {where: {no: no}});
+  return result;
+}
+
 exports.selectIsConnectionEmail = async(no) => {
   console.log('사용자 번호 ='+no);
   const result = await User.findOne({

@@ -2,6 +2,9 @@ const { OK, CREATED, BAD_REQUEST } = require('../../config/statusCode').statusCo
 //import axios from "axios";
 const axios = require("axios");
 
+const userServices = require('../../services/user');
+const emailServices = require('../../services/email');
+
 /** 
     POST: 이메일 연동을 위한 Flask 서버 통신 API
     *@author 이현탁 <leeht620@gmail.com>
@@ -17,20 +20,31 @@ const axios = require("axios");
     @params {string} info: 가족 구성원의 닉네임
 */
 exports.connectionEmail = async (req, res, next) => {
-    const {UserName, email_address, password} = req.body
     try{
-        const response = await axios.post('http://127.0.0.1:5000/count', {
-            UserName: "username",
+        const {no, id, email, emailPassword} = req.body
+        console.log('DEBUGTEST=',no, id, email, emailPassword);
+        await userServices.updateIsConnectionEmail(no);
+        console.log('DEBUGTEST=',no, id, email, emailPassword);
+        await emailServices.setEmail({no, email, emailPassword});
+        const response = await axios.post('http://localhost:5000/count', {
+            UserName: id,
             Emails:[
                 {
-                    email_address: "huiyy9211@gmail.com",
-                    password: "kfjjmemkpjjxuioe"
-                }
+                    email_address: email,
+                    password: emailPassword
+                },
+                
             ]
         });
+        console.log('DEBUGTEST=',no, id, email, emailPassword);
         console.log(response.data)
-        res.status(CREATED).json({result: response.emailCount})
+        res.status(CREATED).json({
+            message: "변경 성공!",
+            result: response.emailCount}, 
+        )
     } catch(error) {
-        console.log(error);
+        res.status(BAD_REQUEST).json({
+            message: "연동 실패!"
+        });
     }
 }

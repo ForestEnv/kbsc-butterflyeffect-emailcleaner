@@ -8,20 +8,26 @@ import { useUserState } from "../contexts/UserContext";
 
 import useConnection from '../hooks/useConnection';
 import authStorage from '../storages/authStorage';
+import { emailConnection } from '../api/connection';
 
 function ConnectionEmailScreen() {
+  //const navigation = useNavigation<RootStackNavigationProp>();
   const navigation = useNavigation<MainTabNavigationProp>();
   const [user, setUser] = useUserState();
+  console.log(user.isConnectionEmail);
+  //이메일, 비밀번호 상태 
   const [email, setEmail] = useState('');
   const [emailPassword, setEmailPassword] = useState('');
 
-  const {mutate: emailConnction} = useConnection();
+  //const {mutate: emailConnction} = useConnection();
   
   //타입 오류 : connection의 id 타입을 유니온 타입으로 대응
   const onConnectionSubmit = () => {
-    emailConnction({
+    emailConnection({
+      no:user.no,
       id:user?.id,
       email,
+      emailPassword,
     });
   }
 
@@ -30,7 +36,7 @@ function ConnectionEmailScreen() {
       <Text>이메일 연동하기</Text>
       <TextInput style={{borderWidth:2}}value={email} onChangeText={setEmail} placeholder="연동할 이메일 주소를 입력하세요"/>
       <TextInput style={{borderWidth:2}}value={emailPassword} onChangeText={setEmailPassword} placeholder="연동할 이메일 비밀번호를 입력하세요"/>
-      <TouchableOpacity style={{alignItems:'center',backgroundColor:'grey', marginTop:10, borderWidth:2}}onPress={() => navigation.navigate('MainTab', {screen:'Home'})}>
+      <TouchableOpacity style={{alignItems:'center',backgroundColor:'grey', marginTop:10, borderWidth:2}}onPress={onConnectionSubmit}>
         <Text>추가</Text>
       </TouchableOpacity>
     </View>

@@ -23,7 +23,7 @@ export default function useLogin() {
             console.log('연동여부'+isConnectionEmail);
             if(!isConnectionEmail){
                 navigation.navigate('Connection');
-            }  
+            } 
             console.log('로그인 사용자 정보',data);
         },
         onError: (error) => {

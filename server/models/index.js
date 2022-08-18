@@ -14,18 +14,6 @@ db.Email = require('./email')(sequelize, Sequelize);
 db.User.hasMany(db.Email, {foreignKey:'no'});
 db.Email.belongsTo(db.User, {foreignKey:'user_no'});
 
-/*db.User = require('./usermanage')(sequelize, Sequelize);
-db.User = require('./email')(sequelize, Sequelize);
-db.User = require('./delete')(sequelize, Sequelize);
-db.User = require('./restore')(sequelize, Sequelize);
-db.User = require('./challenge')(sequelize, Sequelize);
-db.User = require('./treeplant')(sequelize, Sequelize);
-db.User = require('./first_email')(sequelize, Sequelize);
-db.User = require('./add_email')(sequelize, Sequelize);
-db.User = require('./add2_email')(sequelize, Sequelize);
-db.User = require('./reward')(sequelize, Sequelize);
-*/
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

@@ -3,9 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { RootStackParamList } from './types';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useQuery } from '@tanstack/react-query';
 
 import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 import { useUserState } from "../contexts/UserContext";
+import { getIsConnectionEmail } from '../api/auth';
 
 import LandingScreen from '../screens/LandingScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -19,8 +21,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
     const [user, setUser] = useUserState();
+    const [isConnectionEmail, setIsConnectionEmail] = useState(false);
+    
     //로그인 상태 유지
     useAuthLoadEffect();
+    
+    //const isConnectionEmailQuery = useQuery(['isConnectionEmail', user.no], () => getIsConnectionEmail(user.no));
 
     return (
         <Stack.Navigator>

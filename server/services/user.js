@@ -10,3 +10,8 @@ exports.getIsConnectionEmail = async (data) => {
   const isConnectionEmail = await db.selectIsConnectionEmail(data);
   return isConnectionEmail;
 }
+
+exports.updateIsConnectionEmail = async (data) => {
+  const result = await db.updateIsConnectionEmail(data);
+  return result; 
+}

@@ -12,6 +12,9 @@ export interface AuthResult {
 }
 
 export interface EmailConnectionResult {
-    accesstoken: string;
-    user: User;
+    totalEmailCount: number;    
+}
+
+export interface IsConnectionEmail {
+    isConnectionEmail: boolean;
 }

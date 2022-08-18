@@ -11,6 +11,8 @@ export async function emailConnection(params:EmailConnectionParams) {
 }
 
 interface EmailConnectionParams {
+    no: number;
     id: string | undefined;
     email: string;
+    emailPassword: string;
 }
