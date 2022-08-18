@@ -3,10 +3,12 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../stacks/types';
+import { useUserState } from "../contexts/UserContext";
 
 function LandingScreen() {
     const navigation = useNavigation<RootStackNavigationProp>();
-
+    const [user, setUser] = useUserState();
+    
     return (
         <View>
             <TouchableOpacity onPress={() => { navigation.navigate('Register') }}>

@@ -12,20 +12,27 @@ import {
 import useLogin from '../hooks/useLogin';
 import useRegister from '../hooks/useRegister';
 
+import { useNavigation } from '@react-navigation/core';
+import { RootStackNavigationProp } from '../stacks/types';
+
+import authStorage from '../storages/authStorage';
+
 export interface AuthFormProps {
     isRegister?: boolean;
 }
 
 function AuthForm({isRegister}: AuthFormProps) {
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
+    const navigation = useNavigation<RootStackNavigationProp>();
+
+    const [id, setId] = useState('');
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
     const {mutate: login, isLoading: loginLoading} = useLogin();
     const {mutate: register, isLoading: registerLoading} = useRegister();
 
     const isLoading = loginLoading || registerLoading;
-
+    
     const onPress = () => {
         if(isLoading) {
             return;
@@ -33,13 +40,13 @@ function AuthForm({isRegister}: AuthFormProps) {
 
         if(isRegister) {
             register({
-                email,
-                username,
+                id,
+                name,
                 password,
             });
         } else {
             login({
-                email,
+                id,
                 password,
             });
         }
@@ -53,23 +60,23 @@ function AuthForm({isRegister}: AuthFormProps) {
                         <>
                             <TextInput
                                 placeholder='email'
-                                value={email}
-                                onChangeText={setEmail}
+                                value={id}
+                                onChangeText={setId}
                                 autoCapitalize="none"
                                 keyboardType="email-address"
                             />
                             <TextInput
                                 placeholder='name'
-                                value={username}
-                                onChangeText={setUsername}
+                                value={name}
+                                onChangeText={setName}
                                 autoCapitalize="none"
                             />
                         </>
                     ) : (
                         <TextInput
                             placeholder='email'
-                            value={email}
-                            onChangeText={setEmail}
+                            value={id}
+                            onChangeText={setId}
                             autoCapitalize="none"
                             keyboardType="email-address"
                         />
@@ -80,7 +87,7 @@ function AuthForm({isRegister}: AuthFormProps) {
                         value={password}
                         onChangeText={setPassword}
                     />
-                    <TouchableOpacity style={{backgroundColor:'grey', borderWidth:1}}>
+                    <TouchableOpacity style={{backgroundColor:'grey', borderWidth:1}} onPress={onPress}>
                         <Text>
                             {isRegister ? '회원가입' : '로그인'}
                         </Text>

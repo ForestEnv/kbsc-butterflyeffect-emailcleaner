@@ -1,9 +1,18 @@
+
 export interface User {
-    email: string;
-    username: string;
+    no: number;
+    id: string;
+    name: string;
+    isConnectionEmail: boolean;
 }
 
 export interface AuthResult {
-    jwt: string;
+    accesstoken: string;
+    user: User;
+    isRegistered: boolean;
+}
+
+export interface EmailConnectionResult {
+    accesstoken: string;
     user: User;
 }
