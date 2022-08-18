@@ -15,8 +15,8 @@ exports.login = async (req, res, next) => {
             user: {
                 no: req.user.no,
                 id: req.user.id,
+                isConnectionEmail,
             },
-            isConnectionEmail,
             accesstoken
         });
     } catch(error){

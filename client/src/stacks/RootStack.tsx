@@ -19,28 +19,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
     const [user, setUser] = useUserState();
-    const [isRegistered, setIsRegistered] = useState(false);
-    console.log('상태값'+user);
+    //로그인 상태 유지
     useAuthLoadEffect();
 
-    //isConnection 값 확인
-    useEffect(() => {
-        const fn = async () => {
-        //console.log('스토리지:', await authStorage.get())
-        const test = await authStorage.get();
-        const temp = test.isRegistered;
-        setIsRegistered(temp);
-        console.log('테스트:', temp);
-        }
-        fn();
-    },[])
-    console.log('회원가입 상태값'+isRegistered);
-    
     return (
         <Stack.Navigator>
-            { user ? (
+            { user && user.isConnectionEmail ? (
                 <>
-                    <Stack.Screen name='Connection' component={ConnectionEmailScreen}/>
                     <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}}/>
                 </>
             ) : (
@@ -48,6 +33,7 @@ function RootStack() {
                     <Stack.Screen name='Landing' component={LandingScreen}/>
                     <Stack.Screen name='Register' component={RegisterScreen}/>
                     <Stack.Screen name='Login' component={LoginScreen}/>
+                    <Stack.Screen name='Connection' component={ConnectionEmailScreen}/>
                 </>
             )}
         </Stack.Navigator>
