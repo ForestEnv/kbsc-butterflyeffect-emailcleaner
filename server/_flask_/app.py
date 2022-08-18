@@ -40,7 +40,6 @@ def count():
 @app.route('/predict', methods=['POST']) 
 def predict():
     try:
-        success_message = "flask connect"
         req = request.get_json()
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']

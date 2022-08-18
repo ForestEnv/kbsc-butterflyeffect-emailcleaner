@@ -24,8 +24,8 @@ exports.connectionEmail = async (req, res, next) => {
       UserName: "username",
       Emails: [
         {
-          email_address: "huiyy9211@gmail.com",
-          password: "kfjjmemkpjjxuioe",
+          email_address: "huiyeolyun98@gmail.com",
+          password: "qijfcpnjgmurwvfv",
         },
       ],
     });
