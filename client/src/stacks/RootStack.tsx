@@ -23,7 +23,7 @@ function RootStack() {
     console.log('상태값'+user);
     useAuthLoadEffect();
 
- //asyncstorage정보 확인 debug
+    //isConnection 값 확인
     useEffect(() => {
         const fn = async () => {
         //console.log('스토리지:', await authStorage.get())
