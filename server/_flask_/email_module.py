@@ -75,9 +75,8 @@ def fetch_emails(email_address, password):
                 email_data = html_body.decode()
                 body_ += email_data + "\n"
         '''
-        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
+        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : pred_}, index=[n])
         df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "pred" : pred_}, index=[n])
-        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_)}, index=[n])
         df_mail_list = pd.concat([df_mail_list, df])
 
     return df_mail_list
