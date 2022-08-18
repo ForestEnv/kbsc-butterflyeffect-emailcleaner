@@ -180,7 +180,7 @@ def delete_email(email_address, password, emailList):
         emailRsult = df_mail_list.to_dict('records')
     #delete email
     for i in emailList:
-        #obj.store(all_email[i], '+FLAGS', '\\Deleted')
+        obj.store(all_email[i], '+FLAGS', '\\Deleted')
         pass
 
     res, deleted = obj.expunge()
