@@ -1,3 +1,4 @@
+import React from "react";
 
 export interface User {
     no: number;
@@ -11,9 +12,14 @@ export interface AuthResult {
     user: User;
 }
 
-export interface EmailConnectionResult {
-    totalEmailCount: number;    
+export interface EmailCount {
+    emailCount: number;
 }
+
+// export interface EmailConnectionResult {
+//     //totalEmailCount: number;
+//     emailCount:EmailCount;
+// }
 
 export interface IsConnectionEmail {
     isConnectionEmail: boolean;

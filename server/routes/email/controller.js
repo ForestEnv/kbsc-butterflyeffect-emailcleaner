@@ -21,11 +21,11 @@ const emailServices = require('../../services/email');
 */
 exports.connectionEmail = async (req, res, next) => {
     try{
-        const {no, id, email, emailPassword} = req.body
-        console.log('DEBUGTEST=',no, id, email, emailPassword);
+        const {no, id, email, emailPassword} = req.body;
+
         await userServices.updateIsConnectionEmail(no);
-        console.log('DEBUGTEST=',no, id, email, emailPassword);
         await emailServices.setEmail({no, email, emailPassword});
+
         const response = await axios.post('http://localhost:5000/count', {
             UserName: id,
             Emails:[
@@ -36,12 +36,12 @@ exports.connectionEmail = async (req, res, next) => {
                 
             ]
         });
-        console.log('DEBUGTEST=',no, id, email, emailPassword);
-        console.log(response.data)
+        const totalEmailNum = response.data.Result[0].emailCount;
+        console.log('DATA FROM FLASK=' + totalEmailNum)
         res.status(CREATED).json({
-            message: "변경 성공!",
-            result: response.emailCount}, 
-        )
+            //message: "변경 성공!",
+            totalEmailNum
+        })
     } catch(error) {
         res.status(BAD_REQUEST).json({
             message: "연동 실패!"
