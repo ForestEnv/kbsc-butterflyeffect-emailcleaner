@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {User} from '../api/types';
+import { User } from '../api/types';
 
 type UserContextState = [User | null, (user: User | null) => void];
 

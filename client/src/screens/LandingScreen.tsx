@@ -10,12 +10,18 @@ function LandingScreen() {
     const [user, setUser] = useUserState();
     
     return (
-        <View>
-            <TouchableOpacity onPress={() => { navigation.navigate('Register') }}>
-                <Text>이메일로 시작하기</Text>
+        <View style={{flex:1, alignItems:'center'}}>
+            <TouchableOpacity 
+                style={{ marginTop:10, borderColor:'black',  borderWidth:1}}
+                onPress={() => { navigation.navigate('Register') }}
+            >
+                <Text style={{fontSize:20}}>이메일로 시작하기</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { navigation.navigate('Login') }}>
-                <Text>로그인하기</Text>
+            <TouchableOpacity 
+                style={{ marginTop:10, borderColor:'black',  borderWidth:1}}    
+                onPress={() => { navigation.navigate('Login') }}
+            >
+                <Text style={{fontSize:20}}>로그인하기</Text>
             </TouchableOpacity>
         </View>
     )

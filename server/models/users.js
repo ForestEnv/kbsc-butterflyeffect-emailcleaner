@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('users', {
+    return sequelize.define('user', {
         no: {
             autoIncrement: true,
             type: DataTypes.BIGINT,
@@ -20,13 +20,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(100),
             allowNull: false,
         },
-        isConnectionEmail: {
+        is_connection_email: {
             type: DataTypes.BOOLEAN,
             defaultValue: 0,
             allowNull: false,
         }
     }, 
     {
+        tableName:'user',
         timestamps: true,
         paranoid: true,
         underscored: true,

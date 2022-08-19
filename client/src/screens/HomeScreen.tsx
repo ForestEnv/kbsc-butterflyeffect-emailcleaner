@@ -1,19 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  TextInput, 
+  TouchableOpacity 
+} from 'react-native'
+
 import { useUserState } from "../contexts/UserContext";
-import authStorage from '../storages/authStorage';
 
-const HomeScreen = () => {
+function HomeScreen() {
   const [user, setUser] = useUserState();
-  console.log('사용자 정보:', user?.id);
-
+  
   return (
     <View>
-      <Text>HomeScreen</Text>
+      <Text>홈스크린</Text>
     </View>
   ) 
 }
 
 const styles = StyleSheet.create({})
 
-export default HomeScreen
+export default HomeScreen;

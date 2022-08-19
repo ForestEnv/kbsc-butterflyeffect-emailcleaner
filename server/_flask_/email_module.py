@@ -16,6 +16,23 @@ kr_loaded_model = pickle.load(open(PATH + '/pkl/kr_model_NB.pkl', 'rb'))
 kr_tdmvector = pickle.load(open(PATH + '/pkl/kr_tdmvector.pkl','rb')) 
 kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','rb'))
 
+def link_inbox(email_address, password):
+    
+    try:
+        imap_host = 'imap.'+ email_address.split("@")[1]
+        obj = imaplib.IMAP4_SSL(imap_host, 993)
+        obj.login(email_address, password)
+
+        obj.select('Inbox')
+        _, data = obj.search(None, "ALL")
+
+        obj.close()
+        obj.logout()
+
+        return "success" # 연동 성공시
+
+    except:
+        return "fail"  # 연동 실패시
 
 def count_inbox(email_address, password):
 
