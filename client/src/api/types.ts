@@ -3,8 +3,7 @@ import React from "react";
 export interface User {
     no: number;
     id: string;
-    //name: string;
-    isConnectionEmail: boolean;
+    isConnectionEmail: EmailConnection;
 }
 
 export interface AuthResult {
@@ -12,15 +11,18 @@ export interface AuthResult {
     user: User;
 }
 
-export interface EmailCount {
-    emailCount: number;
+export interface EmailConnection {
+    isConnectionEmail: boolean;
 }
 
-// export interface EmailConnectionResult {
-//     //totalEmailCount: number;
-//     emailCount:EmailCount;
-// }
+export interface EmailConnectionResult {
+    isConnectionEmail: boolean;
+}
 
 export interface IsConnectionEmail {
     isConnectionEmail: boolean;
 }
+
+// export interface EmailCount {
+//     emailCount: number;
+// }

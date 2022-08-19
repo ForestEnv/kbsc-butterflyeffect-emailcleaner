@@ -1,4 +1,5 @@
 const { OK, CREATED, BAD_REQUEST } = require('../../config/statusCode').statusCode;
+
 //import axios from "axios";
 const axios = require("axios");
 
@@ -15,17 +16,13 @@ const emailServices = require('../../services/email');
     * express는 client로부터 받은 데이터를 다시 post방식으로 flask에 데이터 요청
     * flask로 부터 받은 데이터를 response에 저장해 React Native로 전송
     * flask 포트 번호: 5000
-    @params {string} familyId: 가족 고유 식별 번호
-    @params {string} id: 가족 구성원의 고유 식별 번호
-    @params {string} info: 가족 구성원의 닉네임
 */
 exports.connectionEmail = async (req, res, next) => {
     try{
         const {no, id, email, emailPassword} = req.body;
-
         await userServices.updateIsConnectionEmail(no);
         await emailServices.setEmail({no, email, emailPassword});
-
+        const isConnectionEmail = await userServices.getIsConnectionEmail(no);
         const response = await axios.post('http://localhost:5000/count', {
             UserName: id,
             Emails:[
@@ -39,12 +36,13 @@ exports.connectionEmail = async (req, res, next) => {
         const totalEmailNum = response.data.Result[0].emailCount;
         console.log('DATA FROM FLASK=' + totalEmailNum)
         res.status(CREATED).json({
-            //message: "변경 성공!",
-            totalEmailNum
+            message: "이메일 연동 성공!",
+            //totalEmailNum,
+            isConnectionEmail,
         })
     } catch(error) {
         res.status(BAD_REQUEST).json({
-            message: "연동 실패!"
+            message: "이메일 연동 실패!"
         });
     }
-}
+};

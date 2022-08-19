@@ -1,14 +1,13 @@
 import client from '../lib/client';
-//import { EmailConnectionResult } from './types';
-import { EmailCount } from './types';
+import { EmailConnectionResult } from './types';
 
 //이메일 연동 API
-export async function emailConnection(params:EmailConnectionParams) {
-    const res = await client.post<EmailCount>(
+export async function setConnection(params:EmailConnectionParams) {
+    const res = await client.post<EmailConnectionResult>(
         'api/email/',
         params
     )
-    console.log('DATA FROM EXPRESS:', res);
+    console.log('DATA FROM EXPRESS:', res.data);
     return res.data;
 }
 

@@ -1,5 +1,8 @@
 import client from "../lib/client";
-import { AuthResult, IsConnectionEmail, User } from "./types";
+import { 
+    AuthResult, 
+    IsConnectionEmail, 
+} from "./types";
 
 //회원가입 API
 export async function register(params: RegisterParams) {
@@ -22,18 +25,20 @@ export async function getIsConnectionEmail(no: number) {
     return res.data
 }
 
+//회원가입 매개변수 타입
 interface RegisterParams {
     id: string;
     name: string;
     password: string;
 }
 
+//로그인 매개변수 타입
 interface LoginParams {
     id: string;
     password: string;
 }
 
-//이메일 연동 여부 조회
+//이메일 연동 여부 조회 매개변수 타입
 interface isConnectionEmailParams {
     isConnectionEmail: boolean;
 }

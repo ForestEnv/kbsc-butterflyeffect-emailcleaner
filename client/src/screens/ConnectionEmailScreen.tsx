@@ -12,19 +12,17 @@ import { useUserState } from "../contexts/UserContext";
 import useConnection from '../hooks/useConnection';
 
 function ConnectionEmailScreen() {
-  //const navigation = useNavigation<RootStackNavigationProp>();
-  //const navigation = useNavigation<MainTabNavigationProp>();
   const [user, setUser] = useUserState();
   
   //이메일, 비밀번호 상태 
   const [email, setEmail] = useState('');
   const [emailPassword, setEmailPassword] = useState('');
 
-  const {mutate: emailConnction} = useConnection();
+  const {mutate: setConnction} = useConnection();
   
   //타입 오류 : connection의 id 타입을 유니온 타입으로 대응
   const onConnectionSubmit = () => {
-    emailConnction({
+    setConnction({
       no:user.no,
       id:user?.id,
       email,
