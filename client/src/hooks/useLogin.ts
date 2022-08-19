@@ -6,24 +6,29 @@ import authStorage from "../storages/authStorage";
 
 import { useNavigation } from "@react-navigation/core";
 import { useUserState } from "../contexts/UserContext";
+import { useConnectionState } from '../contexts/ConnectionContext';
+
 import { RootStackNavigationProp } from "../stacks/types";
 
 export default function useLogin() {
     const [, setUser] = useUserState();
+    const [isConnectionEmail, setIsConnectionEmail] = useConnectionState();
+
     const navigation = useNavigation<RootStackNavigationProp>();
 
     const mutation = useMutation(login, {
         onSuccess: (data) => {
             setUser(data.user);
-            //console.log('로그인토큰',data.accesstoken)
+            setIsConnectionEmail(data.user.isConnectionEmail);
             applyToken(data.accesstoken);
             authStorage.set(data);
             /*연동된 이메일이 없으면 ConnectionEmailScreen으로 이동
-              있으면 MainTab으로 이동 */
-            const isEmailConnection = data.user.isConnectionEmail;
-            if(!isEmailConnection){
+            있으면 MainTab으로 이동 */
+            const isConnectionEmail = data.user.isConnectionEmail;
+            console.log('연동여부'+isConnectionEmail);
+            if(!isConnectionEmail){
                 navigation.navigate('Connection');
-            }  
+            } 
             console.log('로그인 사용자 정보',data);
         },
         onError: (error) => {
