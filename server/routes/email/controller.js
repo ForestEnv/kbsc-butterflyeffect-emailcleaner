@@ -1,7 +1,11 @@
-const { OK, CREATED, BAD_REQUEST } =
-  require("../../config/statusCode").statusCode;
+
+const { OK, CREATED, BAD_REQUEST } = require('../../config/statusCode').statusCode;
+
 //import axios from "axios";
 const axios = require("axios");
+
+const userServices = require('../../services/user');
+const emailServices = require('../../services/email');
 
 /** 
     POST: 이메일 연동을 위한 Flask 서버 통신 API
@@ -13,27 +17,34 @@ const axios = require("axios");
     * express는 client로부터 받은 데이터를 다시 post방식으로 flask에 데이터 요청
     * flask로 부터 받은 데이터를 response에 저장해 React Native로 전송
     * flask 포트 번호: 5000
-    @params {string} familyId: 가족 고유 식별 번호
-    @params {string} id: 가족 구성원의 고유 식별 번호
-    @params {string} info: 가족 구성원의 닉네임
 */
 exports.connectionEmail = async (req, res, next) => {
-  const { UserName, email_address, password } = req.body;
-  try {
-    const response = await axios.post("http://127.0.0.1:5000/count", {
-      UserName: "username",
-      Emails: [
-        {
-          email_address: "huiyeolyun98@gmail.com",
-          password: "qijfcpnjgmurwvfv",
-        },
-      ],
-    });
-    console.log(response.data);
-    res.status(CREATED).json({ result: response.emailCount });
-  } catch (error) {
-    res.status(BAD_REQUEST).json({
-      message: "연동 실패!",
-    });
-  }
+    try{
+        const {no, id, email, emailPassword} = req.body;
+        await userServices.updateIsConnectionEmail(no);
+        await emailServices.setEmail({no, email, emailPassword});
+        const isConnectionEmail = await userServices.getIsConnectionEmail(no);
+        const response = await axios.post('http://localhost:5000/count', {
+            UserName: id,
+            Emails:[
+                {
+                    email_address: email,
+                    password: emailPassword
+                },
+                
+            ]
+        });
+        const totalEmailNum = response.data.Result[0].emailCount;
+        console.log('DATA FROM FLASK=' + totalEmailNum)
+        res.status(CREATED).json({
+            message: "이메일 연동 성공!",
+            //totalEmailNum,
+            isConnectionEmail,
+        })
+    } catch(error) {
+        res.status(BAD_REQUEST).json({
+            message: "이메일 연동 실패!"
+        });
+    }
 };
+

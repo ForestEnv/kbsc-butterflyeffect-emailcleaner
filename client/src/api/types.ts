@@ -1,18 +1,28 @@
+import React from "react";
 
 export interface User {
     no: number;
     id: string;
-    name: string;
-    isConnectionEmail: boolean;
+    isConnectionEmail: EmailConnection;
 }
 
 export interface AuthResult {
     accesstoken: string;
     user: User;
-    isRegistered: boolean;
+}
+
+export interface EmailConnection {
+    isConnectionEmail: boolean;
 }
 
 export interface EmailConnectionResult {
-    accesstoken: string;
-    user: User;
+    isConnectionEmail: boolean;
 }
+
+export interface IsConnectionEmail {
+    isConnectionEmail: boolean;
+}
+
+// export interface EmailCount {
+//     emailCount: number;
+// }

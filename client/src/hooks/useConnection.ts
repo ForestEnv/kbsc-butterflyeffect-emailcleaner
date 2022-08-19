@@ -1,22 +1,23 @@
-import { useMutation } from '@tanstack/react-query';
-import { emailConnection } from '../api/connection';
+import { useMutation } from "@tanstack/react-query";
+import { useNavigation } from "@react-navigation/core";
 
-import authStorage from "../storages/authStorage";
+import { useConnectionState } from "../contexts/ConnectionContext";
+import { setConnection } from "../api/connection";
 
-import { useUserState } from '../contexts/UserContext';
+import { RootStackNavigationProp } from "../stacks/types";
 
 export default function useConnection() {
-    const [, setUser] = useUserState();
+    const [isConnectionEmail, setIsConnectionEmail] = useConnectionState();
+    const navigation = useNavigation<RootStackNavigationProp>();
 
-    const mutation = useMutation(emailConnection, {
+    const mutation = useMutation(setConnection, {
         onSuccess: (data) => {
-            setUser(data.user);
-            //authStorage.set(data);
-            console.log(data);
+            setIsConnectionEmail(data);
+            console.log('이메일 연동 여부 확인='+data);
         },
         onError: (error) => {
             console.log(error);
         }
     });
     return mutation;
-}
+};
