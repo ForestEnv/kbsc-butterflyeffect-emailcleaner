@@ -1,19 +1,11 @@
-#pip install flask
+# pip install flask
+# pip install pandas
+# pip install scikit-learn
 
-from flask import Flask, jsonify, request,render_template
-import pickle
+from flask import Flask, jsonify, request, make_response
 import pandas as pd
-import os
-from email_module import isEnglishOrKorean, count_inbox
-
-PATH = os.getcwd()
-
-eg_loaded_model = pickle.load(open(PATH + '/pkl/eg_model_NB.pkl', 'rb'))
-eg_tdmvector = pickle.load(open(PATH + '/pkl/eg_tdmvector.pkl','rb')) 
-eg_tfidf_transformer = pickle.load(open(PATH + '/pkl/eg_tfidf_transformer.pkl','rb'))
-kr_loaded_model = pickle.load(open(PATH + '/pkl/kr_model_NB.pkl', 'rb'))
-kr_tdmvector = pickle.load(open(PATH + '/pkl/kr_tdmvector.pkl','rb')) 
-kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','rb'))
+from email_module import count_inbox, fetch_emails, delete_email
+import json
 
 app = Flask(__name__)
 
@@ -29,10 +21,7 @@ def main():
 @app.route('/count', methods = ['POST']) 
 def count():
     try:
-        print("debugTEST1");
         req = request.get_json()
-        print("FROM NODE:", req);
-        print("debugTEST2");
         emailList = []
         for em in req['Emails']:
             emailId = em['email_address']
@@ -40,7 +29,6 @@ def count():
             emailCount = count_inbox(emailId , emailPw)
             emailList.append({'email_address' : emailId , 'emailCount' : emailCount})
         result = {'success_message' : "flask connect", 'Result' : emailList}
-        print("debugTEST3");
 
         return jsonify(result)
     except :
@@ -51,31 +39,35 @@ def count():
 # 이메일 분류
 @app.route('/predict', methods=['POST']) 
 def predict():
-
-    data1 = request.form['a']
-    test_email = [{'email_title' : data1}]
-    df_test_email = pd.DataFrame(test_email)
-    lang = isEnglishOrKorean(data1)
-    print(lang)
-    if lang == 'k':
-        test_x_email = df_test_email['email_title']
-        test_x_tdm = kr_tdmvector.transform(test_x_email)
-        test_x_tfidfv = kr_tfidf_transformer.transform(test_x_tdm)
-        pred = kr_loaded_model.predict(test_x_tfidfv)
-    elif lang == 'e':
-        test_x_email = df_test_email['email_title']
-        test_x_tdm = eg_tdmvector.transform(test_x_email)
-        test_x_tfidfv = eg_tfidf_transformer.transform(test_x_tdm)
-        pred = eg_loaded_model.predict(test_x_tfidfv)
-    return render_template('after.html', data= pred)
+    try:
+        req = request.get_json()
+        emailId = req['Emails']['email_address']
+        emailPw = req['Emails']['password']
+        result = fetch_emails(emailId , emailPw)
+        classification = result.to_json(orient = 'index',force_ascii=False)
+        res = make_response(classification)
+        return res
+    except Exception as e: 
+        return jsonify({
+            'fail_message' : 'fail_message'
+        })
 
 # 삭제
-@app.route('/delete') 
+@app.route('/delete', methods = ['POST']) 
 def delete():
-    success_message = "flask connect"
-    return jsonify({
-        'success_message' : success_message
-    })
+    try:
+        req = request.get_json()
+        email_address = req['Emails']['email_address']
+        password = req['Emails']['password']
+        emailList = req['Emails']['list']
+        result, lenEmail, emailRsult = delete_email(email_address , password , emailList)
+        data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult}
+        res = make_response(data)
+        return res
+    except Exception as e: 
+        return jsonify({
+            'fail_message' : 'fail_message'
+        })
 
 if __name__ == "__main__":
     app.run(debug=True)
