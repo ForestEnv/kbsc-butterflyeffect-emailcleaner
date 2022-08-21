@@ -1,13 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('usermanage', {
-
+    return sequelize.define('usermanage', {//회원관리
+        no: {
+            autoIncrement: true,
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            primaryKey: true,
+         },
         id: {
             type: DataTypes.STRING(50),
             allowNull: false,
             unique: true,
-            primaryKey: true,
         },
-        ponit: {
+        experience: {//경험치
             type: DataTypes.STRING(100),
             allowNull: false,
             unique: true,

@@ -1,21 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('add2_email', {
-
+    return sequelize.define('email', {//이메일 연동
+            no: {
+                autoIncrement: true,
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                primaryKey: true,
+             },
             email: {
                 type: DataTypes.STRING(50),
                 allowNull: false,
                 unique: true,
                 primaryKey: true,
             },
-            delete_no: {
+            add_email: {
                 type: DataTypes.STRING(100),
                 allowNull: false,
+                unique: true,
             },
-            add_no: {
-                type: DataTypes.STRING(50),
-                allowNull: false,
-            },
-            total_no: {
+            add2_email: {
                 type: DataTypes.STRING(50),
                 allowNull: false,
             },
