@@ -5,7 +5,10 @@
 from flask import Flask, jsonify, request, make_response
 import pandas as pd
 from email_module import link_inbox, count_inbox, fetch_emails, delete_email
-import json
+from datetime import datetime
+
+now = datetime.now()
+
 
 app = Flask(__name__)
 
@@ -79,7 +82,8 @@ def delete():
         password = req['Emails']['password']
         emailList = req['Emails']['list']
         result, lenEmail, emailRsult = delete_email(email_address , password , emailList)
-        data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult}
+        print("현재 날짜 : ", now.date())
+        data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult, 'deleteDate':now.date()}
         res = make_response(data)
         return res
     except Exception as e: 
