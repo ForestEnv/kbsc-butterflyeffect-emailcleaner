@@ -41,8 +41,8 @@ def count():
         print(req)
         emailList = []
         for em in req['Emails']:
-            emailId = em['email_address']
-            emailPw = em['password']
+            emailId = em['email_id']
+            emailPw = em['email_Pw']
             emailCount = count_inbox(emailId , emailPw)
             emailList.append({'email_address' : emailId , 'emailCount' : emailCount})
         result = {'success_message' : "flask connect", 'Result' : emailList}
@@ -59,7 +59,8 @@ def predict():
     try:
         req = request.get_json()
         emailId = req['Emails']['email_address']
-        emailPw = req['Emails']['password']
+        emailPw = req['Emails']['password'][0]['email_Pw']
+        print(emailPw)
         result = fetch_emails(emailId , emailPw)
         classification = result.to_json(orient = 'index',force_ascii=False)
         res = make_response(classification)

@@ -13,12 +13,8 @@ exports.connectionEmail = async (req, res, next) => {
   try {
     console.log(req.body);
     const { no, id, email_id, email_Pw } = req.body;
-    console.log(email_id);
-    console.log(email_Pw);
     await userServices.updateIsConnectionEmail(no);
-    console.log("gggg1g");
     await emailServices.setEmail({ no, email_id, email_Pw });
-    console.log("gggg2g");
     // const isConnectionEmail = await userServices.getIsConnectionEmail(no);
     const response = await axios.post("http://localhost:5000/link", {
       UserName: id,
@@ -27,7 +23,6 @@ exports.connectionEmail = async (req, res, next) => {
         password: email_Pw,
       },
     });
-    console.log("ggg3gg");
     const connectionMsg = response.data.success_message;
     console.log("DATA FROM FLASK=" + connectionMsg);
     res.status(CREATED).json({
