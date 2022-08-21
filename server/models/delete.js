@@ -1,6 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('delete', {
-
+        no: {
+            autoIncrement: true,
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            primaryKey: true,
+         },
         delete_no: {
             autoIncrement: true,
             type: DataTypes.BIGINT,
