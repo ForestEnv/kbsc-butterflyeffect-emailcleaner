@@ -11,9 +11,8 @@ exports.getEmail = async (data) => {
   return result;
 };
 
-exports.getEmailPassword = async (data) => {
-  console.log(data);
-  const result = await db.getEmailPassword(data);
+exports.getEmailInfo = async (data) => {
+  const result = await db.getEmailInfo(data);
   return result;
 };
 /*

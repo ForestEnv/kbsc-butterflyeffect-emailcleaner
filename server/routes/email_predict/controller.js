@@ -6,12 +6,12 @@ const emailServices = require("../../services/email");
 
 exports.predictEmail = async (req, res, next) => {
   const { user_no, email_id } = req.body;
-  const email_Pw = await emailServices.getEmailPassword({ user_no, email_id });
+  const email_info = await emailServices.getEmailInfo({ user_no, email_id });
   try {
     const response = await axios.post("http://127.0.0.1:5000/predict", {
       Emails: {
         email_address: email_id,
-        password: email_Pw,
+        password: email_info.dataValues.email_Pw,
       },
     });
     res.status(CREATED).json({ result: response.data });

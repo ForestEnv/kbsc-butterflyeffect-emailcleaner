@@ -62,7 +62,7 @@ def predict():
     try:
         req = request.get_json()
         emailId = req['Emails']['email_address']
-        emailPw = req['Emails']['password'][0]['email_Pw']
+        emailPw = req['Emails']['password']
         print(emailPw)
         result = fetch_emails(emailId , emailPw)
         classification = result.to_json(orient = 'index',force_ascii=False)

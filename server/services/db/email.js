@@ -22,9 +22,9 @@ exports.getEmail = async ({ user_no }) => {
   return result;
 };
 
-exports.getEmailPassword = async ({ user_no, email_id }) => {
-  const result = await Email.findAll({
-    attributes: ["email_Pw"],
+exports.getEmailInfo = async ({ user_no, email_id }) => {
+  const result = await Email.findOne({
+    attributes: ["no", "email_Pw"],
     where: { user_no, email_id },
   });
   return result;
