@@ -1,5 +1,5 @@
 const { Email } = require("../../models");
-const { Delete } = require("../../models");
+//const { Delete } = require("../../models");
 const { hashingPw } = require("../../utils/bcrypt");
 
 exports.insertEmail = async ({ no, email_id, email_Pw }) => {
@@ -42,12 +42,11 @@ exports.insertDeleteEmail = async ({ no, Emails }) => {
   const result = await Delete.create(deleteData);
   return result;
 };
-
-exports.updateTotalNum = async (no, { emailLen }) => {
-  const result = await Email.update({
-    total_no: total_no + emailLen,
-    where: { no: no },
-  });
+*/
+exports.updateTotalNum = async ({ email_no, emailLen }) => {
+  const result = await Email.increment(
+    { total_no: emailLen },
+    { where: { no: email_no } }
+  );
   return result;
 };
-*/
