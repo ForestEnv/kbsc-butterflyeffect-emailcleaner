@@ -16,7 +16,7 @@ exports.getEmailPassword = async (data) => {
   const result = await db.getEmailPassword(data);
   return result;
 };
-
+/*
 exports.setDeleteEmail = async (data) => {
   const result = await db.insertDeleteEmail(data);
   return result;
@@ -26,3 +26,4 @@ exports.updateTotalNum = async (data) => {
   const result = await db.updateTotalNum(data);
   return result;
 };
+*/

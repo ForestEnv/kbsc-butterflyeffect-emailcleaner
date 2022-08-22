@@ -29,7 +29,7 @@ exports.getEmailPassword = async ({ user_no, email_id }) => {
   });
   return result;
 };
-
+/*
 exports.insertDeleteEmail = async ({ no, Emails }) => {
   console.log(Emails);
   const deleteData = {
@@ -50,3 +50,4 @@ exports.updateTotalNum = async (no, { emailLen }) => {
   });
   return result;
 };
+*/

@@ -14,7 +14,6 @@ exports.predictEmail = async (req, res, next) => {
         password: email_Pw,
       },
     });
-    console.log(response.data);
     res.status(CREATED).json({ result: response.data });
   } catch (error) {
     res.status(BAD_REQUEST).json({
