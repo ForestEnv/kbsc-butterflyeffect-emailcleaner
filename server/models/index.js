@@ -21,8 +21,8 @@ db.User = require('./reward')(sequelize, Sequelize);
 */
 
 //데이터베이스 관계 정의
-db.User.hasMany(db.Email, { foreignKey: "no" });
-db.Email.belongsTo(db.User, { foreignKey: "user_no" });
+db.User.hasMany(db.Email, { foreignKey: "personal_no" });
+db.Email.belongsTo(db.User, { foreignKey: "personal_no" });
 /*
 db.Email.hasMany(db.Delete, { foreignKey: "no" });
 db.Delete.belongsTo(db.Email, { foreignKey: "email_no" });
