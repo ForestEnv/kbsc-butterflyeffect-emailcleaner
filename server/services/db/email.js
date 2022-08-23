@@ -3,12 +3,17 @@ const { Email } = require("../../models");
 const { hashingPw } = require("../../utils/bcrypt");
 
 exports.insertEmail = async ({ no, email_id, email_Pw }) => {
+  console.log(no);
+  console.log(email_id);
+  console.log(email_Pw);
   const emailData = {
     user_no: no,
     email_id,
     email_Pw,
   };
+  console.log(emailData);
   const result = await Email.create(emailData);
+  console.log(result);
   return result;
 };
 

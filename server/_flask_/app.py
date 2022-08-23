@@ -25,8 +25,11 @@ def main():
 def link():
     try:
         req = request.get_json()
+        print(req)
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']
+        print(emailId)
+        print(emailPw)
         success_message = link_inbox(emailId , emailPw)
         result = {'success_message' : success_message}
         return jsonify(result)
