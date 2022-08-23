@@ -2,6 +2,7 @@ const { OK, CREATED, BAD_REQUEST } =
   require("../../config/statusCode").statusCode;
 const axios = require("axios");
 
+const userServices = require("../../services/user");
 const emailServices = require("../../services/email");
 
 exports.deleteEmail = async (req, res, next) => {
@@ -21,6 +22,10 @@ exports.deleteEmail = async (req, res, next) => {
         password: email_info.dataValues.email_Pw,
         list,
       },
+    });
+    await userServices.updateExperience({
+      user_no,
+      emailLen: response.data.emailLen,
     });
     await emailServices.updateTotalNum({
       email_no: email_info.dataValues.no,
