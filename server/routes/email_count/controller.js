@@ -12,15 +12,16 @@ exports.countEmail = async (req, res, next) => {
     const { user_no } = req.body;
     console.log(user_no);
     const emailData = await emailServices.getEmail({ user_no });
-    console.log("emailData");
+    console.log(emailData);
     const response = await axios.post("http://localhost:5000/count", {
       Emails: emailData,
     });
-    const totalEmailNum = response.data.Result[0].emailCount;
-    console.log("DATA FROM FLASK=" + totalEmailNum);
+    console.log(response.data);
+    //const totalEmailNum = response.data.Result[0].emailCount;
+    //console.log("DATA FROM FLASK=" + totalEmailNum);
     res.status(CREATED).json({
       message: "이메일 연동 성공!",
-      totalEmailNum,
+      Ressult: response.data.Result,
       //isConnectionEmail,
     });
   } catch (error) {
