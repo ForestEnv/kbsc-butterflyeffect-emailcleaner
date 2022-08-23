@@ -23,7 +23,6 @@ exports.getEmail = async ({ user_no }) => {
     where: { user_no },
     raw: true,
   });
-  console.log(result);
   return result;
 };
 
