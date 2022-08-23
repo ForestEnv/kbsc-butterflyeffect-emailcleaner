@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       user_no: {
         type: DataTypes.BIGINT,
         allowNull: false,
+        unique: false,
       },
       email_id: {
         type: DataTypes.STRING(50),
