@@ -25,8 +25,11 @@ def main():
 def link():
     try:
         req = request.get_json()
+        print(req)
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']
+        print(emailId)
+        print(emailPw)
         success_message = link_inbox(emailId , emailPw)
         result = {'success_message' : success_message}
         return jsonify(result)
@@ -62,7 +65,7 @@ def predict():
     try:
         req = request.get_json()
         emailId = req['Emails']['email_address']
-        emailPw = req['Emails']['password'][0]['email_Pw']
+        emailPw = req['Emails']['password']
         print(emailPw)
         result = fetch_emails(emailId , emailPw)
         classification = result.to_json(orient = 'index',force_ascii=False)
