@@ -211,3 +211,30 @@ def delete_email(email_address, password, emailList):
     obj.logout()
     
     return res, len(deleted), emailRsult
+
+def send_email(email_address, emailList):
+    """
+    받는 이메일 주소와 보내려는 메일 리스트를 받아 보내고 오류 발생한 메일 개수 리턴하는 함수
+    일단 yoongul0928 연세메일로 보내게 해놨음
+    """
+    smtp_host = 'smtp.gmail.com'
+    smtp_port = 587
+
+    from_addr = "yoongul0928@yonsei.ac.kr"
+    to_addr = email_address
+
+    smtp = smtplib.SMTP(smtp_host, smtp_port)
+    smtp.starttls()
+    smtp.login("yoongul0928@yonsei.ac.kr", "vanjfiqnzyxuyqfo")
+
+    err_cnt = 0
+
+    for email in emailList:
+        try:
+            message = MIMEText(email["body"])
+            message["Subject"] = email["subject"]
+            
+            smtp.sendmail(from_addr, to_addr, message.as_string())
+        except:
+            err_cnt += 1
+    smtp.quit()
