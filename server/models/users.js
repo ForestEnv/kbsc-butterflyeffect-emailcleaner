@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        unique: true,
       },
       password: {
         type: DataTypes.STRING(100),
@@ -24,6 +23,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       is_connection_email: {
         type: DataTypes.BOOLEAN,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      experience: {
+        //경험치
+        type: DataTypes.BIGINT,
         defaultValue: 0,
         allowNull: false,
       },

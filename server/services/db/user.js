@@ -41,3 +41,11 @@ exports.selectIsConnectionEmail = async (no) => {
 
   return result;
 };
+
+exports.updateExperience = async ({ user_no, emailLen }) => {
+  const result = await User.increment(
+    { experience: emailLen },
+    { where: { no: user_no } }
+  );
+  return result;
+};

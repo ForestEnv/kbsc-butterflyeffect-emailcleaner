@@ -15,3 +15,9 @@ exports.updateIsConnectionEmail = async (data) => {
   const result = await db.updateIsConnectionEmail(data);
   return result;
 };
+
+// 사용자 경험치 증가
+exports.updateExperience = async (data) => {
+  const result = await db.updateExperience(data);
+  return result;
+};
