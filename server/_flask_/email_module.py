@@ -1,13 +1,16 @@
-#전체 메일 개수 = count_inbox(메일주소, 비밀번호)
-#전체 메일 데이터프레임 = fetch_emails(메일주소, 비밀번호)
-#결과(성공시 'OK'), 삭제된 메일 개수, 삭제된 메일 데이터프레임 = delete_email(메일주소, 비밀번호, 삭제할 메일 인덱스 리스트)
+import smtplib, email
 import pandas as pd
 import imaplib, email
 from email.header import decode_header, make_header
+from email.mime.text import MIMEText
 import os
 import pickle
+from datetime import datetime
 
 PATH = os.getcwd()
+
+now = datetime.now()
+
 
 eg_loaded_model = pickle.load(open(PATH + '/pkl/eg_model_NB.pkl', 'rb'))
 eg_tdmvector = pickle.load(open(PATH + '/pkl/eg_tdmvector.pkl','rb')) 
@@ -17,8 +20,10 @@ kr_tdmvector = pickle.load(open(PATH + '/pkl/kr_tdmvector.pkl','rb'))
 kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','rb'))
 
 def link_inbox(email_address, password):
-    print(email_address)
-    print(password)
+    """
+    초기 연동시 이메일 사용 가능여부 판단 함수
+
+    """
     
     try:
         imap_host = 'imap.'+ email_address.split("@")[1]
@@ -35,7 +40,38 @@ def link_inbox(email_address, password):
     except:
         return "fail"  # 연동 실패시
 
+def get_body(email_message):
+    """
+    WIP
+    메세지를 받아서 바디부분을 파싱하는 함수
+    파싱 결과와 바디 문자열을 리턴한다
+    """
+
+    res = "ERROR"
+
+    body_ = ""
+    try:
+        for part in email_message.walk():
+            if part.get_content_type() == "text/plain":
+                body = part.get_payload(decode=True)
+                email_data = body.decode()
+                body_ += email_data + "\n"
+            elif part.get_content_type() == "text/html":
+                html_body = part.get_payload(decode=True)
+                email_data = html_body.decode()
+                body_ += email_data + "\n"
+    except Exception as e:
+        res = "ERROR"
+        body_ = e
+    else:
+        res = "OK"
+    return res, body_
+
+
 def count_inbox(email_address, password):
+    """
+    사용자의 메일 주소와 비밀번호를 입력받아서 메일 개수를 가져오는 함수
+    """
 
     imap_host = 'imap.'+ email_address.split("@")[1]
 
@@ -51,6 +87,9 @@ def count_inbox(email_address, password):
     return len(data[0].split())
 
 def fetch_emails(email_address, password):
+    """
+    사용자의 메일 주소와 비밀번호를 받아서 모든 메일을 읽어오는 함수
+    """
     #imap login, fetch
     imap_host = 'imap.'+ email_address.split("@")[1]
     obj = imaplib.IMAP4_SSL(imap_host, 993)
@@ -80,26 +119,20 @@ def fetch_emails(email_address, password):
                 subject_= make_header(decode_header(str(email_message['Subject'])))
                 break
         pred_ = emailClassification(subject_)
-        '''
-        body_ = ""
+        
+        res, body_ = get_body(email_message)
 
-        for part in email_message.walk():
-            if part.get_content_type() == "text/plain":
-                body = part.get_payload(decode=True)
-                email_data = body.decode()
-                body_ += email_data + "\n"
-            elif part.get_content_type() == "text/html":
-                html_body = part.get_payload(decode=True)
-                email_data = html_body.decode()
-                body_ += email_data + "\n"
-        '''
-        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : pred_}, index=[n])
-        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "pred" : pred_}, index=[n])
+        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : pred_}, index=[n])
+        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "pred" : pred_}, index=[n])
+        
         df_mail_list = pd.concat([df_mail_list, df])
 
     return df_mail_list
 
 def emailClassification(subject_):
+    """
+    메일 제목을 받아서 메일의 종류를 판단하는 함수
+    """
     test_email = [{'email_title' : str(subject_)}]
     df_test_email = pd.DataFrame(test_email)
     #print(df_test_email)
@@ -120,6 +153,10 @@ def emailClassification(subject_):
 
 # 이메일 언어 분류
 def isEnglishOrKorean(input_s):
+    """
+    문자열을 받아서 영어인지 한글인지 판단하는 함수
+    k: 한글, e: 기타, o: 영어
+    """
     k_count = 0
     e_count = 0
     o_count = 0
@@ -139,7 +176,11 @@ def isEnglishOrKorean(input_s):
     else:
         return "o"  # 영어
 
-def delete_email(email_address, password, emailList):
+
+def delete_email(email_address, password, emailList, email_no):
+    """
+    사용자의 메일 주소, 비밀번호, 삭제하려는 메일 리스트를 받아 삭제하고 결과, 삭제한 메일 개수와 데이터 리스트를 리턴하는 함수
+    """
     imap_host = 'imap.'+ email_address.split("@")[1]
     obj = imaplib.IMAP4_SSL(imap_host, 993)
     obj.login(email_address, password)
@@ -179,21 +220,13 @@ def delete_email(email_address, password, emailList):
             except TypeError:
                 subject_= make_header(decode_header(str(email_message['Subject'])))
                 break
-        '''
-        body_ = ""
+        
+     
+        res, body_ = get_body(email_message)
 
-        for part in email_message.walk():
-            if part.get_content_type() == "text/plain":
-                body = part.get_payload(decode=True)
-                email_data = body.decode()
-                body_ += email_data + "\n"
-            elif part.get_content_type() == "text/html":
-                html_body = part.get_payload(decode=True)
-                email_data = html_body.decode()
-                body_ += email_data + "\n"
-          '''    
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
-        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_)}, index=[n])
+        df = pd.DataFrame({"email_no": email_no, "sender": str(from_), "date": str(date_), "title": str(subject_), 'deleteDate':now.date()}, index=[n])
+
         df_mail_list = pd.concat([df_mail_list, df])
         emailRsult = df_mail_list.to_dict('records')
     #delete email
@@ -207,3 +240,31 @@ def delete_email(email_address, password, emailList):
     obj.logout()
     
     return res, len(deleted), emailRsult
+
+def send_email(email_address, emailList):
+    """
+    받는 이메일 주소와 보내려는 메일 리스트를 받아 보내고 오류 발생한 메일 개수 리턴하는 함수
+    일단 yoongul0928 연세메일로 보내게 해놨음
+    """
+    smtp_host = 'smtp.gmail.com'
+    smtp_port = 587
+
+    from_addr = "yoongul0928@yonsei.ac.kr"
+    to_addr = email_address
+
+    smtp = smtplib.SMTP(smtp_host, smtp_port)
+    smtp.starttls()
+    smtp.login("yoongul0928@yonsei.ac.kr", "vanjfiqnzyxuyqfo")
+
+    err_cnt = 0
+
+    for email in emailList:
+        try:
+            message = MIMEText(email["body"])
+            message["Subject"] = email["subject"]
+            
+            smtp.sendmail(from_addr, to_addr, message.as_string())
+        except:
+            err_cnt += 1
+    smtp.quit()
+    return "Success"

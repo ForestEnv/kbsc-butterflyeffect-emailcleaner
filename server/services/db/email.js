@@ -33,20 +33,7 @@ exports.getEmailInfo = async ({ user_no, email_id }) => {
   });
   return result;
 };
-/*
-exports.insertDeleteEmail = async ({ no, Emails }) => {
-  console.log(Emails);
-  const deleteData = {
-    email_no: no,
-    sender,
-    date,
-    title,
-    delete_date, // 현재 시간
-  };
-  const result = await Delete.create(deleteData);
-  return result;
-};
-*/
+
 exports.updateTotalNum = async ({ email_no, emailLen }) => {
   const result = await Email.increment(
     { total_no: emailLen },
