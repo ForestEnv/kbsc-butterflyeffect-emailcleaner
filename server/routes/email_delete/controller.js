@@ -2,20 +2,37 @@ const { OK, CREATED, BAD_REQUEST } =
   require("../../config/statusCode").statusCode;
 const axios = require("axios");
 
+const userServices = require("../../services/user");
+const emailServices = require("../../services/email");
+
 exports.deleteEmail = async (req, res, next) => {
-  const { UserName, email_address, password, list } = req.body;
-  console.log("hhh");
+  const { user_no, email_id, list } = req.body;
+
+  const email_info = await emailServices.getEmailInfo({
+    user_no,
+    email_id,
+  });
+
+  //await emailServices.setDeleteEmail({ Emails, deleteDate, emailLen });
+
   try {
     const response = await axios.post("http://127.0.0.1:5000/delete", {
-      UserName: "username",
       Emails: {
-        email_address: "huiyeolyun98@gmail.com",
-        password: "qijfcpnjgmurwvfv",
-        list: [0, 1],
+        email_address: email_id,
+        password: email_info.dataValues.email_Pw,
+        list,
       },
     });
-    console.log(response.data);
-    res.status(CREATED).json({ result: response.emailCount });
+    await userServices.updateExperience({
+      user_no,
+      emailLen: response.data.emailLen,
+    });
+    await emailServices.updateTotalNum({
+      email_no: email_info.dataValues.no,
+      emailLen: response.data.emailLen,
+    });
+
+    res.status(CREATED).json({ result: response.data.emailLen });
   } catch (error) {
     res.status(BAD_REQUEST).json({
       message: "연동 실패!",

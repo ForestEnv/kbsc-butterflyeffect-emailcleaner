@@ -1,34 +1,43 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('users', {
-        no: {
-            autoIncrement: true,
-            type: DataTypes.BIGINT,
-            allowNull: false,
-            primaryKey: true,
-        },
-        id: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
-            unique: true,  
-        },
-        name: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
-            unique: true,
-        },
-        password: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        isConnectionEmail: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: 0,
-            allowNull: false,
-        }
-    }, 
+  return sequelize.define(
+    "user",
     {
-        timestamps: true,
-        paranoid: true,
-        underscored: true,
-    });
+      no: {
+        autoIncrement: true,
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        primaryKey: true,
+      },
+      id: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        unique: true,
+      },
+      name: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      is_connection_email: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      experience: {
+        //경험치
+        type: DataTypes.BIGINT,
+        defaultValue: 0,
+        allowNull: false,
+      },
+    },
+    {
+      tableName: "user",
+      timestamps: true,
+      paranoid: true,
+      underscored: true,
+    }
+  );
 };

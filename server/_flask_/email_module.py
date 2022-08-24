@@ -15,6 +15,7 @@ kr_loaded_model = pickle.load(open(PATH + '/pkl/kr_model_NB.pkl', 'rb'))
 kr_tdmvector = pickle.load(open(PATH + '/pkl/kr_tdmvector.pkl','rb')) 
 kr_tfidf_transformer = pickle.load(open(PATH + '/pkl/kr_tfidf_transformer.pkl','rb'))
 
+
 def get_body(email_message):
     """
     WIP
@@ -41,6 +42,7 @@ def get_body(email_message):
     else:
         res = "OK"
     return res, body_
+
 
 def count_inbox(email_address, password):
     """
