@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
       }, 
       */
       delete_date: {
-        type: DataTypes.timestamps,
+        // type: DataTypes.timestamps,
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
     },

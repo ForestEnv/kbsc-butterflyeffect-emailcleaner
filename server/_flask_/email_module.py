@@ -5,9 +5,13 @@ from email.header import decode_header, make_header
 from email.mime.text import MIMEText
 import os
 import pickle
+from datetime import datetime
 
 PATH = os.getcwd()
-PATH = "E:/workspace/kbsc-butterflyeffect-emailcleaner/server/_flask_"
+
+now = datetime.now()
+
+
 eg_loaded_model = pickle.load(open(PATH + '/pkl/eg_model_NB.pkl', 'rb'))
 eg_tdmvector = pickle.load(open(PATH + '/pkl/eg_tdmvector.pkl','rb')) 
 eg_tfidf_transformer = pickle.load(open(PATH + '/pkl/eg_tfidf_transformer.pkl','rb'))
@@ -152,6 +156,7 @@ def isEnglishOrKorean(input_s):
     else:
         return "o"  # 영어
 
+
 def delete_email(email_address, password, emailList):
     """
     사용자의 메일 주소, 비밀번호, 삭제하려는 메일 리스트를 받아 삭제하고 결과, 삭제한 메일 개수와 데이터 리스트를 리턴하는 함수
@@ -198,8 +203,20 @@ def delete_email(email_address, password, emailList):
         
         res, body_ = get_body(email_message)
 
-        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
-        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_)}, index=[n])
+
+        for part in email_message.walk():
+            if part.get_content_type() == "text/plain":
+                body = part.get_payload(decode=True)
+                email_data = body.decode()
+                body_ += email_data + "\n"
+            elif part.get_content_type() == "text/html":
+                html_body = part.get_payload(decode=True)
+                email_data = html_body.decode()
+                body_ += email_data + "\n"
+          '''    
+        #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
+        df = pd.DataFrame({"email_no": email_no, "sender": str(from_), "date": str(date_), "title": str(subject_), 'deleteDate':now.date()}, index=[n])
+
         df_mail_list = pd.concat([df_mail_list, df])
         emailRsult = df_mail_list.to_dict('records')
     #delete email
