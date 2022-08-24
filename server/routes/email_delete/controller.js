@@ -4,6 +4,7 @@ const axios = require("axios");
 
 const userServices = require("../../services/user");
 const emailServices = require("../../services/email");
+const deleteServices = require("../../services/delete");
 
 exports.deleteEmail = async (req, res, next) => {
   const { user_no, email_id, list } = req.body;
@@ -20,9 +21,20 @@ exports.deleteEmail = async (req, res, next) => {
       Emails: {
         email_address: email_id,
         password: email_info.dataValues.email_Pw,
+        email_no: email_info.dataValues.no,
         list,
       },
     });
+    console.log("----------------");
+    console.log(response);
+    console.log("----------------");
+    console.log(response.data.Emails);
+    console.log("----------------");
+
+    await deleteServices.setDeleteEmails({
+      Emails: response.data.Emails,
+    });
+
     await userServices.updateExperience({
       user_no,
       emailLen: response.data.emailLen,
