@@ -6,8 +6,10 @@ import imaplib, email
 from email.header import decode_header, make_header
 import os
 import pickle
+from datetime import datetime
 
 PATH = os.getcwd()
+now = datetime.now()
 
 eg_loaded_model = pickle.load(open(PATH + '/pkl/eg_model_NB.pkl', 'rb'))
 eg_tdmvector = pickle.load(open(PATH + '/pkl/eg_tdmvector.pkl','rb')) 
@@ -139,7 +141,7 @@ def isEnglishOrKorean(input_s):
     else:
         return "o"  # 영어
 
-def delete_email(email_address, password, emailList):
+def delete_email(email_address, password, emailList,email_no):
     imap_host = 'imap.'+ email_address.split("@")[1]
     obj = imaplib.IMAP4_SSL(imap_host, 993)
     obj.login(email_address, password)
@@ -193,7 +195,7 @@ def delete_email(email_address, password, emailList):
                 body_ += email_data + "\n"
           '''    
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
-        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_)}, index=[n])
+        df = pd.DataFrame({"email_no": email_no, "sender": str(from_), "date": str(date_), "title": str(subject_), 'deleteDate':now.date()}, index=[n])
         df_mail_list = pd.concat([df_mail_list, df])
         emailRsult = df_mail_list.to_dict('records')
     #delete email

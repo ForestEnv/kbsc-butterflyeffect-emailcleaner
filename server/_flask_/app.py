@@ -5,10 +5,6 @@
 from flask import Flask, jsonify, request, make_response
 import pandas as pd
 from email_module import link_inbox, count_inbox, fetch_emails, delete_email
-from datetime import datetime
-
-now = datetime.now()
-
 
 app = Flask(__name__)
 
@@ -81,12 +77,13 @@ def predict():
 def delete():
     try:
         req = request.get_json()
+        print(req)
         email_address = req['Emails']['email_address']
         password = req['Emails']['password']
         emailList = req['Emails']['list']
-        result, lenEmail, emailRsult = delete_email(email_address , password , emailList)
-        print("현재 날짜 : ", now.date())
-        data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult, 'deleteDate':now.date()}
+        email_no = req['Emails']['email_no']
+        result, lenEmail, emailRsult = delete_email(email_address , password , emailList,email_no)
+        data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult}
         res = make_response(data)
         return res
     except Exception as e: 
