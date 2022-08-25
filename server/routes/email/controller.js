@@ -3,6 +3,7 @@ const { OK, CREATED, BAD_REQUEST } =
 
 const userServices = require("../../services/user");
 const emailServices = require("../../services/email");
+const deleteServices = require("../../services/delete")
 
 const axios = require("axios");
 
@@ -115,9 +116,14 @@ exports.deleteEmail = async (req, res, next) => {
       Emails: {
         email_address: email_id,
         password: email_info.dataValues.email_Pw,
+
+        email_no: email_info.dataValues.no,
         list,
       },
     });
+    console.log(response.data.Emails)
+    await deleteServices.setDeleteEmails(response.data.Emails)
+    // await deleteServices.setDeleteEmails({response.data.Emails})   
     await userServices.updateExperience({
       user_no,
       emailLen: response.data.emailLen,
@@ -133,4 +139,5 @@ exports.deleteEmail = async (req, res, next) => {
       message: "연동 실패!",
     });
   }
+
 };
