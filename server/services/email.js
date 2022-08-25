@@ -20,3 +20,8 @@ exports.updateTotalNum = async (data) => {
   const result = await db.updateTotalNum(data);
   return result;
 };
+
+exports.getDeleteNumber = async (data) => {
+  const result = await db.selectDeleteNumber(data);
+  return result;
+}

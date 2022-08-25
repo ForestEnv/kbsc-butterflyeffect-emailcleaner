@@ -70,9 +70,9 @@ exports.countEmail = async (req, res, next) => {
     const response = await axios.post("http://localhost:5000/count", {
       Emails: emailData,
     });
-    const emailCount = response.data.Result[0].emailCount;
     const email = response.data.Result[0].email_address;
-    res.status(CREATED).json({
+    const emailCount = response.data.Result[0].emailCount;
+    res.status(OK).json({
       email,
       emailCount
     });
@@ -96,7 +96,7 @@ exports.predictEmail = async (req, res, next) => {
     res.status(CREATED).json({ result: response.data });
   } catch (error) {
     res.status(BAD_REQUEST).json({
-      message: "연동 실패!",
+      message: "이메일 스캔 실패!",
     });
   }
 };
@@ -130,5 +130,20 @@ exports.deleteEmail = async (req, res, next) => {
     res.status(BAD_REQUEST).json({
       message: "연동 실패!",
     });
+  }
+};
+
+exports.getDeleteNumber = async (req, res, next) => {
+  try{
+    const { no } = req.params;
+    const deleteNum = await emailServices.getDeleteNumber(no);
+    console.log('삭제된 이메일 수:'+ deleteNum);
+    res.status(OK).json({
+      deleteNum
+    })
+  }catch(error){
+    res.status(BAD_REQUEST).json({
+      message: "삭제된 이메일 수 조회 실패!"
+    })
   }
 };

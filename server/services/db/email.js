@@ -39,3 +39,11 @@ exports.updateTotalNum = async ({ email_no, emailLen }) => {
   );
   return result;
 };
+
+exports.selectDeleteNumber = async (no) => {
+  const result = await Email.findOne({
+    attributes: ["total_no"],
+    where:{user_no: no},
+  });
+  return result;
+}
