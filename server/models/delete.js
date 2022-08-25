@@ -8,10 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      email_no: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-      },
       sender: {
         type: DataTypes.STRING(100),
         allowNull: false,
