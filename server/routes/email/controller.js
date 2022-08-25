@@ -9,15 +9,15 @@ const axios = require("axios");
 exports.connectionEmail = async (req, res, next) => {
   try {
     console.log(req.body);
-    const { no, id, email_id, email_Pw } = req.body;
+    const { no, id, email, emailPassword } = req.body;
     await userServices.updateIsConnectionEmail(no);
-    await emailServices.setEmail({ no, email_id, email_Pw });
+    await emailServices.setEmail({ no, email, emailPassword });
     const isConnectionEmail = await userServices.getIsConnectionEmail(no);
     const response = await axios.post("http://localhost:5000/link", {
       UserName: id,
       Emails: {
-        email_address: email_id,
-        password: email_Pw,
+        email_address: email,
+        password: emailPassword,
       },
     });
     const connectionMsg = response.data.success_message;

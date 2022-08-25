@@ -2,18 +2,15 @@ const { Email } = require("../../models");
 //const { Delete } = require("../../models");
 const { hashingPw } = require("../../utils/bcrypt");
 
-exports.insertEmail = async ({ no, email_id, email_Pw }) => {
-  console.log(no);
-  console.log(email_id);
-  console.log(email_Pw);
+exports.insertEmail = async ({ no, email, emailPassword }) => {
   const emailData = {
     user_no: no,
-    email_id,
-    email_Pw,
+    email_id: email,
+    email_Pw: await hashingPw(emailPassword),
   };
-  console.log(emailData);
+  console.log("PARMAS:"+emailData);
   const result = await Email.create(emailData);
-  console.log(result);
+  console.log("CREATE결과:"+result);
   return result;
 };
 

@@ -4,7 +4,7 @@ import { EmailConnectionResult } from './types';
 //이메일 연동 API
 export async function setConnection(params:EmailConnectionParams) {
     const res = await client.post<EmailConnectionResult>(
-        'api/email/',
+        'api/email/connection',
         params
     )
     console.log('DATA FROM EXPRESS:', res.data);
