@@ -1,12 +1,28 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import { 
+  StyleSheet, 
+  Text,
+  View ,
+} from 'react-native';
 
 import AuthForm from '../components/AuthForm';
 
+import { COLORS } from '../constants/theme';
+
 function LoginScreen() {
-  return <AuthForm/>
+  return (
+    <View style={styles.container}>
+      <AuthForm/>
+    </View>
+  ) 
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    alignItems:'center',
+    backgroundColor: COLORS.white
+  }
+})
 
 export default LoginScreen;

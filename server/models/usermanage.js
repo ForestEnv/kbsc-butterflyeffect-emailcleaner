@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
         },
         experience: {//경험치
-            type: DataTypes.STRING(100),
+            type: DataTyxpes.STRING(100),
             allowNull: false,
             unique: true,
         },

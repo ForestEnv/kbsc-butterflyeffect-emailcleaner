@@ -1,11 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { 
+    StyleSheet, 
+    Text, 
+    View,
+    TouchableOpacity 
+} from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { RootStackNavigationProp } from '../stacks/types';
+import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from './types';
+
 import { useUserState } from "../contexts/UserContext";
 import { useConnectionState } from '../contexts/ConnectionContext';
+
 import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 
 import LandingScreen from '../screens/LandingScreen';
@@ -17,7 +26,9 @@ import MainTab from './MainTab';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
-    const [user, setUser] = useUserState();
+    const navigation = useNavigation<RootStackNavigationProp>();
+
+    const [user] = useUserState();
     const [isConnectionEmail] = useConnectionState();
 
     //로그인 상태 유지
@@ -31,10 +42,46 @@ function RootStack() {
                 </>
             ) : (
                 <>
-                    <Stack.Screen name='Landing' component={LandingScreen}/>
-                    <Stack.Screen name='Register' component={RegisterScreen}/>
-                    <Stack.Screen name='Login' component={LoginScreen}/>
-                    <Stack.Screen name='Connection' component={ConnectionEmailScreen}/>
+                    <Stack.Screen name='Landing' component={LandingScreen} options={{headerShown: false}}/>
+                    <Stack.Screen 
+                        name='Register' 
+                        component={RegisterScreen} 
+                        options={{
+                            headerTitleAlign: 'center',
+                            headerTransparent: true,
+                            headerBackVisible: false,
+                            headerLeft: () => (
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Text>취소</Text>
+                                </TouchableOpacity>
+                            ),
+                            headerTitle: () => (
+                                <View>
+                                    <Text>회원가입</Text>
+                                </View>
+                            )
+                        }}
+                    />
+                    <Stack.Screen 
+                        name='Login' 
+                        component={LoginScreen} 
+                        options={{
+                            headerTitleAlign: 'center',
+                            headerTransparent: true,
+                            headerBackVisible: false,
+                            headerLeft: () => (
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Text>취소</Text>
+                                </TouchableOpacity>
+                            ),
+                            headerTitle: () => (
+                                <View>
+                                    <Text>로그인</Text>
+                                </View>
+                            )
+                        }}
+                    />
+                    <Stack.Screen name='Connection' component={ConnectionEmailScreen} options={{headerShown: false}}/>
                 </>
             )}
         </Stack.Navigator>
