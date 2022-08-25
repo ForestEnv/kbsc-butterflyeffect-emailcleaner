@@ -6,6 +6,7 @@ import {
     Platform,
     Text,
     TextInput,
+    ActivityIndicator,
     KeyboardAvoidingView,
 } from 'react-native';
 
@@ -93,10 +94,19 @@ function AuthForm({isRegister}: AuthFormProps) {
                         value={password}
                         onChangeText={setPassword}
                     />
-                    <TouchableOpacity style={styles.button} onPress={onPress}>
-                        <Text style={styles.text}>
-                            {isRegister ? '회원가입' : '로그인'}
-                        </Text>
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={onPress}
+                    >
+                        {isLoading ? (
+                            <ActivityIndicator size="small" color="white"/>
+                        ) : (
+                            <Text style={styles.text}>
+                                {isRegister ? '회원가입' : '로그인'}
+                            </Text>
+                            
+                        )}
+                    
                     </TouchableOpacity>
                 </View>
             </View>

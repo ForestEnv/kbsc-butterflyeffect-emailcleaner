@@ -25,7 +25,7 @@ export interface EmailConnectionResult {
 
 //이메일 개수 조회
 export interface EmailCount {
-    email_address: string;
+    email: string;
     emailCount: number;
 }
 

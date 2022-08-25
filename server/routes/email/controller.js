@@ -67,11 +67,13 @@ exports.countEmail = async (req, res, next) => {
   try {
     const { no } = req.params;
     const emailData = await emailServices.getEmail(no);
+    console.log('SERVER', emailData);
     const response = await axios.post("http://localhost:5000/count", {
       Emails: emailData,
     });
     const email = response.data.Result[0].email_address;
     const emailCount = response.data.Result[0].emailCount;
+    console.log('EMAILCOUNT', emailCount);
     res.status(OK).json({
       email,
       emailCount
@@ -136,8 +138,9 @@ exports.deleteEmail = async (req, res, next) => {
 exports.getDeleteNumber = async (req, res, next) => {
   try{
     const { no } = req.params;
-    const deleteNum = await emailServices.getDeleteNumber(no);
-    console.log('삭제된 이메일 수:'+ deleteNum);
+    const result = await emailServices.getDeleteNumber(no);
+    console.log('삭제된 이메일 수:'+ result);
+    const deleteNum = result.total_no;
     res.status(OK).json({
       deleteNum
     })

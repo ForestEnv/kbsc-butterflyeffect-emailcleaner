@@ -15,6 +15,7 @@ exports.insertEmail = async ({ no, email, emailPassword }) => {
 };
 
 exports.getEmail = async (no) => {
+  console.log('사용자 번호:'+ no);
   const result = await Email.findAll({
     attributes: ["email_id", "email_Pw"],
     where: { no },
