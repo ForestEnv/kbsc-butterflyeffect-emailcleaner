@@ -116,6 +116,7 @@ exports.deleteEmail = async (req, res, next) => {
       Emails: {
         email_address: email_id,
         password: email_info.dataValues.email_Pw,
+
         email_no: email_info.dataValues.no,
         list,
       },
@@ -138,4 +139,5 @@ exports.deleteEmail = async (req, res, next) => {
       message: "연동 실패!",
     });
   }
+
 };
