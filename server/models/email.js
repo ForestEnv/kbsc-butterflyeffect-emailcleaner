@@ -9,11 +9,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      user_no: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        unique: false,
-      },
       email_id: {
         type: DataTypes.STRING(50),
         allowNull: false,
