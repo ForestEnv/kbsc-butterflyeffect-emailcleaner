@@ -6,7 +6,7 @@ exports.insertEmail = async ({ no, email, emailPassword }) => {
   const emailData = {
     user_no: no,
     email_id: email,
-    email_Pw: await hashingPw(emailPassword),
+    email_Pw: emailPassword,
   };
   console.log("PARMAS:"+emailData);
   const result = await Email.create(emailData);
@@ -14,12 +14,13 @@ exports.insertEmail = async ({ no, email, emailPassword }) => {
   return result;
 };
 
-exports.getEmail = async ({ user_no }) => {
+exports.getEmail = async (no) => {
   const result = await Email.findAll({
     attributes: ["email_id", "email_Pw"],
-    where: { user_no },
+    where: { no },
     raw: true,
   });
+  console.log('사용자 이메일 디비:'+result.email_id);
   return result;
 };
 

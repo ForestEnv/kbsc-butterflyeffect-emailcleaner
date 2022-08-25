@@ -8,11 +8,13 @@ const axios = require("axios");
 
 exports.connectionEmail = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { no, id, email, emailPassword } = req.body;
+    
     await userServices.updateIsConnectionEmail(no);
     await emailServices.setEmail({ no, email, emailPassword });
+    
     const isConnectionEmail = await userServices.getIsConnectionEmail(no);
+    
     const response = await axios.post("http://localhost:5000/link", {
       UserName: id,
       Emails: {
@@ -20,8 +22,8 @@ exports.connectionEmail = async (req, res, next) => {
         password: emailPassword,
       },
     });
+    
     const connectionMsg = response.data.success_message;
-    console.log("DATA FROM FLASK=" + connectionMsg);
     res.status(CREATED).json({
       message: "이메일 연동 작업!",
       isConnectionEmail,
@@ -63,24 +65,20 @@ exports.connectionAddEmail = async (req, res, next) => {
 
 exports.countEmail = async (req, res, next) => {
   try {
-    const { user_no } = req.body;
-    console.log(user_no);
-    const emailData = await emailServices.getEmail({ user_no });
-    console.log(emailData);
+    const { no } = req.params;
+    const emailData = await emailServices.getEmail(no);
     const response = await axios.post("http://localhost:5000/count", {
       Emails: emailData,
     });
-    console.log(response.data);
-    //const totalEmailNum = response.data.Result[0].emailCount;
-    //console.log("DATA FROM FLASK=" + totalEmailNum);
+    const emailCount = response.data.Result[0].emailCount;
+    const email = response.data.Result[0].email_address;
     res.status(CREATED).json({
-      message: "이메일 연동 성공!",
-      Ressult: response.data.Result,
-      //isConnectionEmail,
+      email,
+      emailCount
     });
   } catch (error) {
     res.status(BAD_REQUEST).json({
-      message: "이메일 연동 실패!",
+      message: "이메일 개수 조회 실패!",
     });
   }
 };
