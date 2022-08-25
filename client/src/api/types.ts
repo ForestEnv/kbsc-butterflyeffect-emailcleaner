@@ -29,6 +29,10 @@ export interface EmailCount {
     emailCount: number;
 }
 
+export interface DeleteNumber {
+    deleteNum:number;
+}
+
 export interface IsConnectionEmail {
     isConnectionEmail: boolean;
 }

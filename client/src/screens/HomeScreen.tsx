@@ -12,9 +12,12 @@ import { useUserState } from "../contexts/UserContext";
 
 import { getEmailCount } from "../api/email";
 import { getDeleteEmailNum } from '../api/email';
+
 import { EmailCount } from '../api/types';
+import { DeleteNumber } from '../api/types';
 
 import { COLORS } from '../constants/theme';
+
 
 function HomeScreen() {
   const [user] = useUserState();
@@ -23,9 +26,7 @@ function HomeScreen() {
   console.log({data, isLoading});
   // const [count, setCount] = useState<EmailCount>()
   // const [isLoading, setIsLoading] = useState(false);
-  // const [deleteNum, setDeleteNum] = useState<{
-  //   deleteNum: number;
-  // } | null>(null);
+  const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
 
   // //로그인하고 나서 홈스크린이 렌더링될 때 데이터 패칭 오류
   // //console.log('첫번째 로딩'+isLoading)
@@ -52,24 +53,24 @@ function HomeScreen() {
 
   
   
-  // useEffect(() => {
-    //   const fetchData = async () => {
-      //     try{
-        //       const res = await getDeleteEmailNum(user.no);
-        //       setDeleteNum(res);
-        //     }catch(error){
-          //       console.log('데이터 조회 실패');
-          //     }
-          //   };
-          //   fetchData();
-          // });
-          
-          //console.log("삭제된 이메일 수:"+deleteNum.deleteNum);
-          if(isLoading) {
-            return(
-              <ActivityIndicator size="small" color="white"/>
-            )
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+          const res = await getDeleteEmailNum(user.no);
+          setDeleteNum(res);
+        } catch(error){
+            console.log('데이터 조회 실패');
           }
+        };
+    fetchData();
+  }, []);
+  
+  if(isLoading) {
+    return(
+      <ActivityIndicator size="large" color="green"/>
+    )
+  }
+
   return (
     // <>
     //   {!isLoading ? (
@@ -77,11 +78,12 @@ function HomeScreen() {
     //     ) : (
           <View style={styles.container}>
             <View style={styles.header}>
+              <Text style={{fontSize:30, marginRight:50}}>ButterflyEffect</Text>
               <TouchableOpacity>
-                <Text>휴지통</Text>
+                <Text style={{fontSize:18}}>휴지통</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text>알림</Text>
+                <Text style={{fontSize:18}}>알림</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.main}>
@@ -97,7 +99,7 @@ function HomeScreen() {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {/* { !deleteNum ? (
+              { !deleteNum ? (
                   <View>
                     <Text>사용 내역이 있습니다.</Text>
                   </View>
@@ -105,7 +107,7 @@ function HomeScreen() {
                   <View style={styles.firstInfo}>
                     <Text>사용 내역이 없습니다.</Text>
                   </View>
-              )} */}
+              )}
             </View>
           </View>
     //     )}
@@ -123,12 +125,11 @@ const styles = StyleSheet.create({
     height:'10%',
     flexDirection:'row',
     alignItems:'center',
-    justifyContent:'flex-end',  
-    borderBottomWidth:2
+    justifyContent:'space-around',  
   },
   main:{
     alignItems:'center',
-    marginTop:'13%'
+    marginTop:'3%'
   },
   emailBox: {
     borderRadius:20,
