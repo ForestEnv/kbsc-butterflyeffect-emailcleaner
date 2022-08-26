@@ -26,8 +26,8 @@ db.Email.belongsTo(db.User, {
   foreignKey: "user_no",
 });
 
-db.Email.hasMany(db.Delete, { foreignKey: "delete_no" });
-db.Delete.belongsTo(db.Email, { foreignKey: "delete_no" });
+db.Email.hasMany(db.Delete, { foreignKey: "email_no", sourceKey: "no" });
+db.Delete.belongsTo(db.Email, { foreignKey: "email_no" });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

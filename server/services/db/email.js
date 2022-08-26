@@ -44,11 +44,10 @@ exports.updateTotalNum = async ({ email_no, emailLen }) => {
 };
 
 exports.getTotalNum = async (user_no) => {
-  const result = await Email.findAndCountAll({
-    attributes: [
-      [sequelize.fn("sum", sequelize.col("total_no")), "total_amount"],
-    ],
-    group: { user_no },
+  const result = await Email.findAll({
+    attributes: [user_no],
+    group: [user_no],
+    raw: ture,
   });
   return result;
 };
