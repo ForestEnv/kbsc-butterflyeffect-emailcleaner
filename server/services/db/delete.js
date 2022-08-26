@@ -8,3 +8,9 @@ exports.setDeleteEmails = async (Emails) => {
   await Delete.bulkCreate(Emails);
   console.log("************33");
 }
+
+exports.removeDeleteEmails = async ({email_no,list}) => {
+  console.log("************11");
+  await Delete.destroy({where:{email_no: email_no , no: list}});
+  console.log("************22");
+}

@@ -6,15 +6,13 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true,
          },
-        id: {
+        email_id: {
             type: DataTypes.STRING(50),
             allowNull: false,
-            unique: true,
         },
         experience: {//경험치
             type: DataTyxpes.STRING(100),
             allowNull: false,
-            unique: true,
         },
         level: {
             type: DataTypes.STRING(50),
