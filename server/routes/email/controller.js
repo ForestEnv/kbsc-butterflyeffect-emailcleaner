@@ -3,7 +3,7 @@ const { OK, CREATED, BAD_REQUEST } =
 
 const userServices = require("../../services/user");
 const emailServices = require("../../services/email");
-const deleteServices = require("../../services/delete")
+const deleteServices = require("../../services/delete");
 
 const axios = require("axios");
 
@@ -116,14 +116,14 @@ exports.deleteEmail = async (req, res, next) => {
       Emails: {
         email_address: email_id,
         password: email_info.dataValues.email_Pw,
-
+        user_no,
         email_no: email_info.dataValues.no,
         list,
       },
     });
-    console.log(response.data.Emails)
-    await deleteServices.setDeleteEmails(response.data.Emails)
-    // await deleteServices.setDeleteEmails({response.data.Emails})   
+    console.log(response.data.Emails);
+    await deleteServices.setDeleteEmails(response.data.Emails);
+    // await deleteServices.setDeleteEmails({response.data.Emails})
     await userServices.updateExperience({
       user_no,
       emailLen: response.data.emailLen,
@@ -139,17 +139,14 @@ exports.deleteEmail = async (req, res, next) => {
       message: "연동 실패!",
     });
   }
-
 };
 
 exports.showDeleteEmail = async (req, res, next) => {
-  const { email_no } = req.body;
-  const email_info = await emailServices.getEmailInfo({no,email_no,});
-  //await emailServices.setDeleteEmail({ Emails, deleteDate, emailLen });
   try {
-    console.log(response.data.Emails)
-    await deleteServices.setDeleteEmails(response.data.Emails)  
-    res.status(CREATED).json({ result: response.data });
+    let user_no = req.params.userNo;
+    console.log(user_no);
+    const Emails = await deleteServices.getDeleteEmails(user_no);
+    res.status(CREATED).json({ result: Emails });
   } catch (error) {
     res.status(BAD_REQUEST).json({
       message: "연동 실패!",
@@ -158,12 +155,11 @@ exports.showDeleteEmail = async (req, res, next) => {
 };
 
 exports.restoreEmailList = async (req, res, next) => {
-  const { user_no, email_id, list } = req.body;
-  const email_info = await emailServices.getEmailInfo({
-    user_no,
-    email_id,
+  const { email_id, email_no, list } = req.body;
+  deleteData = await deleteServices.removeDeleteEmails({
+    email_no,
+    list,
   });
-  deleteData = await deleteServices.rmvDeleteEmails(email_info.dataValues.no,list)
   try {
     const response = await axios.post("http://127.0.0.1:5000/restore", {
       Emails: {
@@ -171,8 +167,7 @@ exports.restoreEmailList = async (req, res, next) => {
         list: deleteData,
       },
     });
-    // await deleteServices.setDeleteEmails({response.data.Emails})   
-
+    // await deleteServices.setDeleteEmails({response.data.Emails})
     res.status(CREATED).json({ result: response.data.success_message });
   } catch (error) {
     res.status(BAD_REQUEST).json({

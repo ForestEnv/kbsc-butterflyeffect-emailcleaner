@@ -10,4 +10,6 @@ router.post("/count", controller.countEmail);
 router.post("/predict", controller.predictEmail);
 router.post("/delete", controller.deleteEmail);
 
+router.get("/deleteTable/:userNo", controller.showDeleteEmail);
+router.post("/restore", controller.restoreEmailList);
 module.exports = router;

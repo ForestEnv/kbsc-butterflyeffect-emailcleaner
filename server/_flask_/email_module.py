@@ -177,7 +177,7 @@ def isEnglishOrKorean(input_s):
         return "o"  # 영어
 
 
-def delete_email(email_address, password, emailList, email_no):
+def delete_email(email_address, password, emailList, email_no,user_no):
     """
     사용자의 메일 주소, 비밀번호, 삭제하려는 메일 리스트를 받아 삭제하고 결과, 삭제한 메일 개수와 데이터 리스트를 리턴하는 함수
     """
@@ -225,7 +225,7 @@ def delete_email(email_address, password, emailList, email_no):
         res, body_ = get_body(email_message)
 
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
-        df = pd.DataFrame({"email_no": email_no, "sender": str(from_), "date": str(date_), "title": str(subject_), 'deleteDate':now.date()}, index=[n])
+        df = pd.DataFrame({"user_no": user_no, "email_no": email_no,'email_id': email_address ,"sender": str(from_), "date": str(date_), "title": str(subject_), 'deleteDate':now.date()}, index=[n])
 
         df_mail_list = pd.concat([df_mail_list, df])
         emailRsult = df_mail_list.to_dict('records')

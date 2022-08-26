@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      email_id: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
       total_no: {
         //삭제된 메일수
         type: DataTypes.BIGINT,
