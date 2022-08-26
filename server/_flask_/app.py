@@ -82,7 +82,8 @@ def delete():
         password = req['Emails']['password']
         emailList = req['Emails']['list']
         email_no = req['Emails']['email_no']
-        result, lenEmail, emailRsult = delete_email(email_address , password , emailList, email_no)
+        user_no = req['Emails']['user_no']
+        result, lenEmail, emailRsult = delete_email(email_address , password , emailList, email_no, user_no)
         data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult}
         res = make_response(data)
         return res
