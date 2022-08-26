@@ -1,7 +1,6 @@
 const { Email } = require("../../models");
 //const { Delete } = require("../../models");
 const { hashingPw } = require("../../utils/bcrypt");
-const { Op, fn, col } = require("sequelize");
 
 exports.insertEmail = async ({ no, email_id, email_Pw }) => {
   console.log(no);
@@ -44,10 +43,6 @@ exports.updateTotalNum = async ({ email_no, emailLen }) => {
 };
 
 exports.getTotalNum = async (user_no) => {
-  const result = await Email.findAll({
-    attributes: [user_no],
-    group: [user_no],
-    raw: ture,
-  });
+  const result = await Email.sum("total_no", { where: { user_no } });
   return result;
 };
