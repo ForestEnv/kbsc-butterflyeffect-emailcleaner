@@ -141,3 +141,42 @@ exports.deleteEmail = async (req, res, next) => {
   }
 
 };
+
+exports.showDeleteEmail = async (req, res, next) => {
+  const { email_no } = req.body;
+  const email_info = await emailServices.getEmailInfo({no,email_no,});
+  //await emailServices.setDeleteEmail({ Emails, deleteDate, emailLen });
+  try {
+    console.log(response.data.Emails)
+    await deleteServices.setDeleteEmails(response.data.Emails)  
+    res.status(CREATED).json({ result: response.data });
+  } catch (error) {
+    res.status(BAD_REQUEST).json({
+      message: "연동 실패!",
+    });
+  }
+};
+
+exports.restoreEmailList = async (req, res, next) => {
+  const { user_no, email_id, list } = req.body;
+  const email_info = await emailServices.getEmailInfo({
+    user_no,
+    email_id,
+  });
+  deleteData = await deleteServices.rmvDeleteEmails(email_info.dataValues.no,list)
+  try {
+    const response = await axios.post("http://127.0.0.1:5000/restore", {
+      Emails: {
+        email_address: email_id,
+        list: deleteData,
+      },
+    });
+    // await deleteServices.setDeleteEmails({response.data.Emails})   
+
+    res.status(CREATED).json({ result: response.data.success_message });
+  } catch (error) {
+    res.status(BAD_REQUEST).json({
+      message: "연동 실패!",
+    });
+  }
+};
