@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true,
          },
-        email_id: {
+        id: {
             type: DataTypes.STRING(50),
             allowNull: false,
         },
@@ -19,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         ranking: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        email: {
             type: DataTypes.STRING(100),
             allowNull: false,
         },
