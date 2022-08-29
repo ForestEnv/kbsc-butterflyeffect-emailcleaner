@@ -49,3 +49,11 @@ exports.updateExperience = async ({ user_no, emailLen }) => {
   );
   return result;
 };
+
+exports.declineExperience = async ({ user_no, emailLen }) => {
+  const result = await User.decrement(
+    { experience: emailLen },
+    { where: { no: user_no } }
+  );
+  return result;
+};
