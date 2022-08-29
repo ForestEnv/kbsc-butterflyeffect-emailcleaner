@@ -46,3 +46,11 @@ exports.getTotalNum = async (user_no) => {
   const result = await Email.sum("total_no", { where: { user_no } });
   return result;
 };
+
+exports.declineTotalNum = async ({ email_no, emailLen }) => {
+  const result = await Email.decrement(
+    { total_no: emailLen },
+    { where: { no: email_no } }
+  );
+  return result;
+};

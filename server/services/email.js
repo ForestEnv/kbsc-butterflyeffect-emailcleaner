@@ -26,3 +26,8 @@ exports.getTotalNum = async (data) => {
   const result = await db.getTotalNum(data);
   return result;
 };
+
+exports.declineTotalNum = async (data) => {
+  const result = await db.declineTotalNum(data);
+  return result;
+};

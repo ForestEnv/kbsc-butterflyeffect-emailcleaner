@@ -155,23 +155,31 @@ exports.showDeleteEmail = async (req, res, next) => {
 };
 
 exports.restoreEmailList = async (req, res, next) => {
-  const { email_id, email_no, list } = req.body;
-  deleteData = await deleteServices.removeDeleteEmails({
+  const { user_no, email_id, email_no, list } = req.body;
+  result = await deleteServices.removeDeleteEmails({
     email_no,
     list,
   });
+  console.log(result.emailList)
+  console.log(result.emailLen)
+ 
   try {
     const response = await axios.post("http://127.0.0.1:5000/restore", {
       Emails: {
         email_address: email_id,
-        list: deleteData,
+        list: result.deleteData,
       },
     });
     // await deleteServices.setDeleteEmails({response.data.Emails})
-    res.status(CREATED).json({ result: response.data.success_message });
+    //res.status(CREATED).json({ result: response.data.success_message });
+    await userServices.declineExperience({user_no, emailsLen: result.emailLen})
+    await emailServices.declineTotalNum({email_no, emailsLen: result.emailLen})
+    res.status(CREATED).json({ emailList: result.emailList, emailLen: result.emailLen });
   } catch (error) {
     res.status(BAD_REQUEST).json({
       message: "연동 실패!",
     });
   }
 };
+
+
