@@ -21,3 +21,9 @@ exports.updateExperience = async (data) => {
   const result = await db.updateExperience(data);
   return result;
 };
+
+// 사용자 경험치 감소
+exports.declineExperience = async (data) => {
+  const result = await db.declineExperience(data);
+  return result;
+};

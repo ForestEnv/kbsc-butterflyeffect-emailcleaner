@@ -8,8 +8,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      email_no: {
+      user_no: {
         type: DataTypes.BIGINT,
+        allowNull: false,
+      },
+      email_id: {
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
       sender: {
@@ -25,13 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      /*
-      contents: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      }, 
-      */
-      delete_date: {
+      deleteDate: {
         // type: DataTypes.timestamps,
         type: DataTypes.STRING(100),
         allowNull: false,

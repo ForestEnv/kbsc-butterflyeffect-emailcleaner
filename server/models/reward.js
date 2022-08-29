@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
             name: {
                 type: DataTypes.STRING(50),
                 allowNull: false,
-                unique: true,
             },
             
             miles: {
@@ -17,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
 
-            no_carbon: {
-                type: DataTypes.STRING(50),
-                allowNull: false,
-            },
         },
     {
       timestamps: false,
