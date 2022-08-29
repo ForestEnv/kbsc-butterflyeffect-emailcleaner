@@ -14,6 +14,9 @@ exports.getDeleteEmails = async (user_no) => {
 
 exports.removeDeleteEmails = async ({ email_no, list }) => {
   console.log("************11");
-  await Delete.destroy({ where: { email_no: email_no, no: list } });
+  const emailList = await Delete.findAll({ where: { email_no: email_no, no: list }, raw: true })
+  const emailLen = await Delete.destroy({ where: { email_no: email_no, no: list } });
   console.log("************22");
+  return {emailList,emailLen};
 };
+
