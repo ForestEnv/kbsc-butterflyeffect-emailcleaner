@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      body: {
+        type: DataTypes.TEXT("long"),
+        allowNull: false,
+      },
       deleteDate: {
         // type: DataTypes.timestamps,
         type: DataTypes.STRING(100),

@@ -40,32 +40,41 @@ def link_inbox(email_address, password):
     except:
         return "fail"  # 연동 실패시
 
-def get_body(email_message):
-    """
-    WIP
-    메세지를 받아서 바디부분을 파싱하는 함수
-    파싱 결과와 바디 문자열을 리턴한다
-    """
+def get_body(msg):
+    def read_msg(msg):
+        for response in msg:
+            if isinstance(response, tuple):
+                msg = email.message_from_bytes(response[1])
 
-    res = "ERROR"
+                if msg.is_multipart():
+                    for part in msg.walk():
+                        content_type = part.get_content_type()
+                        content_disposition = str(part.get("Content-Disposition"))
+                        try:
+                            body = part.get_payload(decode=True).decode()
+                        except:
+                            pass
 
-    body_ = ""
+                        #if plain text and not attachment
+                        if content_type == "text/plain" and "attachment" not in content_disposition:
+                            try:
+                                body = part.get_payload(decode=True).decode()
+                            except:
+                                body = part.get_payload(decode=True).decode("utf-8")
+
+                else:
+                    content_type = msg.get_content_type()
+                    try:
+                        body = msg.get_payload(decode=True).decode()
+                    except:
+                        body = msg.get_payload(decode=True).decode("utf-8")
+        return body
     try:
-        for part in email_message.walk():
-            if part.get_content_type() == "text/plain":
-                body = part.get_payload(decode=True)
-                email_data = body.decode()
-                body_ += email_data + "\n"
-            elif part.get_content_type() == "text/html":
-                html_body = part.get_payload(decode=True)
-                email_data = html_body.decode()
-                body_ += email_data + "\n"
-    except Exception as e:
-        res = "ERROR"
-        body_ = e
-    else:
+        body = read_msg([msg, b'('])
         res = "OK"
-    return res, body_
+    except Exception as e:
+        body = e, res = "NO"
+    return res, body
 
 
 def count_inbox(email_address, password):
@@ -120,7 +129,7 @@ def fetch_emails(email_address, password):
                 break
         pred_ = emailClassification(subject_)
         
-        res, body_ = get_body(email_message)
+        res, body_ = get_body(data)
 
         df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : pred_}, index=[n])
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "pred" : pred_}, index=[n])
@@ -222,10 +231,10 @@ def delete_email(email_address, password, emailList, email_no,user_no):
                 break
         
      
-        res, body_ = get_body(email_message)
+        res, body_ = get_body(data)
 
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
-        df = pd.DataFrame({"user_no": user_no, "email_no": email_no,'email_id': email_address ,"sender": str(from_), "date": str(date_), "title": str(subject_), 'deleteDate':now.date()}, index=[n])
+        df = pd.DataFrame({"user_no": user_no, "email_no": email_no,'email_id': email_address ,"sender": str(from_), "date": str(date_), "title": str(subject_), "body": body_, 'deleteDate':now.date()}, index=[n])
 
         df_mail_list = pd.concat([df_mail_list, df])
         emailRsult = df_mail_list.to_dict('records')
@@ -249,22 +258,24 @@ def send_email(email_address, emailList):
     smtp_host = 'smtp.gmail.com'
     smtp_port = 587
 
-    from_addr = "yoongul0928@yonsei.ac.kr"
+    from_addr = "이메일 ID"
     to_addr = email_address
 
     smtp = smtplib.SMTP(smtp_host, smtp_port)
     smtp.starttls()
-    smtp.login("yoongul0928@yonsei.ac.kr", "vanjfiqnzyxuyqfo")
-
+    smtp.login("이메일 ID", "이메일 PW")
+    suc_cnt = 0
     err_cnt = 0
 
     for email in emailList:
         try:
             message = MIMEText(email["body"])
-            message["Subject"] = email["subject"]
+            message["Subject"] = email["title"]
             
             smtp.sendmail(from_addr, to_addr, message.as_string())
+            suc_cnt += 1
         except:
             err_cnt += 1
     smtp.quit()
-    return "Success"
+    successMsg = "Success"
+    return successMsg, suc_cnt, err_cnt
