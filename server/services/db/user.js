@@ -50,9 +50,9 @@ exports.updateExperience = async ({ user_no, emailLen }) => {
   return result;
 };
 
-exports.declineExperience = async ({ user_no, emailLen }) => {
+exports.declineExperience = async ({ user_no, emailsLen }) => {
   const result = await User.decrement(
-    { experience: emailLen },
+    { experience: emailsLen },
     { where: { no: user_no } }
   );
   return result;
