@@ -6,6 +6,8 @@ from email.mime.text import MIMEText
 import os
 import pickle
 from datetime import datetime
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 PATH = os.getcwd()
 
@@ -255,27 +257,25 @@ def send_email(email_address, emailList):
     받는 이메일 주소와 보내려는 메일 리스트를 받아 보내고 오류 발생한 메일 개수 리턴하는 함수
     일단 yoongul0928 연세메일로 보내게 해놨음
     """
+    def make(sender, receiver, title, content):
+        msg = MIMEMultipart('alternative')
+        msg["Subject"] = "%s"%(title)
+        msg["From"] = sender
+        msg["To"] = receiver
+
+        html = MIMEText(content, 'html')
+        
+        msg.attach(html)
+        return msg.as_string()
+
     smtp_host = 'smtp.gmail.com'
     smtp_port = 587
 
-    from_addr = "이메일 ID"
+    from_addr = "보내는 주소"
     to_addr = email_address
 
     smtp = smtplib.SMTP(smtp_host, smtp_port)
     smtp.starttls()
-    smtp.login("이메일 ID", "이메일 PW")
+    smtp.login(from_addr, "비밀번호")
     suc_cnt = 0
     err_cnt = 0
-
-    for email in emailList:
-        try:
-            message = MIMEText(email["body"])
-            message["Subject"] = email["title"]
-            
-            smtp.sendmail(from_addr, to_addr, message.as_string())
-            suc_cnt += 1
-        except:
-            err_cnt += 1
-    smtp.quit()
-    successMsg = "Success"
-    return successMsg, suc_cnt, err_cnt
