@@ -28,3 +28,10 @@ exports.declineExperience = async (data) => {
   const result = await db.declineExperience(data);
   return result;
 };
+
+// 사용자 rank 확인
+exports.getRank = async (data) => {
+  console.log(data);
+  const result = await db.getRank(data);
+  return result;
+};

@@ -18,3 +18,18 @@ exports.showStatistics = async (req, res, next) => {
     });
   }
 };
+
+exports.showRank = async (req, res, next) => {
+  try {
+    let user_no = req.params.userNo;
+    console.log(user_no);
+    const rank = await userServices.getRank(user_no);
+    console.log(rank);
+    console.log(rank.dataValues);
+    res.status(CREATED).json({ rank });
+  } catch (error) {
+    res.status(BAD_REQUEST).json({
+      message: "확인 실패!",
+    });
+  }
+};
