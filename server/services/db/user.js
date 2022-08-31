@@ -57,3 +57,11 @@ exports.declineExperience = async ({ user_no, emailsLen }) => {
   );
   return result;
 };
+
+exports.getRank = async ({ user_no }) => {
+  const result = await User.findAll({
+    attributes: ["id", "name"],
+    order: [["experience", "ASC"]],
+  });
+  return result;
+};
