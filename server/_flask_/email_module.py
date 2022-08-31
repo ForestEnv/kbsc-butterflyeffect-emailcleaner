@@ -234,7 +234,7 @@ def delete_email(email_address, password, emailList, email_no,user_no):
         res, body_ = get_body(data)
 
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_}, index=[n])
-        df = pd.DataFrame({"user_no": user_no, "email_no": email_no,'email_id': email_address ,"sender": str(from_), "date": str(date_), "title": str(subject_), 'deleteDate':now.date()}, index=[n])
+        df = pd.DataFrame({"user_no": user_no, "email_no": email_no,'email_id': email_address ,"sender": str(from_), "date": str(date_), "title": str(subject_), "body": body_, 'deleteDate':now.date()}, index=[n])
 
         df_mail_list = pd.concat([df_mail_list, df])
         emailRsult = df_mail_list.to_dict('records')
@@ -258,22 +258,24 @@ def send_email(email_address, emailList):
     smtp_host = 'smtp.gmail.com'
     smtp_port = 587
 
-    from_addr = "yoongul0928@yonsei.ac.kr"
+    from_addr = "이메일 ID"
     to_addr = email_address
 
     smtp = smtplib.SMTP(smtp_host, smtp_port)
     smtp.starttls()
-    smtp.login("yoongul0928@yonsei.ac.kr", "vanjfiqnzyxuyqfo")
-
+    smtp.login("이메일 ID", "이메일 PW")
+    suc_cnt = 0
     err_cnt = 0
 
     for email in emailList:
         try:
             message = MIMEText(email["body"])
-            message["Subject"] = email["subject"]
+            message["Subject"] = email["title"]
             
             smtp.sendmail(from_addr, to_addr, message.as_string())
+            suc_cnt += 1
         except:
             err_cnt += 1
     smtp.quit()
-    return "Success"
+    successMsg = "Success"
+    return successMsg, suc_cnt, err_cnt

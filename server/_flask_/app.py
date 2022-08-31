@@ -98,11 +98,14 @@ def restore():
     try:
         req = request.get_json()
         email_address = req['Emails']['email_address']
+        print(email_address)
         emailList = req['Emails']['list']
-        res = send_email(email_address, emailList)
-        print(res)
+        print(emailList)
+        msg, suc_cnt, err_cnt = send_email(email_address, emailList)
         return jsonify({
-            'success_message' : res
+            'success_message' : msg,
+            'successCount' : suc_cnt,
+            'errorCount' : err_cnt
         })
 
     except Exception as e: 
