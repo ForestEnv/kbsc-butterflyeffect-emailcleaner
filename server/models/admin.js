@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "user",
+    "admin",
     {
       no: {
         autoIncrement: true,
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "user",
+      tableName: "admin",
       timestamps: true,
       paranoid: true,
       underscored: true,
