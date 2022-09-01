@@ -8,17 +8,19 @@ const axios = require("axios");
 exports.adminlogin = async (req, res, next) => {
   try {
     const adminuser = req.body;
-    const temp = await userServices.getIsConnectionEmail(req.user.no);
+    const id = req.adminuse.id;
+    const accessToken = createID(adminuse.id);
     res.status(CREATED).json({
-      message: "관리자 로그인 성공!",
+      message: "로그인 성공!",
       adminuser: {
-        no: req.adminuser.no,
-        id: req.adminuser.id,
+        no: req.adminuse.no,
+        id: req.adminuse.id,
       },
+      accesstoken,
     });
   } catch (error) {
     res.status(BAD_REQUEST).json({
-      message: "관리자 로그인 실패!",
+      message: "로그인 실패!",
     });
   }
 };
@@ -29,7 +31,7 @@ exports.adminregister = async (req, res, next) => {
     const { id, name, password } = req.body;
     await adminServices.setadmin({ id, name, password });
     res.status(CREATED).json({
-      message: "연동 성공!",
+      registerSuccess: true,
     });
   } catch (error) {
     res.status(BAD_REQUEST).json({

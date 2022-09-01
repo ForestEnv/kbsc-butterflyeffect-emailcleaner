@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -11,7 +12,7 @@ import useStyles from "./style";
 
 const RegisterPage = (props) => {
   const classes = useStyles();
-
+  const navigate = useNavigate();
   const [name, setUserNameReg] = useState(null);
   const [id, setUserIdReg] = useState(null);
   const [password, setUserPwReg] = useState(null);
@@ -47,21 +48,22 @@ const RegisterPage = (props) => {
       return alert("비밀번호가 형식에 맞지 않습니다.");
     }
     let data = {
-      name: name,
       id: id,
+      name: name,
       password: password,
     };
     axios
       .post("api/admin/register", data)
       .then((response) => {
         const isSuccess = response.data.registerSuccess;
+        console.log(isSuccess);
         if (isSuccess) {
           //성공
           Swal.fire({
             icon: "success",
             title: "SUCCESS!",
             text: "성공하셨습니다.",
-          }).then(props.history.push("/login"));
+          }).then(navigate("/Login"));
         }
       })
       .catch((err) => {

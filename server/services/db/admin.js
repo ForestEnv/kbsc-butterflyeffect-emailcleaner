@@ -13,3 +13,11 @@ exports.insertadmin = async ({ id, name, password }) => {
 
   return result;
 };
+
+exports.selectID = async (no) => {
+  const result = await selectID.findOne({
+    where: { no },
+  });
+
+  return result;
+};
