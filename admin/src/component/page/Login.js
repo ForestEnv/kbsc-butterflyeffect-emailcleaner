@@ -29,7 +29,7 @@ const LoginPage = (props) => {
       password: password,
     };
     axios
-      .post("/api/users/login", data)
+      .post("/api/admin/login", data)
       .then((response) => {
         const isSuccess = response.data.loginSuccess;
         //추후에 서버측에서 오류메세지 오면 성공여부에따른 알림 출력을 위해
@@ -69,8 +69,8 @@ const LoginPage = (props) => {
             <h2>SIGN IN</h2>
           </Grid>
           <TextField
-            label="Username"
-            placeholder="Enter Username"
+            label="User Id"
+            placeholder="Enter UserId"
             fullWidth
             required
             onChange={onIdHandler}
