@@ -75,7 +75,7 @@ exports.updateMiles = async () => {
   console.log("*********1");
   const result_2 = await User.increment(
     { miles: 200 },
-    { where: { experience: { [Op.and]: { [Op.lte]: 10, [Op.gte]: 6 } } } }
+    { where: { experience: { [Op.and]: { [Op.lte]: 20, [Op.gte]: 6 } } } }
   );
   console.log("*********2");
   return { result_1, result_2 };

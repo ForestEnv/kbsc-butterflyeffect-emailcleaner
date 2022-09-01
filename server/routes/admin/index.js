@@ -4,5 +4,5 @@ const controller = require("./controller");
 
 router.get("/updateMiles", controller.updateUserMiles);
 router.post("/register", controller.adminregister);
-router.post("login", controller.adminlogin);
+router.post("/login", controller.adminlogin);
 module.exports = router;

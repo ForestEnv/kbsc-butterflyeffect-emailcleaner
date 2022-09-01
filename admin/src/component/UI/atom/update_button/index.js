@@ -13,12 +13,23 @@ const UpdatePage = () => {
       title: "Do you want to save the Update User Point?",
       showCancelButton: true,
       confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Updated!", "", "success");
-        // axios
-      }
-    });
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          // axios
+          axios.get("api/admin/updateMiles").then(() => {
+            Swal.fire("Updated!", "", "success");
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "업데이트에 실패하셧습니다.",
+        });
+      });
   };
 
   return (
