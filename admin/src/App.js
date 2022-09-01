@@ -7,6 +7,7 @@ import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import LandingPage from "./component/page/Landing";
 import LoginPage from "./component/page/Login";
 import RegisterPage from "./component/page/Register";
+import UpdatePage from "./component/UI/atom/update_button";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/adminPage" element={<UpdatePage />} />
       </Routes>
     </Router>
   );
