@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         // 0-> user
         // 1 -> 관리자
         type: DataTypes.BOOLEAN,
-        defaultValue: 0,
+        defaultValue: 1,
         allowNull: false,
       },
     },
