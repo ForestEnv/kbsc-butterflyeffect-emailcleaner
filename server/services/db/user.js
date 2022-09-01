@@ -65,3 +65,18 @@ exports.getRank = async ({ user_no }) => {
   });
   return result;
 };
+
+exports.updateMiles = async () => {
+  console.log("*********0");
+  const result_1 = await User.increment(
+    { miles: 100 },
+    { where: { experience: { [Op.and]: { [Op.lte]: 5, [Op.gte]: 0 } } } }
+  );
+  console.log("*********1");
+  const result_2 = await User.increment(
+    { miles: 200 },
+    { where: { experience: { [Op.and]: { [Op.lte]: 10, [Op.gte]: 6 } } } }
+  );
+  console.log("*********2");
+  return { result_1, result_2 };
+};

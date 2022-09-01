@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const userRouter = require("./user");
+const adminRouter = require("./admin");
 const emailRouter = require("./email");
 const rewardRouter = require("./reward");
 // const emailConnectionRouter = require("./email_link");
@@ -10,6 +11,7 @@ const rewardRouter = require("./reward");
 // const emailDeleteRouter = require("./email_delete");
 
 router.use("/users", userRouter);
+router.use("/admin", adminRouter);
 router.use("/email", emailRouter);
 router.use("/reward", rewardRouter);
 // router.use("/email_link", emailConnectionRouter);
