@@ -35,3 +35,9 @@ exports.getRank = async (data) => {
   const result = await db.getRank(data);
   return result;
 };
+
+// 사용자 경험치 증가
+exports.updateMiles = async () => {
+  const result = await db.updateMiles();
+  return result;
+};
