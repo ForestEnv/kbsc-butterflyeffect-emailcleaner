@@ -9,6 +9,7 @@ import LoginPage from "./component/page/Login";
 import RegisterPage from "./component/page/Register";
 import UpdatePage from "./component/UI/atom/update_button";
 
+// route (publicroute) 설정 필요
 function App() {
   return (
     <Router>
