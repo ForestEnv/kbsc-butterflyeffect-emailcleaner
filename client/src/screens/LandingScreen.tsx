@@ -3,7 +3,8 @@ import {
     StyleSheet, 
     Text, 
     View, 
-    TouchableOpacity 
+    TouchableOpacity,
+    StatusBar
 } from 'react-native';
 
 import { RootStackNavigationProp } from '../stacks/types';
@@ -15,48 +16,52 @@ function LandingScreen() {
     const navigation = useNavigation<RootStackNavigationProp>();
     
     return (
-        <View style={styles.container}>
-            <View style={styles.form}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => { navigation.navigate('Register') }}
-                >
-                    <Text style={styles.text}>이메일로 시작하기</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => { navigation.navigate('Login') }}
-                >
-                    <Text style={styles.text}>로그인하기</Text>
-                </TouchableOpacity>
+        <>
+            <StatusBar backgroundColor={COLORS.main} barStyle={'dark-content'}/>
+            <View style={styles.container}>
+                <View style={styles.form}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => { navigation.navigate('Register') }}
+                    >
+                        <Text style={styles.text}>시작하기</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => { navigation.navigate('Login') }}
+                    >
+                        <Text style={styles.text}>계정이 이미 있어요</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.main,
     },
     form:{
         height:'100%',
         width:'100%',
         alignItems:"center",
         marginTop: DEVICE_HEIGHT * 370,
+        marginBottom: DEVICE_HEIGHT * 50,
     },
     button:{
         width:DEVICE_WIDTH * 280,
         height:DEVICE_HEIGHT * 50 - 10,
         marginTop: DEVICE_HEIGHT * 15,
         borderRadius:20,
-        borderWidth:1,
-        backgroundColor:COLORS.lofi,
+        backgroundColor:COLORS.subTwo,
     },
     text:{
         fontSize: FONTS.medium,
+        fontFamily: 'NotoSansKR-Black',
         textAlign: 'center',
-        marginVertical: DEVICE_HEIGHT * 10
+        marginVertical: DEVICE_HEIGHT * 2
     }
 })
 

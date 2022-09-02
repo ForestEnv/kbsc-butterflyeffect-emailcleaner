@@ -71,12 +71,12 @@ function RootStack() {
                             headerBackVisible: false,
                             headerLeft: () => (
                                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                                    <Text>취소</Text>
+                                    <Text style={{fontSize:23}}>이전</Text>
                                 </TouchableOpacity>
                             ),
                             headerTitle: () => (
                                 <View>
-                                    <Text>로그인</Text>
+                                    <Text style={{fontSize:23}}>로그인</Text>
                                 </View>
                             )
                         }}

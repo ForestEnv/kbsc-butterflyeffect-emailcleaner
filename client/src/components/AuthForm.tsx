@@ -40,7 +40,6 @@ function AuthForm({isRegister}: AuthFormProps) {
         if(isLoading) {
             return;
         }
-
         if(isRegister) {
             register({
                 id,
@@ -78,17 +77,20 @@ function AuthForm({isRegister}: AuthFormProps) {
                             />
                         </>
                     ) : (
-                        <TextInput
-                            style={styles.input}
-                            placeholder='이메일을 입력하세요'
-                            value={id}
-                            onChangeText={setId}
-                            autoCapitalize="none"
-                            keyboardType="email-address"
-                        />
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='아이디를 입력하세요'
+                                value={id}
+                                onChangeText={setId}
+                                autoCapitalize="none"
+                                keyboardType="email-address"
+                            />
+                        </>
                     )}
+                    <Text>비밀번호</Text>
                     <TextInput
-                        style={styles.input}
+                        style={styles.pwInput}
                         placeholder='비밀번호를 입력하세요'
                         secureTextEntry
                         value={password}
@@ -116,19 +118,24 @@ function AuthForm({isRegister}: AuthFormProps) {
 
 const styles = StyleSheet.create({
     input:{
-        borderWidth: 1,
-        borderRadius: 20,
+        borderBottomWidth:1,
         width: DEVICE_WIDTH * 300,
         height: DEVICE_HEIGHT * 40,
-        marginTop: DEVICE_HEIGHT * 50,
+        marginTop: DEVICE_HEIGHT * 60,
     },
     button:{
-        width:DEVICE_WIDTH * 280,
+        width:DEVICE_WIDTH * 300,
         height:DEVICE_HEIGHT * 50 - 10,
-        marginTop: DEVICE_HEIGHT * 15,
+        marginTop: DEVICE_HEIGHT * 30,
         borderRadius:20,
-        borderWidth:1,
+        borderWidth:2,
         backgroundColor:COLORS.lofi,
+    },
+    pwInput:{
+        borderBottomWidth:1,
+        width: DEVICE_WIDTH * 300,
+        height: DEVICE_HEIGHT * 40,
+        marginTop: DEVICE_HEIGHT * 10,
     },
     text:{
         fontSize: FONTS.medium,
