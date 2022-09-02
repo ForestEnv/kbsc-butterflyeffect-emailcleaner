@@ -4,7 +4,7 @@ import useStyles from "./style";
 import { Button, Grid, Paper, Avatar } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 
-const Main = () => {
+const AdminMain = (props) => {
   const classes = useStyles();
   return (
     <Grid container spacing={2}>
@@ -41,4 +41,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default AdminMain;

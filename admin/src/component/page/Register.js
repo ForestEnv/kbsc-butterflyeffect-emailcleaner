@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -12,7 +11,6 @@ import useStyles from "./style";
 
 const RegisterPage = (props) => {
   const classes = useStyles();
-  const navigate = useNavigate();
   const [name, setUserNameReg] = useState(null);
   const [id, setUserIdReg] = useState(null);
   const [password, setUserPwReg] = useState(null);
@@ -63,7 +61,7 @@ const RegisterPage = (props) => {
             icon: "success",
             title: "SUCCESS!",
             text: "성공하셨습니다.",
-          }).then(navigate("/Login"));
+          }).then(props.history.push("/Login"));
         }
       })
       .catch((err) => {

@@ -2,9 +2,12 @@
 /*import module*/
 import React from "react";
 /*import router*/
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import LandingPage from "./component/page/Landing";
+/*import routes*/
+import Routes from "./routes";
+
+import Landing from "./component/page/Landing";
 import LoginPage from "./component/page/Login";
 import RegisterPage from "./component/page/Register";
 import UpdatePage from "./component/UI/atom/update_button";
@@ -13,13 +16,20 @@ import UpdatePage from "./component/UI/atom/update_button";
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/adminPage" element={<UpdatePage />} />
-      </Routes>
+      <Switch>
+        <Route path="/" component={<Landing />} />
+        <Route path="/login" component={<LoginPage />} />
+        <Route path="/register" component={<RegisterPage />} />
+        <Route path="/admin" component={<UpdatePage />} />
+      </Switch>
     </Router>
+    /**
+     * <Router>
+      <Switch>
+        <Routes />
+      </Switch>
+    </Router>
+    */
   );
 }
 
