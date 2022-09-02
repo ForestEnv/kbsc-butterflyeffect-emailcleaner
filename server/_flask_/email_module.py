@@ -255,7 +255,7 @@ def delete_email(email_address, password, emailList, email_no,user_no):
 def send_email(email_address, emailList):
     """
     받는 이메일 주소와 보내려는 메일 리스트를 받아 보내고 오류 발생한 메일 개수 리턴하는 함수
-    일단 yoongul0928 연세메일로 보내게 해놨음
+    
     """
     def make(sender, receiver, title, content):
         msg = MIMEMultipart('alternative')
@@ -277,5 +277,20 @@ def send_email(email_address, emailList):
     smtp = smtplib.SMTP(smtp_host, smtp_port)
     smtp.starttls()
     smtp.login(from_addr, "비밀번호")
+    
     suc_cnt = 0
     err_cnt = 0
+
+    for email in emailList:
+        try:
+            smtp.sendmail(from_addr, to_addr, make(from_addr, to_addr, email["Subject"], email["Body"]))
+            suc_cnt += 1
+        except Exception as e:
+            print(e)
+            err_cnt += 1
+
+    smtp.quit()
+
+    res = "OK"
+
+    return res, suc_cnt, err_cnt
