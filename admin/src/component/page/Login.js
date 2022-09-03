@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -9,11 +10,13 @@ import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import Swal from "sweetalert2";
 import useStyles from "./style";
 
-const LoginPage = (props) => {
+const Login = (props) => {
   const [id, setUserId] = useState("");
   const [password, setUserPw] = useState("");
 
   const classes = useStyles();
+
+  const navigate = useNavigate();
 
   /*EventHandler*/
   const onIdHandler = (e) => {
@@ -35,18 +38,11 @@ const LoginPage = (props) => {
         //추후에 서버측에서 오류메세지 오면 성공여부에따른 알림 출력을 위해
         //만약 isSuccess가 false이면 그에 맞는 서버 측에서의 중복여부 오류문자 수신후 출력 예정
         if (isSuccess) {
-          const userTypeRes = response.data.userType;
           Swal.fire({
             icon: "success",
             title: "SUCCESS!",
             text: "성공하셨습니다.",
-          }).then(() => {
-            if (userTypeRes === "lecturer") {
-              props.history.push("/lecturer");
-            } else if (userTypeRes === "learner") {
-              props.history.push("/learner");
-            }
-          });
+          }).then(navigate("/admin"));
         }
       })
       .catch((err) => {
@@ -100,4 +96,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default LoginPage;
+export default Login;
