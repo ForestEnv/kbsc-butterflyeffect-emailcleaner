@@ -1,13 +1,13 @@
-import Grid from "@mui/material/Grid";
 import React from "react";
-import Main from "../UI/modules/registerMain";
+import Grid from "@mui/material/Grid";
+import AdminMain from "../UI/modules/AdminMain";
 
-const LandingPage = (props) => {
+const Landing = (props) => {
   return (
     <Grid>
-      <Main />
+      <AdminMain />
     </Grid>
   );
 };
 
-export default LandingPage;
+export default Landing;

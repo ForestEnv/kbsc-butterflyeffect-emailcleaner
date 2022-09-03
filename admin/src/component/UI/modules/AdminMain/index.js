@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import useStyles from "./style";
 import { Button, Grid, Paper, Avatar } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 
-const Main = () => {
+const AdminMain = (props) => {
   const classes = useStyles();
   return (
     <Grid container spacing={2}>
@@ -18,8 +17,7 @@ const Main = () => {
         <Grid item>
           <Button
             size="large"
-            component={Link}
-            to="/login"
+            href="/login"
             className={classes.lecturerButton}
             variant="contained"
           >
@@ -28,8 +26,7 @@ const Main = () => {
 
           <Button
             size="large"
-            component={Link}
-            to="/register"
+            href="/register"
             className={classes.learnerButton}
             variant="contained"
           >
@@ -41,4 +38,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default AdminMain;
