@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import useStyles from "./style";
 import { Button, Grid, Paper, Avatar } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
@@ -18,8 +17,7 @@ const AdminMain = (props) => {
         <Grid item>
           <Button
             size="large"
-            component={Link}
-            to="/login"
+            href="/login"
             className={classes.lecturerButton}
             variant="contained"
           >
@@ -28,8 +26,7 @@ const AdminMain = (props) => {
 
           <Button
             size="large"
-            component={Link}
-            to="/register"
+            href="/register"
             className={classes.learnerButton}
             variant="contained"
           >

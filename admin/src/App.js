@@ -2,34 +2,33 @@
 /*import module*/
 import React from "react";
 /*import router*/
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /*import routes*/
-import Routes from "./routes";
 
 import Landing from "./component/page/Landing";
-import LoginPage from "./component/page/Login";
-import RegisterPage from "./component/page/Register";
+import Login from "./component/page/Login";
+import Register from "./component/page/Register";
 import UpdatePage from "./component/UI/atom/update_button";
+import PrivateRoute from "./lib/PrivateRoute";
+import PublicRoute from "./lib/PublicRoute";
 
-// route (publicroute) 설정 필요
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={<Landing />} />
-        <Route path="/login" component={<LoginPage />} />
-        <Route path="/register" component={<RegisterPage />} />
-        <Route path="/admin" component={<UpdatePage />} />
-      </Switch>
-    </Router>
-    /**
-     * <Router>
-      <Switch>
-        <Routes />
-      </Switch>
-    </Router>
-    */
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<PublicRoute component={<Landing />} />} />
+        <Route
+          path="/register"
+          element={<PublicRoute component={<Register />} />}
+        />
+        <Route path="/login" element={<PublicRoute component={<Login />} />} />
+        <Route
+          path="/admin"
+          element={<PrivateRoute component={<UpdatePage />} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

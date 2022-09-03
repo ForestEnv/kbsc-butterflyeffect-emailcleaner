@@ -8,13 +8,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Swal from "sweetalert2";
 import RegisterInfo from "../UI/atom/register_info";
 import useStyles from "./style";
+import { useNavigate } from "react-router-dom";
 
-const RegisterPage = (props) => {
+const Register = (props) => {
   const classes = useStyles();
   const [name, setUserNameReg] = useState(null);
   const [id, setUserIdReg] = useState(null);
   const [password, setUserPwReg] = useState(null);
   const [confirmPassword, setUserConfirmPWReg] = useState(null);
+
+  const navigate = useNavigate();
 
   /*Event Handler*/
   const nameHandler = (e) => {
@@ -54,14 +57,13 @@ const RegisterPage = (props) => {
       .post("api/admin/register", data)
       .then((response) => {
         const isSuccess = response.data.registerSuccess;
-        console.log(isSuccess);
         if (isSuccess) {
           //성공
           Swal.fire({
             icon: "success",
             title: "SUCCESS!",
             text: "성공하셨습니다.",
-          }).then(props.history.push("/Login"));
+          }).then(navigate("/login"));
         }
       })
       .catch((err) => {
@@ -106,4 +108,4 @@ const RegisterPage = (props) => {
   );
 };
 
-export default RegisterPage;
+export default Register;
