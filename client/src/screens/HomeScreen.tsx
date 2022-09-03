@@ -51,7 +51,7 @@ function HomeScreen() {
 
   return (
     <>
-      <StatusBar backgroundColor={COLORS.main} barStyle={'dark-content'}/>
+      <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
       <View style={styles.container}>
         <View style={styles.header}>
           {/* 브랜드 로고 */}
@@ -87,9 +87,11 @@ function HomeScreen() {
               </View>
             ) : (
               <View style={[styles.firstInfo, styles.shadow]}>
-                <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>🖐️현탁님! 아직 활동 내역이 없습니다.</Text>
-                <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>메일을 삭제해 감소시킨 탄소량을</Text>
-                <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>확인해보세요</Text>
+                <Text>
+                  <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>🖐️현탁님, 아직 활동 내역이 없습니다.</Text>
+                  <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>메일을 삭제해서 감소시킨 탄소량을</Text>
+                  <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>확인해보세요😊</Text>
+                </Text>
               </View>
           )}
         </View>
