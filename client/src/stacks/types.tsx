@@ -8,9 +8,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /* MainTab */
 export type MainTabParamList = {
-    Home: undefined;
-    Reward: undefined;
-    MyProfile: undefined;
+    홈: undefined;
+    마이트리: undefined;
+    설정: undefined;
 }
 export type MainTabNavigationScreenParams = NavigatorScreenParams<MainTabParamList>;
 export type MainTabNavigationProp = CompositeNavigationProp<

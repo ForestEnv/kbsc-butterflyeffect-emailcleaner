@@ -27,13 +27,13 @@ function MainTab() {
         initialRouteName='홈'
         // Tab Bar 크기 조정 
         screenOptions={{  
-          tabBarLabelStyle:{fontSize:13, fontWeight:'500'},
+          tabBarLabelStyle:{fontSize:13, fontWeight:'500',},
           tabBarStyle: { 
             height:55,  
             borderTopWidth:0,
             backgroundColor: 'transparent',
             position: 'absolute',
-            elevation: 0, 
+            elevation: 0,
           },
           tabBarActiveTintColor: '#8ABC88',
           tabBarInactiveTintColor: '#000000',
@@ -76,7 +76,8 @@ function MainTab() {
 
 const styles = StyleSheet.create({
   container:{
-    flex:1
+    flex:1,
+    marginBottom: DEVICE_HEIGHT * 8
   }
 });
 export default MainTab;

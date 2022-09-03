@@ -23,6 +23,8 @@ import RegisterScreen from '../screens/RegisterScreen';
 import ConnectionEmailScreen from '../screens/ConnectionEmailScreen';
 import MainTab from './MainTab';
 
+import { COLORS } from '../constants/theme';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {

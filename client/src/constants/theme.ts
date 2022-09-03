@@ -13,6 +13,7 @@ export const FONTS = {
     regular: 20,
     mailAddress: 16,
     mailCount: 48,
+    info: 15,
 }
 
 //피그마 스크린 사이즈 : Android Small
