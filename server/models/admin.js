@@ -21,14 +21,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      auth: {
-        // 관리자 권한여부
-        // 0-> user
-        // 1 -> 관리자
-        type: DataTypes.BOOLEAN,
-        defaultValue: 1,
-        allowNull: false,
-      },
     },
     {
       tableName: "admin",

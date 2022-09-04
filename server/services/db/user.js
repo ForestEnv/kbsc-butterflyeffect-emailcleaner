@@ -58,7 +58,7 @@ exports.declineExperience = async ({ user_no, emailsLen }) => {
   return result;
 };
 
-exports.getRank = async ({ user_no }) => {
+exports.getRank = async () => {
   const result = await User.findAll({
     attributes: ["id", "name"],
     order: [["experience", "ASC"]],
@@ -79,4 +79,21 @@ exports.updateMiles = async () => {
   );
   console.log("*********2");
   return { result_1, result_2 };
+};
+
+// 사용자 마일리지 확인
+exports.getUserMilse = async ({ user_no, miles }) => {
+  const result = await User.findOne({
+    attributes: ["miles"],
+    where: { no: user_no },
+  });
+  return result;
+};
+// 사용자 마일리지 감소
+exports.declineMiles = async ({ user_no, miles }) => {
+  const result = await User.decrement(
+    { miles: miles.miles },
+    { where: { no: user_no } }
+  );
+  return result;
 };
