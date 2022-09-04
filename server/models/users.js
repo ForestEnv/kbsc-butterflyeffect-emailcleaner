@@ -38,14 +38,6 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         allowNull: false,
       },
-      auth: {
-        // 관리자 권한여부
-        // 0-> user
-        // 1 -> 관리자
-        type: DataTypes.BOOLEAN,
-        defaultValue: 0,
-        allowNull: false,
-      },
     },
     {
       tableName: "user",

@@ -64,7 +64,7 @@ exports.connectionAddEmail = async (req, res, next) => {
 
 exports.countEmail = async (req, res, next) => {
   try {
-    const { user_no } = req.body;
+    const { user_no } = req.params;
     console.log(user_no);
     const emailData = await emailServices.getEmail({ user_no });
     console.log(emailData);
