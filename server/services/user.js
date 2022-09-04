@@ -36,8 +36,22 @@ exports.getRank = async (data) => {
   return result;
 };
 
-// 사용자 경험치 증가
+// 사용자 마일리지 증가
 exports.updateMiles = async () => {
   const result = await db.updateMiles();
   return result;
+};
+
+// 사용자 마일리지 감소
+exports.declineMiles = async (data) => {
+  console.log(data);
+  // conditon setting
+  const user_miles = await db.getUserMilse(data);
+  console.log(user_miles.miles);
+  if (data.miles.miles > user_miles.miles) {
+    return "fail";
+  } else {
+    await db.declineMiles(data);
+    return "success";
+  }
 };

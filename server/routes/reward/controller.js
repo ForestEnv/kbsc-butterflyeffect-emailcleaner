@@ -33,3 +33,21 @@ exports.showRank = async (req, res, next) => {
     });
   }
 };
+
+exports.desclineUserMiles = async (req, res, next) => {
+  try {
+    let user_no = req.params.userNo;
+    console.log(user_no);
+    const miles = req.body;
+    console.log(miles);
+    result = await userServices.declineMiles({ user_no, miles });
+    console.log(result);
+    res.status(CREATED).json({
+      message: result,
+    });
+  } catch (error) {
+    res.status(BAD_REQUEST).json({
+      message: "update 실패!",
+    });
+  }
+};
