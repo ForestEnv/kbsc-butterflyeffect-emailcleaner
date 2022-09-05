@@ -1,23 +1,25 @@
-const { Op } = require("sequelize");
 const { hashingPw } = require("../../utils/bcrypt");
 const { Admin } = require("../../models");
 
 exports.insertadmin = async ({ id, name, password }) => {
-  const adminData = {
-    id,
-    name,
-    password: await hashingPw(password),
+    const adminData = {
+      id,
+      name,
+      password: await hashingPw(password),
+    };
+  
+    const result = await Admin.create(adminData);
+  
+    return result;
   };
-
-  const result = await Admin.create(adminData);
-
-  return result;
-};
-
-exports.selectID = async (no) => {
-  const result = await selectID.findOne({
-    where: { no },
-  });
-
-  return result;
-};
+  
+  
+  exports.selectID = async (id) => {
+    const result = await selectID.findOne({
+      attributes: ["no", "id", "name", "password"],
+      where: { id },
+    });
+  
+    return result;
+  };
+  
