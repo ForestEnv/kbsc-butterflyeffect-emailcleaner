@@ -31,9 +31,13 @@ exports.declineExperience = async (data) => {
 
 // 사용자 rank 확인
 exports.getRank = async (data) => {
-  console.log(data);
-  const result = await db.getRank(data);
-  return result;
+  const rankList = await db.getRank(data);
+  for (let index = 0; index < rankList.length; index++) {
+    toatl_no = await db.getTotalNum(rankList[index]);
+    rankList[index].dataValues.toatl_no = toatl_no;
+    console.log(rankList[index]);
+  }
+  return rankList;
 };
 
 // 사용자 마일리지 증가
