@@ -14,7 +14,6 @@ exports.insertadmin = async ({ id, name, password }) => {
 };
 
 exports.selectID = async (id) => {
-  console.log("*************5");
   const result = await Admin.findOne({
     attributes: ["no", "id", "name", "password"],
     where: { id },

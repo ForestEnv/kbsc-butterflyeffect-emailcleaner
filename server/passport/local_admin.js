@@ -4,10 +4,7 @@ const localAdmin = { usernameField: "id", passwordField: "password" };
 
 const localadmin = async (id, password, done) => {
   try {
-    console.log("debug test");
-    console.log("*************3");
     const users = await db.selectID(id);
-    console.log("*************4");
     if (!users) {
       return done(null, false);
     }
