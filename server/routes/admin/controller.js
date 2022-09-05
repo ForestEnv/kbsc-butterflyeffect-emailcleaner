@@ -9,10 +9,8 @@ const axios = require("axios");
 exports.adminlogin = async (req, res, next) => {
   try {
     const adminuser = req.body;
-    console.log("---------------1");
     console.log(adminuser);
     const accesstoken = createID(adminuser.id);
-    console.log("---------------");
     console.log(accesstoken);
     res.status(CREATED).json({
       message: "로그인 성공!",
@@ -46,9 +44,7 @@ exports.adminregister = async (req, res, next) => {
 
 exports.updateUserMiles = async (req, res, next) => {
   try {
-    console.log("-------------1");
     await userServices.updateMiles();
-    console.log("-------------2");
     res.status(CREATED).json({
       message: "사용자 마일리지 update!",
     });
