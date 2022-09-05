@@ -3,13 +3,13 @@ const { OK, CREATED, BAD_REQUEST } =
 
 const userServices = require("../../services/user");
 const adminServices = require("../../services/admin");
+const { createID } = require("../../utils/jwt")
 const axios = require("axios");
 
 exports.adminlogin = async (req, res, next) => {
   try {
     const adminuser = req.body;
-    const id = req.adminuse.id;
-    const accessToken = createID(adminuse.id);
+    const accesstoken = createID(adminuser.id);
     res.status(CREATED).json({
       message: "로그인 성공!",
       adminuser: {
