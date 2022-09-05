@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const { hashingPw } = require("../../utils/bcrypt");
 const { User } = require("../../models");
+const { Email } = require("../../models");
 
 exports.selectUserFromPassport = async (id) => {
   const result = await User.findOne({
@@ -58,11 +59,30 @@ exports.declineExperience = async ({ user_no, emailsLen }) => {
   return result;
 };
 
-exports.getRank = async () => {
+exports.getRank = async ({ user_no }) => {
   const result = await User.findAll({
-    attributes: ["id", "name"],
-    order: [["experience", "ASC"]],
+    attributes: ["no", "id", "name"],
+    /**
+    include: [
+      {
+        model: Email,
+        attributes: [
+          email_id,
+          //[(sequelize.fn("SUM", Sequelize.col("total_no")), "totalNum")],
+        ],
+        where: {
+          user_no,
+        },
+      },
+    ],
+     */
+    order: [["experience", "DESC"]],
   });
+  return result;
+};
+
+exports.getTotalNum = async ({ no }) => {
+  const result = await Email.sum("total_no", { where: { user_no: no } });
   return result;
 };
 
