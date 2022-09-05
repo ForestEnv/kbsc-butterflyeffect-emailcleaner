@@ -1,5 +1,6 @@
 const { ExtractJwt } = require('passport-jwt');
 const db = require('../services/db/user');
+const db = require('../services/db/admin');
 
 const jwtConfig = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,5 +20,6 @@ const jwtVerify = async (jwtPayload, done) => {
     done(error);
   }
 };
+
 
 module.exports = { jwtConfig, jwtVerify };
