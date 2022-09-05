@@ -271,19 +271,19 @@ def send_email(email_address, emailList):
     smtp_host = 'smtp.gmail.com'
     smtp_port = 587
 
-    from_addr = "보내는 주소"
+    from_addr = "huiyy9211@gmail.com"
     to_addr = email_address
 
     smtp = smtplib.SMTP(smtp_host, smtp_port)
     smtp.starttls()
-    smtp.login(from_addr, "비밀번호")
+    smtp.login(from_addr, "kfjjmemkpjjxuioe")
     
     suc_cnt = 0
     err_cnt = 0
 
     for email in emailList:
         try:
-            smtp.sendmail(from_addr, to_addr, make(from_addr, to_addr, email["Subject"], email["Body"]))
+            smtp.sendmail(from_addr, to_addr, make(from_addr, to_addr, email["title"], email["body"]))
             suc_cnt += 1
         except Exception as e:
             print(e)
