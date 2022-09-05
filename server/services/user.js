@@ -28,3 +28,34 @@ exports.declineExperience = async (data) => {
   const result = await db.declineExperience(data);
   return result;
 };
+
+// 사용자 rank 확인
+exports.getRank = async (data) => {
+  const rankList = await db.getRank(data);
+  for (let index = 0; index < rankList.length; index++) {
+    toatl_no = await db.getTotalNum(rankList[index]);
+    rankList[index].dataValues.toatl_no = toatl_no;
+    console.log(rankList[index]);
+  }
+  return rankList;
+};
+
+// 사용자 마일리지 증가
+exports.updateMiles = async () => {
+  const result = await db.updateMiles();
+  return result;
+};
+
+// 사용자 마일리지 감소
+exports.declineMiles = async (data) => {
+  console.log(data);
+  // conditon setting
+  const user_miles = await db.getUserMilse(data);
+  console.log(user_miles.miles);
+  if (data.miles.miles > user_miles.miles) {
+    return "fail";
+  } else {
+    await db.declineMiles(data);
+    return "success";
+  }
+};

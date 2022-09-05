@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "user",
+    "admin",
     {
       no: {
         autoIncrement: true,
@@ -21,26 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      is_connection_email: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: 0,
-        allowNull: false,
-      },
-      experience: {
-        //경험치
-        type: DataTypes.BIGINT,
-        defaultValue: 0,
-        allowNull: false,
-      },
-      miles: {
-        // 나무사는 돈
-        type: DataTypes.BIGINT,
-        defaultValue: 0,
-        allowNull: false,
-      },
     },
     {
-      tableName: "user",
+      tableName: "admin",
       timestamps: true,
       paranoid: true,
       underscored: true,
