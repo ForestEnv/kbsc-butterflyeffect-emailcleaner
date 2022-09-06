@@ -23,6 +23,8 @@ import RegisterScreen from '../screens/RegisterScreen';
 import ConnectionEmailScreen from '../screens/ConnectionEmailScreen';
 import MainTab from './MainTab';
 
+import Back from '../assets/icons/icon-back.svg';
+
 import { COLORS } from '../constants/theme';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -73,12 +75,12 @@ function RootStack() {
                             headerBackVisible: false,
                             headerLeft: () => (
                                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                                    <Text style={{fontSize:23}}>이전</Text>
+                                    <Back/>
                                 </TouchableOpacity>
                             ),
                             headerTitle: () => (
                                 <View>
-                                    <Text style={{fontSize:23}}>로그인</Text>
+                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>로그인</Text>
                                 </View>
                             )
                         }}

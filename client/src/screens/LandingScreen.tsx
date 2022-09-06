@@ -58,8 +58,9 @@ const styles = StyleSheet.create({
         backgroundColor:COLORS.subTwo,
     },
     text:{
+        color:'#000000',
         fontSize: FONTS.medium,
-        fontFamily: 'NotoSansKR-Black',
+        fontFamily: 'NotoSansKR-Bold',
         textAlign: 'center',
         marginVertical: DEVICE_HEIGHT * 2
     }

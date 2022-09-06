@@ -57,7 +57,7 @@ function AuthForm({isRegister}: AuthFormProps) {
     return (
         <KeyboardAvoidingView>
             <View>
-                <View>
+                <View style={{marginTop:60}}>
                     {isRegister ? (
                         <>
                             <TextInput
@@ -78,6 +78,7 @@ function AuthForm({isRegister}: AuthFormProps) {
                         </>
                     ) : (
                         <>
+                            <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>아이디</Text>
                             <TextInput
                                 style={styles.input}
                                 placeholder='아이디를 입력하세요'
@@ -88,7 +89,7 @@ function AuthForm({isRegister}: AuthFormProps) {
                             />
                         </>
                     )}
-                    <Text>비밀번호</Text>
+                    <Text style={{marginTop:13, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>비밀번호</Text>
                     <TextInput
                         style={styles.pwInput}
                         placeholder='비밀번호를 입력하세요'
@@ -121,26 +122,27 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         width: DEVICE_WIDTH * 300,
         height: DEVICE_HEIGHT * 40,
-        marginTop: DEVICE_HEIGHT * 60,
     },
     button:{
         width:DEVICE_WIDTH * 300,
         height:DEVICE_HEIGHT * 50 - 10,
         marginTop: DEVICE_HEIGHT * 30,
         borderRadius:20,
-        borderWidth:2,
-        backgroundColor:COLORS.lofi,
+        backgroundColor:COLORS.subTwo,
+        alignItems:'center',
+        justifyContent:'center',
     },
     pwInput:{
         borderBottomWidth:1,
         width: DEVICE_WIDTH * 300,
         height: DEVICE_HEIGHT * 40,
-        marginTop: DEVICE_HEIGHT * 10,
     },
     text:{
+        color:'#000000',
+        fontFamily:'NotoSansKR-Medium',
         fontSize: FONTS.medium,
         textAlign: 'center',
-        marginVertical: DEVICE_HEIGHT * 10
+        marginVertical: DEVICE_HEIGHT * 2
     }
 });
 
