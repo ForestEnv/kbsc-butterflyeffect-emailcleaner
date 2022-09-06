@@ -4,7 +4,8 @@ import {
     Text, 
     View, 
     TouchableOpacity,
-    StatusBar
+    StatusBar,
+    Image
 } from 'react-native';
 
 import { RootStackNavigationProp } from '../stacks/types';
@@ -19,6 +20,13 @@ function LandingScreen() {
         <>
             <StatusBar backgroundColor={COLORS.main} barStyle={'dark-content'}/>
             <View style={styles.container}>
+                <View style={{alignItems:"center", backgroundColor:COLORS.main, marginTop:64}}>
+                    <Image source={require('../assets/images/brand_logo.png')} style={styles.image}/>
+                </View>
+                <View style={{alignItems:'center', height: DEVICE_HEIGHT * 100, marginTop: DEVICE_HEIGHT * 40.52}}>
+                    <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Bold', lineHeight:30}}>작은 실천으로 예상하지 못한 결과로</Text>
+                    <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Bold', lineHeight:30}}>이루어지는 공간</Text>
+                </View>
                 <View style={styles.form}>
                     <TouchableOpacity
                         style={styles.button}
@@ -47,7 +55,6 @@ const styles = StyleSheet.create({
         height:'100%',
         width:'100%',
         alignItems:"center",
-        marginTop: DEVICE_HEIGHT * 370,
         marginBottom: DEVICE_HEIGHT * 50,
     },
     button:{
@@ -56,6 +63,11 @@ const styles = StyleSheet.create({
         marginTop: DEVICE_HEIGHT * 15,
         borderRadius:20,
         backgroundColor:COLORS.subTwo,
+    },
+    image:{
+        width:DEVICE_WIDTH * 195,
+        height: DEVICE_HEIGHT * 125,
+        backgroundColor: COLORS.main
     },
     text:{
         color:'#000000',

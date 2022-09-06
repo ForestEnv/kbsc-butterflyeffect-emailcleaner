@@ -85,7 +85,25 @@ function RootStack() {
                             )
                         }}
                     />
-                    <Stack.Screen name='Connection' component={ConnectionEmailScreen} options={{headerShown: false}}/>
+                    <Stack.Screen 
+                        name='Connection' 
+                        component={ConnectionEmailScreen} 
+                        options={{
+                            headerTitleAlign: 'center',
+                            headerTransparent: true,
+                            headerBackVisible: false,
+                            headerLeft: () => (
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Back/>
+                                </TouchableOpacity>
+                            ),
+                            headerTitle: () => (
+                                <View>
+                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>이메일 연동</Text>
+                                </View>
+                            )
+                        }}
+                    />
                 </>
             )}
         </Stack.Navigator>

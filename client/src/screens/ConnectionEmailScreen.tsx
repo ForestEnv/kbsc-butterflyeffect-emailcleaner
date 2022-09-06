@@ -11,6 +11,8 @@ import { useUserState } from "../contexts/UserContext";
 
 import useConnection from '../hooks/useConnection';
 
+import {COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS} from '../constants/theme';
+
 function ConnectionEmailScreen() {
   const [user, setUser] = useUserState();
   
@@ -31,17 +33,53 @@ function ConnectionEmailScreen() {
   }
 
   return (
-    <View>
-      <Text>이메일 연동하기</Text>
-      <TextInput style={{borderWidth:2}}value={email} onChangeText={setEmail} placeholder="연동할 이메일 주소를 입력하세요"/>
-      <TextInput style={{borderWidth:2}}value={emailPassword} onChangeText={setEmailPassword} placeholder="연동할 이메일 비밀번호를 입력하세요"/>
-      <TouchableOpacity style={{alignItems:'center',backgroundColor:'grey', marginTop:10, borderWidth:2}}onPress={onConnectionSubmit}>
-        <Text>추가</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.form}>
+        <Text style={styles.text}>연동하고자 하는</Text>
+        <Text style={styles.text}>이메일 주소를 입력해주세요.</Text>
+        <View style={{marginTop:DEVICE_HEIGHT * 42, alignItems:'center'}}>
+          <TextInput style={{borderWidth:2}}value={email} onChangeText={setEmail} placeholder="연동할 이메일 주소를 입력하세요"/>
+          <TextInput style={{borderWidth:2}}value={emailPassword} onChangeText={setEmailPassword} placeholder="연동할 이메일 비밀번호를 입력하세요"/>
+          <TouchableOpacity style={styles.button}onPress={onConnectionSubmit}>
+            <Text style={styles.btnText}>다음</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   )
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:COLORS.main    
+  },
+  form:{
+    marginTop: DEVICE_HEIGHT * 70
+  },
+  text:{
+    color:'#000000',
+    fontSize: 20,
+    fontFamily:"NotoSansKR-Bold",
+    marginLeft: DEVICE_WIDTH * 24,
+    lineHeight:30
+  },
+  btnText:{
+    color:'#000000',
+    fontSize: FONTS.medium,
+    fontFamily: 'NotoSansKR-Bold',
+    textAlign: 'center',
+    marginVertical: DEVICE_HEIGHT * 2
+  },
+  button:{
+    width:DEVICE_WIDTH * 280,
+    height:DEVICE_HEIGHT * 50 - 10,
+    marginTop: DEVICE_HEIGHT * 15,
+    borderRadius:20,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:COLORS.subTwo,
+  },
+});
 
 export default ConnectionEmailScreen;
