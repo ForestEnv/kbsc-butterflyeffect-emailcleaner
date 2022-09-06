@@ -11,6 +11,7 @@ export async function setConnection(params:EmailConnectionParams) {
     return res.data;
 }
 
+//이메일 연동 시 매개변수 타입 설정
 interface EmailConnectionParams {
     no: number;
     id: string | undefined;

@@ -6,7 +6,8 @@ import {
   TextInput,
   ActivityIndicator, 
   TouchableOpacity,
-  StatusBar, 
+  StatusBar,
+  Image 
 } from 'react-native';
 
 import { useQuery } from '@tanstack/react-query';
@@ -19,33 +20,42 @@ import { DeleteNumber } from '../api/types';
 
 import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
 
-import Notification from '../assets/icons/icon_notification.svg';
-import TrashCan from '../assets/icons/icon_trash-can.svg';
+import HeaderView from '../components/HeaderView';
+import FirstUseInfo from '../components/FirstUseInfo';
+
 import Scan from '../assets/icons/icon_scan.svg';
 
 function HomeScreen() {
   const [user] = useUserState();
-  //리액트 쿼리를 사용한 데이터 페칭
+  
+  //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
   const {data, isLoading} = useQuery(['count', user.no], () => getEmailCount(user.no));
+  
+  //이메일 삭제 수 State
   const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
 
-  //삭제 유무 판별 API 
+  //서비스 사용 여부  API 
   useEffect(() => {
     const fetchData = async () => {
       try {
           const res = await getDeleteEmailNum(user.no);
           setDeleteNum(res);
-        } catch(error){
+        } catch(error) {
             console.log('데이터 조회 실패');
           }
-        };
+    };
     fetchData();
   }, []);
   
   //이메일 주소, 이메일 수 데이터 로딩
   if(isLoading) {
     return(
-      <ActivityIndicator size="large" color="green"/>
+      <>
+        <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
+        <View style={{flex:1, backgroundColor:COLORS.main}}>
+          <ActivityIndicator size="large" color="green"/>
+        </View>
+      </>
     );
   }
 
@@ -53,24 +63,11 @@ function HomeScreen() {
     <>
       <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
       <View style={styles.container}>
-        <View style={styles.header}>
-          {/* 브랜드 로고 */}
-          <Text style={{fontSize:30, marginRight:50, color:'#000000'}}>ButterflyEffect</Text>
-          {/* 아이콘 form */}
-          <View style={{flexDirection:'row', marginRight:DEVICE_WIDTH * 5.1,}}>
-            <TouchableOpacity style={{marginRight: DEVICE_WIDTH * 18.1, marginTop: DEVICE_HEIGHT * 2.3}}>
-              <TrashCan/>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Notification/>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <HeaderView/>
         <View style={styles.main}>
           <View style={[styles.emailBox, styles.shadow]}>
             <Text style={styles.address}>{data.email}</Text>
           </View>
-          {/* circle */}
           <View style={[styles.circle, styles.shadow]}>
               <Text style={{ textAlign: 'center', marginTop: DEVICE_HEIGHT * 30, width: DEVICE_WIDTH * 108, height: DEVICE_HEIGHT * 29, fontSize: FONTS.regular, fontWeight:'600', color:'#000000'}}>현재 메일 수</Text>
               <Text style={{ textAlign: 'center', marginTop: DEVICE_HEIGHT * 4, width: DEVICE_WIDTH * 100, height: DEVICE_HEIGHT * 58, includeFontPadding:false, fontSize: FONTS.mailCount, color:'#000000', fontFamily:'NotoSansKR-Bold' }}>{data.emailCount}</Text>
@@ -86,13 +83,7 @@ function HomeScreen() {
                 <Text>사용 내역이 있습니다.</Text>
               </View>
             ) : (
-              <View style={[styles.firstInfo, styles.shadow]}>
-                <Text>
-                  <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>🖐️현탁님, 아직 활동 내역이 없습니다.</Text>
-                  <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>메일을 삭제해서 감소시킨 탄소량을</Text>
-                  <Text style={{fontSize: FONTS.info, color: "#000000", fontFamily:"NotoSansKR-Medium"}}>확인해보세요😊</Text>
-                </Text>
-              </View>
+              <FirstUseInfo/>
           )}
         </View>
       </View>
@@ -104,12 +95,6 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     backgroundColor: COLORS.main,
-  },
-  header:{
-    height:'10%',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'space-around',
   },
   main:{
     alignItems:'center',
@@ -137,15 +122,6 @@ const styles = StyleSheet.create({
     fontSize: FONTS.mailAddress,
     color:'#000000',
     fontFamily: 'NotoSansKR-Bold'
-  },
-  firstInfo:{
-    width: DEVICE_WIDTH * 293,
-    height: DEVICE_HEIGHT * 118,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: DEVICE_WIDTH * 28,
-    borderRadius: 20,
-    backgroundColor: COLORS.white
   },
   btnScan:{
     width: DEVICE_WIDTH * 120,

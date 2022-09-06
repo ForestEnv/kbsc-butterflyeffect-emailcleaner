@@ -83,7 +83,7 @@ function RootStack() {
                             ),
                             headerTitle: () => (
                                 <View>
-                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>로그인</Text>
+                                    <Text style={{fontSize:20, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>로그인</Text>
                                 </View>
                             )
                         }}
