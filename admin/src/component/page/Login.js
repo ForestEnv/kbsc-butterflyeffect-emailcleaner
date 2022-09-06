@@ -34,10 +34,10 @@ const Login = (props) => {
     axios
       .post("/api/admin/login", data)
       .then((response) => {
-        const isSuccess = response.data.loginSuccess;
-        //추후에 서버측에서 오류메세지 오면 성공여부에따른 알림 출력을 위해
-        //만약 isSuccess가 false이면 그에 맞는 서버 측에서의 중복여부 오류문자 수신후 출력 예정
+        const isSuccess = response.data;
+        console.log(isSuccess);
         if (isSuccess) {
+          localStorage.setItem("accessToken", response.data.accessToken);
           Swal.fire({
             icon: "success",
             title: "SUCCESS!",
