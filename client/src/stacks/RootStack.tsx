@@ -21,6 +21,7 @@ import LandingScreen from '../screens/LandingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ConnectionEmailScreen from '../screens/ConnectionEmailScreen';
+import ConnectionEmailPwScreen from '../screens/ConnectionEmailPwScreen';
 import MainTab from './MainTab';
 
 import Back from '../assets/icons/icon-back.svg';
@@ -40,6 +41,8 @@ function RootStack() {
     
     return (
         <Stack.Navigator>
+            {/* 사용자가 현재 로그인중이면서 연동된 인박스 주소가 있으면 홈스크린으로 접속함 
+                연동된 인박스 주소가 없으면 이메일 연동 스크린 접속*/}
             { user && isConnectionEmail ? (
                 <>
                     <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}}/>
@@ -99,7 +102,26 @@ function RootStack() {
                             ),
                             headerTitle: () => (
                                 <View>
-                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>이메일 연동</Text>
+                                    <Text style={{fontSize:20, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>이메일 연동</Text>
+                                </View>
+                            )
+                        }}
+                    />
+                    <Stack.Screen 
+                        name='ConnectionPw' 
+                        component={ConnectionEmailPwScreen} 
+                        options={{
+                            headerTitleAlign: 'center',
+                            headerTransparent: true,
+                            headerBackVisible: false,
+                            headerLeft: () => (
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Back/>
+                                </TouchableOpacity>
+                            ),
+                            headerTitle: () => (
+                                <View>
+                                    <Text style={{fontSize:20, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>이메일 연동</Text>
                                 </View>
                             )
                         }}

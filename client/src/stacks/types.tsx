@@ -4,7 +4,7 @@ import {
     NavigatorScreenParams,
     RouteProp,
 } from '@react-navigation/core';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp,} from '@react-navigation/native-stack';
 
 /* MainTab */
 export type MainTabParamList = {
@@ -25,6 +25,12 @@ export type RootStackParamList = {
     Login: undefined;
     Register: undefined;
     Connection: undefined;
+    ConnectionPw: {
+        email:string;
+    };
     MainTab: MainTabNavigationScreenParams;
 };
+
+export type ConnectionPwRouteProp =  RouteProp<RootStackParamList, 'ConnectionPw'>;
+
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;

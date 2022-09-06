@@ -25,7 +25,10 @@ function LandingScreen() {
                 </View>
                 <View style={{alignItems:'center', height: DEVICE_HEIGHT * 100, marginTop: DEVICE_HEIGHT * 40.52}}>
                     <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Bold', lineHeight:30}}>작은 실천으로 예상하지 못한 결과로</Text>
-                    <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Bold', lineHeight:30}}>이루어지는 공간</Text>
+                    <Text>
+                        <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Bold', lineHeight:30}}>이루어지는 &nbsp;</Text>
+                        <Text style={{color:'#8ABC88', fontSize:20, fontFamily:'NotoSansKR-Black', lineHeight:30}}>공간</Text>
+                    </Text>
                 </View>
                 <View style={styles.form}>
                     <TouchableOpacity
