@@ -56,12 +56,12 @@ function RootStack() {
                             headerBackVisible: false,
                             headerLeft: () => (
                                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                                    <Text>취소</Text>
+                                    <Back/>
                                 </TouchableOpacity>
                             ),
                             headerTitle: () => (
                                 <View>
-                                    <Text>회원가입</Text>
+                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>회원가입</Text>
                                 </View>
                             )
                         }}

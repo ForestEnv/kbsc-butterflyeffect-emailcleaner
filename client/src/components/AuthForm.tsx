@@ -60,17 +60,19 @@ function AuthForm({isRegister}: AuthFormProps) {
                 <View style={{marginTop:60}}>
                     {isRegister ? (
                         <>
+                            <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>아이디</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder='email'
+                                placeholder='아이디를 입력하세요.'
                                 value={id}
                                 onChangeText={setId}
                                 autoCapitalize="none"
                                 keyboardType="email-address"
                             />
+                            <Text style={{marginTop:15,color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>닉네임</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder='name'
+                                placeholder='닉네임을 입력하세요.'
                                 value={name}
                                 onChangeText={setName}
                                 autoCapitalize="none"
@@ -81,7 +83,7 @@ function AuthForm({isRegister}: AuthFormProps) {
                             <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>아이디</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder='아이디를 입력하세요'
+                                placeholder='아이디를 입력하세요.'
                                 value={id}
                                 onChangeText={setId}
                                 autoCapitalize="none"
@@ -92,7 +94,7 @@ function AuthForm({isRegister}: AuthFormProps) {
                     <Text style={{marginTop:13, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>비밀번호</Text>
                     <TextInput
                         style={styles.pwInput}
-                        placeholder='비밀번호를 입력하세요'
+                        placeholder='비밀번호를 입력하세요.'
                         secureTextEntry
                         value={password}
                         onChangeText={setPassword}
