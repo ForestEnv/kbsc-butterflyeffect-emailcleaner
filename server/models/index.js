@@ -15,23 +15,22 @@ const sequelize = new Sequelize(
 db.User = require("./users")(sequelize, Sequelize);
 db.Email = require("./email")(sequelize, Sequelize);
 db.Delete = require("./delete")(sequelize, Sequelize);
+db.Admin = require("./admin")(sequelize, Sequelize);
+db.selectID = require("./admin")(sequelize, Sequelize);
 /*db.User = require('./usermanage')(sequelize, Sequelize);
 db.User = require('./restore')(sequelize, Sequelize);
 db.User = require('./reward')(sequelize, Sequelize);
 */
 
 //데이터베이스 관계 정의
-// db.User.hasMany(db.Email, { foreignKey: "personal_no", sourceKey: "no" });
-// db.Email.belongsTo(db.User, {
-//   foreignKey: "personal_no",
-//   sourceKey: "user_no",
-// });
+db.User.hasMany(db.Email, { foreignKey: "user_no", sourceKey: "no" });
+db.Email.belongsTo(db.User, { foreignKey: "user_no" });
 
-db.User.hasMany(db.Email, {foreignKey:'no'});
-db.Email.belongsTo(db.User, {foreignKey:'user_no'});
+db.Admin.hasMany(db.Admin, { foreignKey: "admin_no", sourceKey: "no" });
+db.selectID.belongsTo(db.Admin, { foreignKey: "admin_no" });
 
-db.Email.hasMany(db.Delete, { foreignKey: "delete_no" });
-db.Delete.belongsTo(db.Email, { foreignKey: "delete_no" });
+db.Email.hasMany(db.Delete, { foreignKey: "email_no", sourceKey: "no" });
+db.Delete.belongsTo(db.Email, { foreignKey: "email_no" });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
