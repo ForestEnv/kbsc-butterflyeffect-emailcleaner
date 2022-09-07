@@ -2,51 +2,38 @@ const { Email } = require("../../models");
 //const { Delete } = require("../../models");
 const { hashingPw } = require("../../utils/bcrypt");
 
-exports.insertEmail = async ({ no, email_id, email_Pw }) => {
-  console.log(no);
-  console.log(email_id);
-  console.log(email_Pw);
+exports.insertEmail = async ({ no, email, emailPassword }) => {
   const emailData = {
     user_no: no,
-    email_id,
-    email_Pw,
+    email_id: email,
+    email_Pw: emailPassword,
   };
-  console.log(emailData);
+  console.log("PARMAS:"+emailData);
   const result = await Email.create(emailData);
-  console.log(result);
+  console.log("CREATE결과:"+result);
   return result;
 };
 
-exports.getEmail = async ({ user_no }) => {
+exports.getEmail = async (no) => {
+  console.log('사용자 번호:'+ no);
   const result = await Email.findAll({
     attributes: ["email_id", "email_Pw"],
-    where: { user_no },
+    where: { no },
     raw: true,
+  });
+  console.log('사용자 이메일 디비:'+result.email_id);
+  return result;
+};
+
+//attributes: 이메일 아이디 추가
+exports.getEmailInfo = async (no) => {
+  const result = await Email.findOne({
+    attributes: ["no", "email_id","email_Pw"],
+    where: { no },
   });
   return result;
 };
 
-exports.getEmailInfo = async ({ user_no, email_id }) => {
-  const result = await Email.findOne({
-    attributes: ["no", "email_Pw"],
-    where: { user_no, email_id },
-  });
-  return result;
-};
-/*
-exports.insertDeleteEmail = async ({ no, Emails }) => {
-  console.log(Emails);
-  const deleteData = {
-    email_no: no,
-    sender,
-    date,
-    title,
-    delete_date, // 현재 시간
-  };
-  const result = await Delete.create(deleteData);
-  return result;
-};
-*/
 exports.updateTotalNum = async ({ email_no, emailLen }) => {
   const result = await Email.increment(
     { total_no: emailLen },
@@ -54,3 +41,11 @@ exports.updateTotalNum = async ({ email_no, emailLen }) => {
   );
   return result;
 };
+
+exports.selectDeleteNumber = async (no) => {
+  const result = await Email.findOne({
+    attributes: ["total_no"],
+    where:{user_no: no},
+  });
+  return result;
+}
