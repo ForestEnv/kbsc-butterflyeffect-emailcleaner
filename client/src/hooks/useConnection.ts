@@ -8,7 +8,6 @@ import { RootStackNavigationProp } from "../stacks/types";
 
 export default function useConnection() {
     const [isConnectionEmail, setIsConnectionEmail] = useConnectionState();
-    const navigation = useNavigation<RootStackNavigationProp>();
 
     const mutation = useMutation(setConnection, {
         onSuccess: (data) => {
