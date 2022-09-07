@@ -1,13 +1,12 @@
 const bcrypt = require('bcrypt');
 const db = require('../services/db/user');
-
 const localConfig = { usernameField: 'id', passwordField: 'password' };
 
 const localVerify = async (id, password, done) => {
   try {
-    console.log ('debug test')
+    console.log('debug test')
     const user = await db.selectUserFromPassport(id);
-   
+
     if (!user) {
       return done(null, false);
     }
