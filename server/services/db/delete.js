@@ -1,14 +1,22 @@
 //const { Email } = require("../../models");
 const { Delete } = require("../../models");
-//const { hashingPw } = require("../../utils/bcrypt");
 
-exports.setDeleteEmails = async ({ Emails }) => {
-  console.log("************");
-  console.log(Emails);
-  console.log("************");
-  await Delete.bulkCreate(Emails).then(() => {
-    console.log("************11");
-    return "Delete.findAll()";
-  });
-  console.log("************11");
+exports.setDeleteEmails = async (Emails) => {
+  await Delete.bulkCreate(Emails);
 };
+
+exports.getDeleteEmails = async (user_no) => {
+  console.log("**********1");
+  const result = await Delete.findAll({ where: { user_no }, raw: true });
+  console.log("**********2");
+  return result;
+};
+
+exports.removeDeleteEmails = async ({ email_no, list }) => {
+  console.log("************11");
+  const emailList = await Delete.findAll({ where: { email_no: email_no, no: list }, raw: true })
+  const emailLen = await Delete.destroy({ where: { email_no: email_no, no: list } });
+  console.log("************22");
+  return {emailList,emailLen};
+};
+

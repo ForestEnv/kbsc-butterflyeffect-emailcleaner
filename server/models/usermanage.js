@@ -9,22 +9,16 @@ module.exports = (sequelize, DataTypes) => {
         id: {
             type: DataTypes.STRING(50),
             allowNull: false,
-            unique: true,
         },
         experience: {//경험치
             type: DataTyxpes.STRING(100),
             allowNull: false,
-            unique: true,
         },
         level: {
             type: DataTypes.STRING(50),
             allowNull: false,
         },
         ranking: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        email: {
             type: DataTypes.STRING(100),
             allowNull: false,
         },
