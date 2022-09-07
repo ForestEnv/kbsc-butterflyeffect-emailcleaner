@@ -67,7 +67,7 @@ exports.countEmail = async (req, res, next) => {
   try {
     const { no } = req.params;
     const emailData = await emailServices.getEmail(no);
-    console.log('SERVER', emailData);
+    console.log('SERVER from MYSQL:', emailData);
     const response = await axios.post("http://localhost:5000/count", {
       Emails: emailData,
     });
@@ -85,13 +85,14 @@ exports.countEmail = async (req, res, next) => {
   }
 };
 
+//수정 : no , 이메일 아이디 디비로부터 비밀번호와 같이 받음
 exports.predictEmail = async (req, res, next) => {
-  const { user_no, email_id } = req.body;
-  const email_info = await emailServices.getEmailInfo({ user_no, email_id });
+  const { no } = req.body;
+  const email_info = await emailServices.getEmailInfo(no);
   try {
     const response = await axios.post("http://127.0.0.1:5000/predict", {
       Emails: {
-        email_address: email_id,
+        email_address: email_info.dataValues.email_id,
         password: email_info.dataValues.email_Pw,
       },
     });

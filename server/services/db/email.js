@@ -25,10 +25,11 @@ exports.getEmail = async (no) => {
   return result;
 };
 
-exports.getEmailInfo = async ({ user_no, email_id }) => {
+//attributes: 이메일 아이디 추가
+exports.getEmailInfo = async (no) => {
   const result = await Email.findOne({
-    attributes: ["no", "email_Pw"],
-    where: { user_no, email_id },
+    attributes: ["no", "email_id","email_Pw"],
+    where: { no },
   });
   return result;
 };

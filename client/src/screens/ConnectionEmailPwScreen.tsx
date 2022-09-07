@@ -16,17 +16,17 @@ import useConnection from '../hooks/useConnection';
 function ConnectionEmailPwScreen() {
     //입력된 이메일 주소 값을 저장
     const {params} = useRoute<ConnectionPwRouteProp>();
-    const [user, setUser] = useUserState();
+    const [user] = useUserState();
     
     //연동할 이메일 비밀번호 State
     const [emailPassword, setEmailPassword] = useState('');
-    const {mutate: setConnction} = useConnection();
+    const {mutate: setConnection} = useConnection();
     
     const email = params.email;
 
     //EventHandler: 이메일 연동 실행
     const onConnectionSubmit = () => {
-        setConnction({
+        setConnection({
             no:user.no,
             id:user?.id,
             email,
