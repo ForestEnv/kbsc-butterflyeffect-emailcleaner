@@ -8,19 +8,31 @@ import {
 
 import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
 
+import {Bounce} from 'react-native-animated-spinkit';
+
 import ScanButton from './ScanButton';
 
 interface EmailCountProps {
     emailCount: number;
     onScanSubmit: any;
+    isScanLoading: boolean;
 };
 
-function CircleView({emailCount, onScanSubmit}: EmailCountProps) {
+function CircleView({emailCount, onScanSubmit, isScanLoading}: EmailCountProps) {
     return(
         <View style={[styles.circle, styles.shadow]}>
-            <Text style={styles.infoText}>현재 메일 수</Text>
-            <Text style={styles.countText}>{emailCount}</Text>
-            <ScanButton onScanSubmit={onScanSubmit}/>
+            {isScanLoading ? (
+                <>
+                    <Bounce size={85} color="#F4EAE6"/>
+                    <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Medium'}}>회원님의 이메일을 스캔중입니다.</Text>
+                </>
+                ):(
+                    <>
+                        <Text style={styles.infoText}>현재 메일 수</Text>
+                        <Text style={styles.countText}>{emailCount}</Text>
+                        <ScanButton onScanSubmit={onScanSubmit}/>
+                    </>
+                )}
         </View>
     );
 };

@@ -54,12 +54,13 @@ const classification = [
 
 function HomeScreen()  {
   const [user] = useUserState();
-
+  
   //Tab 상태값
   const [toggleState, setToggleState] = useState<string>("개인");
 
   //scan 결과 상태값
   const [scanResult, setScanResult] = useState();
+  const [isScanLoading, setIsScanLoading] = useState(false);
 
   //연동된 이메일 주소
   // const [emailAddress] = useEmailAddressState();
@@ -85,6 +86,8 @@ function HomeScreen()  {
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
+    setIsScanLoading(false);
+    //바텀시트 렌더링
     bottomSheetModalRef.current?.present();  
   }, []);
 
@@ -121,7 +124,7 @@ function HomeScreen()  {
         <HeaderView/>
         <View style={styles.main}>
           <EmailAddressBox email={data.Ressult[0].email_address}/>
-          <CircleView emailCount={data.Ressult[0].emailCount} onScanSubmit={onScanSubmit}/>
+          <CircleView emailCount={data.Ressult[0].emailCount} onScanSubmit={onScanSubmit} isScanLoading={isScanLoading}/>
           <BottomSheetModal
             ref={bottomSheetModalRef}          
             index={1}          
