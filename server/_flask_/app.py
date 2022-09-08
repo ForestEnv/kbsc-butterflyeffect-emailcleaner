@@ -1,6 +1,7 @@
 # pip install flask
 # pip install pandas
 # pip install scikit-learn
+# pip install python-dotenv
 
 from flask import Flask, jsonify, request, make_response
 import pandas as pd
@@ -62,10 +63,12 @@ def predict():
         req = request.get_json()
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']
-        print(emailPw)
         result = fetch_emails(emailId , emailPw)
-        classification = result.to_json(orient = 'index',force_ascii=False)
+        print("hhhh1")
+        classification = result.to_json(orient = 'records',force_ascii=False)
+        print("hhhh2")
         res = make_response(classification)
+        print("hhhh3")
         return res
     except Exception as e: 
         return jsonify({

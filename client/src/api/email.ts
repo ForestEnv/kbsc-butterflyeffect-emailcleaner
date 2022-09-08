@@ -9,9 +9,10 @@ export async function getEmailCount(user_no: number) {
 };
 
 //스캔 이후 분류된 이메일 리스트 조회 API
-export async function getEmailClassification(user_no:number, email_id:string) {
+export async function getEmailClassification(params: EmailScanParams) {
     const res = await client.post(
         'api/email/predict',
+        params
     );
     return res.data;
 };

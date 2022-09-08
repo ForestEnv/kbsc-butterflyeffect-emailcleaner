@@ -8,8 +8,14 @@ import pickle
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
 
 PATH = os.getcwd()
+
+load_dotenv()
+
+PRIVATE_EMAIL = os.environ.get("PRIVATE_EMAIL")
+PRIVATE_PW = os.environ.get("PRIVATE_PW")
 
 now = datetime.now()
 
@@ -130,10 +136,17 @@ def fetch_emails(email_address, password):
                 subject_= make_header(decode_header(str(email_message['Subject'])))
                 break
         pred_ = emailClassification(subject_)
-        
+        if pred_ == 0:
+            predict_ = "광고"
+        elif pred_ == 1:
+            predict_ = "뉴스레터"
+        elif pred_ == 2:
+            predict_ = "알림"
+        elif pred_ == 3:
+            predict_ = "개인"
         res, body_ = get_body(data)
 
-        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : pred_}, index=[n])
+        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : predict_}, index=[n])
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "pred" : pred_}, index=[n])
         
         df_mail_list = pd.concat([df_mail_list, df])
@@ -271,12 +284,12 @@ def send_email(email_address, emailList):
     smtp_host = 'smtp.gmail.com'
     smtp_port = 587
 
-    from_addr = "huiyy9211@gmail.com"
+    from_addr = PRIVATE_EMAIL
     to_addr = email_address
 
     smtp = smtplib.SMTP(smtp_host, smtp_port)
     smtp.starttls()
-    smtp.login(from_addr, "kfjjmemkpjjxuioe")
+    smtp.login(from_addr, PRIVATE_PW)
     
     suc_cnt = 0
     err_cnt = 0
