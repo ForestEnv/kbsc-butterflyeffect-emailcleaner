@@ -1,10 +1,10 @@
 import client from '../lib/client';
-import { EmailCount } from './types';
+import { EmailInfoArray } from './types';
 import { DeleteNumber } from './types';
 
 //이메일 개수 조회 API
 export async function getEmailCount(user_no: number) {
-    const res = await client.get<EmailCount>(`api/email/count/${user_no}`);
+    const res = await client.get<EmailInfoArray>(`api/email/count/${user_no}`);
     return res.data;
 };
 

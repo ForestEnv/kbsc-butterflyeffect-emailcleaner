@@ -29,9 +29,14 @@ export interface EmailAddress {
 }
 
 //이메일 개수 조회
-export interface EmailCount {
-    email: string;
+export interface EmailCountResult {
     emailCount: number;
+    email_address: string;
+}
+
+//연동된 사용자의 이메일 주소 & 이메일 수에 대한 배열 
+export interface EmailInfoArray {
+    Ressult: EmailCountResult[]
 }
 
 export interface DeleteNumber {
