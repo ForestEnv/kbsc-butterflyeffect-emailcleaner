@@ -13,6 +13,9 @@ import com.client.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+//spinkit 라이브러리 설정
+import com.react.rnspinkit.RNSpinkitPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -28,6 +31,9 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          
+          //spinkit 라이브러리 설정
+          packages.add(new RNSpinkitPackage());
           return packages;
         }
 

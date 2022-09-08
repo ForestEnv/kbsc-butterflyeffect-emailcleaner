@@ -15,6 +15,6 @@ export async function setConnection(params:EmailConnectionParams) {
 interface EmailConnectionParams {
     no: number;
     id: string | undefined;
-    email: string;
-    emailPassword: string;
+    email_id: string;
+    email_Pw: string;
 }
