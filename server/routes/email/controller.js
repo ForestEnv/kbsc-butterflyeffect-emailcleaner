@@ -71,9 +71,6 @@ exports.countEmail = async (req, res, next) => {
     const response = await axios.post("http://localhost:5000/count", {
       Emails: emailData,
     });
-    console.log(response.data);
-    //const totalEmailNum = response.data.Result[0].emailCount;
-    //console.log("DATA FROM FLASK=" + totalEmailNum);
     res.status(CREATED).json({
       message: "이메일 연동 성공!",
       Ressult: response.data.Result,
@@ -96,7 +93,7 @@ exports.predictEmail = async (req, res, next) => {
         password: email_info.dataValues.email_Pw,
       },
     });
-    res.status(CREATED).json({ result: response.data });
+    res.status(CREATED).send(response.data);
   } catch (error) {
     res.status(BAD_REQUEST).json({
       message: "연동 실패!",
