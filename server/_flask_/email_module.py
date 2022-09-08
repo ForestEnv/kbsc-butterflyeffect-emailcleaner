@@ -8,8 +8,14 @@ import pickle
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
 
 PATH = os.getcwd()
+
+load_dotenv()
+
+PRIVATE_EMAIL = os.environ.get("PRIVATE_EMAIL")
+PRIVATE_PW = os.environ.get("PRIVATE_PW")
 
 now = datetime.now()
 
@@ -278,12 +284,12 @@ def send_email(email_address, emailList):
     smtp_host = 'smtp.gmail.com'
     smtp_port = 587
 
-    from_addr = "huiyy9211@gmail.com"
+    from_addr = PRIVATE_EMAIL
     to_addr = email_address
 
     smtp = smtplib.SMTP(smtp_host, smtp_port)
     smtp.starttls()
-    smtp.login(from_addr, "kfjjmemkpjjxuioe")
+    smtp.login(from_addr, PRIVATE_PW)
     
     suc_cnt = 0
     err_cnt = 0
