@@ -23,6 +23,11 @@ export interface EmailConnectionResult {
     isConnectionEmail: boolean;
 }
 
+//이메일 주소 
+export interface EmailAddress {
+    email_id: string[];
+}
+
 //이메일 개수 조회
 export interface EmailCount {
     email: string;

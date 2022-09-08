@@ -10,27 +10,32 @@ import {
 import {COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS} from '../constants/theme';
 import { ConnectionPwRouteProp } from '../stacks/types';
 import { useRoute } from '@react-navigation/core';
+
 import { useUserState } from "../contexts/UserContext";
+import { useEmailAddressState } from '../contexts/EmailAddressContext';
+
 import useConnection from '../hooks/useConnection';
 
 function ConnectionEmailPwScreen() {
     //입력된 이메일 주소 값을 저장
     const {params} = useRoute<ConnectionPwRouteProp>();
     const [user] = useUserState();
-    
+    const [emailAddress, setEmailAddress] = useEmailAddressState();
+
     //연동할 이메일 비밀번호 State
-    const [emailPassword, setEmailPassword] = useState('');
+    const [email_Pw, setEmailPassword] = useState('');
     const {mutate: setConnection} = useConnection();
     
-    const email = params.email;
-
+    const email_id = params.email;
+    
     //EventHandler: 이메일 연동 실행
     const onConnectionSubmit = () => {
+        setEmailAddress([email_id]);
         setConnection({
             no:user.no,
             id:user?.id,
-            email,
-            emailPassword,
+            email_id,
+            email_Pw,
         });
     };
 
@@ -41,7 +46,7 @@ function ConnectionEmailPwScreen() {
                 <Text style={styles.text}>입력해주세요.</Text>
                 <Text style={{color:'#484848', marginLeft:DEVICE_WIDTH * 32, fontSize:14, fontFamily:"NotoSansKR-Medium"}}>연동이 완료되기까지 특정 시간이 소요됩니다.</Text>
                 <View style={{marginTop:DEVICE_HEIGHT * 20, alignItems:'center'}}>
-                    <TextInput style={styles.input}value={emailPassword} onChangeText={setEmailPassword} placeholder="비밀번호를 입력하세요."/>
+                    <TextInput style={styles.input}value={email_Pw} onChangeText={setEmailPassword} placeholder="비밀번호를 입력하세요."/>
                     <TouchableOpacity style={styles.button}onPress={onConnectionSubmit}>
                         <Text style={styles.btnText}>완료</Text>
                     </TouchableOpacity>

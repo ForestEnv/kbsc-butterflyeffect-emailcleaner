@@ -16,9 +16,12 @@ import {
 
 import { useQuery } from '@tanstack/react-query';
 import { useUserState } from "../contexts/UserContext";
+import { useEmailAddressState } from '../contexts/EmailAddressContext';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import  useScan  from '../hooks/useScan';
 
 import { getEmailCount } from "../api/email";
+import { getEmailClassification } from '../api/email';
 import { getDeleteEmailNum } from '../api/email';
 import { DeleteNumber } from '../api/types';
 
@@ -35,12 +38,25 @@ import Scan from '../assets/icons/icon_scan.svg';
 function HomeScreen() {
   const [user] = useUserState();
   
+  //scan 결과 상태값
+  const [scanResult, setScanResult] = useState();
+
+  //연동된 이메일 주소
+  const [emailAddress] = useEmailAddressState();
+  const email_id = emailAddress[0];
+  
   //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
   const {data, isLoading} = useQuery(['count', user.no], () => getEmailCount(user.no));
   
   //리액트 쿼리를 사용한 데이터 페칭 : scan 작업 이후 분류된 이메일 리스트
-  //const {mutate: }
-  
+  //const {mutate: getEmailClassification, isLoading: scanLoading } = useScan();
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getEmailClassification(user.no, email_id);
+    }
+    fetchData();
+  },[])
+
   //이메일 삭제 수 State
   const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
   
@@ -60,6 +76,10 @@ function HomeScreen() {
   //스캔 실행
   const onScanSubmit = () => {
     handlePresentModalPress();
+    // getEmailClassification({
+    //   user_no: user.no,
+    //   email_id
+    // })
   };
 
   //서비스 사용 여부 API 
