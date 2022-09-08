@@ -14,7 +14,8 @@ export default function useRegister() {
     const mutation = useMutation(register, {
         onSuccess: (data) => {
             setUser(data.user);
-            navigation.pop();
+            //회원가입 이후 로그인 스크린으로 이동
+            navigation.navigate('Login');
             applyToken(data.accesstoken);
             authStorage.set(data);
             console.log(data);

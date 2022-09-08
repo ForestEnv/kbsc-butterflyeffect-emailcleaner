@@ -12,6 +12,7 @@ import {
   View, 
   ActivityIndicator, 
   StatusBar,
+  ScrollView
 } from 'react-native';
 
 import {
@@ -52,25 +53,44 @@ const classification = [
   {id:4, sort:'뉴스레터', icon:<NewsLetter/>},
 ]
 
+//분류 응답 데이터 타입
+interface ScanResult {
+  index:number;
+  date:string;
+  subject:string;
+  sender:string;
+  body:string;
+  pred:string;
+}
+
+interface ResultArray {
+  result: ScanResult[]
+}
+
 function HomeScreen()  {
   const [user] = useUserState();
-  
+  const user_no = user.no;
+
   //Tab 상태값
   const [toggleState, setToggleState] = useState<string>("개인");
 
   //scan 결과 상태값
-  const [scanResult, setScanResult] = useState();
+  const [scanResult, setScanResult] = useState<ScanResult[]>([]);
   const [isScanLoading, setIsScanLoading] = useState(false);
 
   //연동된 이메일 주소
-  // const [emailAddress] = useEmailAddressState();
-  // const email_id = emailAddress[0];
-  
+  const [emailAddress] = useEmailAddressState();
+  const email_id = emailAddress[0];
+
   //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
   const {data, isLoading} = useQuery(['count', user.no], () => getEmailCount(user.no));
-
+  
   //이메일 삭제 수 State
   const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
+
+  const emailList = scanResult.filter(item => (
+    item.pred === toggleState
+  ));
 
   //Eventhandler: Tab
   const toggleTab = (index: string) => {
@@ -84,13 +104,29 @@ function HomeScreen()  {
     console.log('handleSheetChanges', index);  
   }, []);
 
+  //스캔 이후 응답 데이터 저장
+  const fetchData = async () => {
+    const res = await getEmailClassification({user_no, email_id});
+    setScanResult(res);
+  }
+
   //스캔 실행
   const onScanSubmit = useCallback(() => {
-    setIsScanLoading(false);
+    //스캔 데이터 로딩
+    try{
+      setIsScanLoading(true);
+      fetchData();
+    } catch(error){
+        console.log(error);
+    } finally{
+      setIsScanLoading(false)
+    }
     //바텀시트 렌더링
     bottomSheetModalRef.current?.present();  
   }, []);
 
+  console.log("스캔 이후 응답 데이터 =",scanResult[0].sender);
+  
   //서비스 사용 여부 API 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,6 +188,7 @@ function HomeScreen()  {
                 {classification.map((item, index) => (
                   <TouchableOpacity
                     key={index}
+                    onPress={() => toggleTab(item.sort)}
                     style={{
                       width: DEVICE_WIDTH * 60,
                       height: DEVICE_HEIGHT * 60,
@@ -167,6 +204,16 @@ function HomeScreen()  {
                       <Text style={{fontFamily:'NotoSansKR-Medium', color:'#000000', fontSize:14}}>{item.sort}</Text>
                   </TouchableOpacity>
                 ))}
+              </View>
+              <View>
+                  {emailList.map((item, index) => (
+                    <>
+                      <View key={index} style={{marginLeft:35,flexDirection:'row'}}>
+                        <Text style={{color:'red', fontSize:16, }}>{item.index}</Text>
+                        <Text style={{color:'#000000', fontSize:16}}>{item.subject}</Text>
+                      </View>
+                    </>
+                  ))}
               </View>            
             </View> 
           </BottomSheetModal>
