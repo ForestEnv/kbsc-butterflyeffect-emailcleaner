@@ -1,6 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 
+import {
+  BottomSheetModalProvider
+} from '@gorhom/bottom-sheet';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserContextProvider } from './src/contexts/UserContext';
@@ -19,9 +23,11 @@ function App() {
           <ConnectionContextProvider>
             <EmailAddressContextProvider>
               <QueryClientProvider client={queryClient}>
-                <NavigationContainer>
-                  <RootStack/>
-                </NavigationContainer>
+                  <NavigationContainer>
+                    <BottomSheetModalProvider>
+                      <RootStack/>
+                    </BottomSheetModalProvider>
+                  </NavigationContainer>
               </QueryClientProvider>
             </EmailAddressContextProvider>
           </ConnectionContextProvider>

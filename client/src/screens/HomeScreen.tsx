@@ -13,7 +13,12 @@ import {
   ActivityIndicator, 
   StatusBar,
 } from 'react-native';
-import { BottomSheet } from '@rneui/themed';
+
+import {
+  BottomSheetModal, 
+  BottomSheetModalProvider,
+  TouchableOpacity
+} from '@gorhom/bottom-sheet';
 
 import { useQuery } from '@tanstack/react-query';
 import { useUserState } from "../contexts/UserContext";
@@ -32,9 +37,25 @@ import EmailAddressBox from '../components/EmailAddreessBox';
 import CircleView from '../components/CircleView';
 import FirstUseInfo from '../components/FirstUseInfo';
 
-function HomeScreen() {
+import Person from '../assets/icons/icon_person.svg';
+import Alarm from '../assets/icons/icon_alaram.svg';
+import Ads from '../assets/icons/icon_ads.svg';
+import NewsLetter from '../assets/icons/icon_newsletter.svg';
+
+//분류 
+const classification = [
+  {id:1, sort:'개인', icon:<Person/>},
+  {id:2, sort:'알림', icon:<Alarm/>},
+  {id:3, sort:'광고', icon:<Ads/>},
+  {id:4, sort:'뉴스레터', icon:<NewsLetter/>},
+]
+
+function HomeScreen()  {
   const [user] = useUserState();
-  
+
+  //Tab 상태값
+  const [toggleState, setToggleState] = useState<string>("개인");
+
   //scan 결과 상태값
   const [scanResult, setScanResult] = useState();
 
@@ -48,10 +69,22 @@ function HomeScreen() {
   //이메일 삭제 수 State
   const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
 
-  //스캔 실행
-  const onScanSubmit = () => {
-    
+  //Eventhandler: Tab
+  const toggleTab = (index: string) => {
+    setToggleState(index);
   };
+  
+  //바텀시트
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => ['1%', DEVICE_HEIGHT*525], []);
+  const handleSheetChanges = useCallback((index: number) => {    
+    console.log('handleSheetChanges', index);  
+  }, []);
+
+  //스캔 실행
+  const onScanSubmit = useCallback(() => {
+    bottomSheetModalRef.current?.present();  
+  }, []);
 
   //서비스 사용 여부 API 
   useEffect(() => {
@@ -86,6 +119,51 @@ function HomeScreen() {
         <View style={styles.main}>
           <EmailAddressBox email={data.Ressult[0].email_address}/>
           <CircleView emailCount={data.Ressult[0].emailCount} onScanSubmit={onScanSubmit}/>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}          
+            index={1}          
+            snapPoints={snapPoints}          
+            onChange={handleSheetChanges}
+            enablePanDownToClose={true}
+          > 
+            <View style={styles.contentContainer}>
+              <View>
+                <Text style={{fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:24}}>스캔 작업을 완료했습니다🎊</Text>
+                <Text style={{textAlign:'center'}}>
+                  <Text style={{marginTop:DEVICE_HEIGHT * 5, fontFamily:'NotoSansKR-Bold', color:'red', fontSize:16  }}>삭제를 원하지 않는 메일은 &nbsp;</Text>
+                  <Text style={{fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:16  }}>체크를</Text>
+                </Text>          
+                <Text style={{textAlign:'center',fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:16, lineHeight:20, }}>해제시켜주세요.</Text>
+              </View>
+              <View 
+                style={{
+                  flexDirection:'row',
+                  marginTop:DEVICE_HEIGHT * 15,
+                  alignItems:'center',
+                  justifyContent:'center',
+                }}
+              >
+                {classification.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={{
+                      width: DEVICE_WIDTH * 60,
+                      height: DEVICE_HEIGHT * 60,
+                      marginHorizontal: DEVICE_WIDTH * 8,
+                      alignItems:'center',
+                      justifyContent:'center',
+                      borderWidth:3,
+                      borderRadius: 15,
+                      borderColor:"#ECE6E6"
+                    }}
+                  >
+                      <View>{item.icon}</View>
+                      <Text style={{fontFamily:'NotoSansKR-Medium', color:'#000000', fontSize:14}}>{item.sort}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>            
+            </View> 
+          </BottomSheetModal>
           { !deleteNum ? (
               <View>
                 <Text>사용 내역이 있습니다.</Text>
