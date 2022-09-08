@@ -104,7 +104,7 @@ function AuthForm({isRegister}: AuthFormProps) {
                         onPress={onPress}
                     >
                         {isLoading ? (
-                            <ActivityIndicator size="small" color="white"/>
+                            <ActivityIndicator size="large" color="white"/>
                         ) : (
                             <Text style={styles.text}>
                                 {isRegister ? '회원가입' : '로그인'}

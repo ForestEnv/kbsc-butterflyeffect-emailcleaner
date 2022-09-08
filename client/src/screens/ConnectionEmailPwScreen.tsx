@@ -24,12 +24,19 @@ function ConnectionEmailPwScreen() {
 
     //연동할 이메일 비밀번호 State
     const [email_Pw, setEmailPassword] = useState('');
-    const {mutate: setConnection} = useConnection();
+    const {mutate: setConnection, isLoading: connectionLoading} = useConnection();
     
+    //연동 loading
+    const isLoading = connectionLoading;
+
+    //이메일 주소 입력 화면으로부터 받은 이메일 주소 값: string
     const email_id = params.email;
     
     //EventHandler: 이메일 연동 실행
     const onConnectionSubmit = () => {
+        if(isLoading) {
+            return;
+        }
         setEmailAddress([email_id]);
         setConnection({
             no:user.no,

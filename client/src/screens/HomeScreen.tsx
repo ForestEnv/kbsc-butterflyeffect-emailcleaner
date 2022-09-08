@@ -37,6 +37,8 @@ import EmailAddressBox from '../components/EmailAddreessBox';
 import CircleView from '../components/CircleView';
 import FirstUseInfo from '../components/FirstUseInfo';
 
+import {Bounce} from 'react-native-animated-spinkit';
+
 import Person from '../assets/icons/icon_person.svg';
 import Alarm from '../assets/icons/icon_alaram.svg';
 import Ads from '../assets/icons/icon_ads.svg';
@@ -104,8 +106,9 @@ function HomeScreen()  {
     return(
       <>
         <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
-        <View style={{flex:1, backgroundColor:COLORS.main}}>
-          <ActivityIndicator size="large" color="green"/>
+        <View style={{flex:1, backgroundColor: 'rgba(0, 0, 0, 0.25)', alignItems:'center', justifyContent:'center'}}>
+          <Bounce size={65} color="#B6E3B5"/>
+          <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Medium'}}>인박스 정보를 가져오고 있습니다. </Text>
         </View>
       </>
     );
