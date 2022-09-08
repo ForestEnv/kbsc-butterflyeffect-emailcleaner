@@ -130,10 +130,17 @@ def fetch_emails(email_address, password):
                 subject_= make_header(decode_header(str(email_message['Subject'])))
                 break
         pred_ = emailClassification(subject_)
-        
+        if pred_ == 0:
+            predict_ = "광고"
+        elif pred_ == 1:
+            predict_ = "뉴스레터"
+        elif pred_ == 2:
+            predict_ = "알림"
+        elif pred_ == 3:
+            predict_ = "개인"
         res, body_ = get_body(data)
 
-        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : pred_}, index=[n])
+        df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "body": body_, "pred" : predict_}, index=[n])
         #df = pd.DataFrame({"index": n, "date": str(date_), "subject": str(subject_), "sender": str(from_), "pred" : pred_}, index=[n])
         
         df_mail_list = pd.concat([df_mail_list, df])
