@@ -22,7 +22,6 @@ exports.connectionEmail = async (req, res, next) => {
       },
     });
     const connectionMsg = response.data.success_message;
-    console.log("DATA FROM FLASK=" + connectionMsg);
     res.status(CREATED).json({
       message: "이메일 연동 작업!",
       isConnectionEmail,
@@ -64,6 +63,7 @@ exports.connectionAddEmail = async (req, res, next) => {
 
 exports.countEmail = async (req, res, next) => {
   try {
+    console.log('HI!!!!!!!')
     const { user_no } = req.params;
     console.log(user_no);
     const emailData = await emailServices.getEmail({ user_no });

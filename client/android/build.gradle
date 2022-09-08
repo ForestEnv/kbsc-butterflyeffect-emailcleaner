@@ -40,6 +40,10 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+        //spinkit 라이브러리 설정
+        maven {                                                                                                             
+            url "https://jitpack.io"                                                                                       
+        } 
         mavenCentral {
             // We don't want to fetch react-native from Maven Central as there are
             // older versions over there.

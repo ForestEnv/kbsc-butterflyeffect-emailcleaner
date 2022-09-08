@@ -1,6 +1,7 @@
 # pip install flask
 # pip install pandas
 # pip install scikit-learn
+# pip install python-dotenv
 
 from flask import Flask, jsonify, request, make_response
 import pandas as pd
