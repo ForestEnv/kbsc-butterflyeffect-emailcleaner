@@ -16,7 +16,7 @@ interface EventProps {
 function ScanButton({onScanSubmit}: EventProps) {
     return(
         <View style={styles.container}>
-            <Text style={{color:'#a19f9f', }}>아래 스캔 버튼을 클릭하세요.</Text>
+            <Text style={{color:'#a19f9f', fontFamily:'NotoSansKR-Bold' }}>아래 스캔 버튼을 클릭하세요.</Text>
             <TouchableOpacity
                 onPress={onScanSubmit}
                 style={[styles.button, styles.shadow]}
@@ -29,7 +29,7 @@ function ScanButton({onScanSubmit}: EventProps) {
 
 const styles = StyleSheet.create({
     container:{
-        marginTop: DEVICE_HEIGHT * 25, 
+        marginTop: DEVICE_HEIGHT * 1, 
         alignItems:'center', 
         justifyContent:'center',
     },
