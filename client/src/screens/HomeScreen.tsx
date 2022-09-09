@@ -70,11 +70,35 @@ function HomeScreen()  {
 
   //Tab 상태값
   const [toggleState, setToggleState] = useState<string>("광고");
-
+  
   //scan 결과 상태값
   const [scanResult, setScanResult] = useState<ScanResult[]>([]);
   const [isScanLoading, setIsScanLoading] = useState(false);
-
+  
+  //체크박스 상태값
+  //const [toggleCheckBox, setToggleCheckBox] = useState(true);
+  const [toggleCheckBox, setToggleCheckBox] = useState([]);
+  const [deleteEmailIndex, setDeleteEmailIndex] = useState([]);
+  
+  const temp = scanResult.map((item) => {
+    return item.index
+  });
+  console.log("데이터",temp);
+  
+  const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
+    console.log("체크 해제 이메일 인덱스 번호 = ",dataIndex, "&","체크박스 상태 =",newValue);
+    if(newValue){
+      // 단일 선택 시 체크된 아이템을 배열에 추가
+      setToggleCheckBox(prev => [...prev, dataIndex])
+      setDeleteEmailIndex(prev => [...prev, dataIndex])
+    }
+    else{
+      // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+      setToggleCheckBox(toggleCheckBox.filter((item) => item !== dataIndex))
+      setDeleteEmailIndex(deleteEmailIndex.filter((item) => item !== dataIndex))
+    }
+  }
+  console.log('삭제 예정 이메일 인덱스:',deleteEmailIndex);
   //연동된 이메일 주소
   //const [emailAddress] = useEmailAddressState();
   //const email_id = emailAddress[0];
@@ -117,10 +141,16 @@ function HomeScreen()  {
     setIsScanLoading(true);
     const res = await getEmailClassification({user_no, email_id});
     setScanResult(res);
+    //체크박스 기본값을 true로 초기화
+    setToggleCheckBox(new Array(res.length).fill(true));
     setIsScanLoading(false)
+
+    setToggleCheckBox(temp)
+    setDeleteEmailIndex(temp)
     //바텀시트 실행
-    bottomSheetModalRef.current?.present();  
+    bottomSheetModalRef.current?.present(); 
   }
+  console.log("체크박스:", toggleCheckBox.length);
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
@@ -144,6 +174,30 @@ function HomeScreen()  {
     fetchData();
   }, []);
   
+  // const temp = scanResult.map((item) => {
+  //   return item.index
+  // });
+  // console.log("데이터",temp);
+
+  // useEffect(()=> {
+  //   setToggleCheckBox(temp)
+  //   setDeleteEmailIndex(temp)
+  // },[])
+  
+  // const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
+  //   console.log("체크 해제 이메일 인덱스 번호 = ",dataIndex, "&","체크박스 상태 =",newValue);
+  //   if(newValue){
+  //     // 단일 선택 시 체크된 아이템을 배열에 추가
+  //     setToggleCheckBox(prev => [...prev, dataIndex])
+  //     setDeleteEmailIndex(prev => [...prev, dataIndex])
+  //   }
+  //   else{
+  //     // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+  //     setToggleCheckBox(toggleCheckBox.filter((item) => item !== dataIndex))
+  //     setDeleteEmailIndex(deleteEmailIndex.filter((item) => item !== dataIndex))
+  //   }
+  // }
+  // console.log('삭제 예정 이메일 인덱스:',deleteEmailIndex);
   //이메일 주소 & 이메일 수 조회 데이터 로딩
   if(isLoading) {
     return(
@@ -225,7 +279,9 @@ function HomeScreen()  {
                         <View style={{flexDirection:'row', marginHorizontal:17, alignItems:'center', }}>
                           {/* <Text style={{color:'#000000', fontSize:16, }}>{index + 1}</Text> */}
                           <CheckBox
-
+                            disabled={false}
+                            value={toggleCheckBox.includes(item.index) ? true : false}
+                            onValueChange={(newValue) => onHandleCheckBox(newValue, item.index)}
                           />
                           <Text numberOfLines={2} style={{color:'#000000', marginLeft:DEVICE_WIDTH * 8,fontSize:16, fontFamily:'NotoSansKR-Bold', includeFontPadding:false,}}>{item.subject}</Text>
                         </View>
