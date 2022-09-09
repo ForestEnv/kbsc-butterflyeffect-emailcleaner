@@ -17,7 +17,6 @@ import {
 
 import {
   BottomSheetModal, 
-  BottomSheetModalProvider,
   TouchableOpacity
 } from '@gorhom/bottom-sheet';
 
@@ -80,11 +79,11 @@ function HomeScreen()  {
 
   //연동된 이메일 주소
   const [emailAddress] = useEmailAddressState();
-  const email_id = emailAddress[0];
+  //const email_id = emailAddress[0];
 
   //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
   const {data, isLoading} = useQuery(['count', user.no], () => getEmailCount(user.no));
-  
+
   //이메일 삭제 수 State
   const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
 
@@ -98,35 +97,39 @@ function HomeScreen()  {
   };
   
   //바텀시트
+  //const sheetRef = useRef<BottomSheet>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['1%', DEVICE_HEIGHT*525], []);
   const handleSheetChanges = useCallback((index: number) => {    
     console.log('handleSheetChanges', index);  
   }, []);
 
+  //이메일 주소 
+  const email_id = data.Ressult[0].email_address;
+  
   //스캔 이후 응답 데이터 저장
   const fetchData = async () => {
+    setIsScanLoading(true);
     const res = await getEmailClassification({user_no, email_id});
     setScanResult(res);
+    setIsScanLoading(false)
+    bottomSheetModalRef.current?.present();  
   }
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
-    //스캔 데이터 로딩
+     //스캔 데이터 로딩
     try{
-      setIsScanLoading(true);
       fetchData();
     } catch(error){
         console.log(error);
-    } finally{
-      setIsScanLoading(false)
-    }
+     } //finally{
+    //   setIsScanLoading(false)
+    // }
     //바텀시트 렌더링
-    bottomSheetModalRef.current?.present();  
+    //bottomSheetModalRef.current?.present();  
   }, []);
 
-  console.log("스캔 이후 응답 데이터 =",scanResult[0].sender);
-  
   //서비스 사용 여부 API 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,7 +155,8 @@ function HomeScreen()  {
       </>
     );
   };
-
+  //const email_id = data.Ressult[0].email_address;
+  console.log(isScanLoading);
   return (
     <>
       <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
