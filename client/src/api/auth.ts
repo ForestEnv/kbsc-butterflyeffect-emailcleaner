@@ -4,7 +4,13 @@ import {
     IsConnectionEmail, 
 } from "./types";
 
-//회원가입 API
+// @ts-check
+/**
+ * 회원가입 실행
+ * @typedef {(id: string, name: string, password: string)} RegisterParams
+ * @param params {RegisterParams} 
+ * @returns 
+ */
 export async function register(params: RegisterParams) {
     const res = await client.post<AuthResult>(
         '/api/users/register',

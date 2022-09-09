@@ -10,14 +10,15 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  ActivityIndicator, 
   StatusBar,
-  ScrollView
 } from 'react-native';
 
-import {
+import { ScrollView } from 'react-native-gesture-handler';
+
+import BottomSheet, {
   BottomSheetModal, 
-  TouchableOpacity
+  TouchableOpacity,
+  BottomSheetScrollView
 } from '@gorhom/bottom-sheet';
 
 import { useQuery } from '@tanstack/react-query';
@@ -31,13 +32,14 @@ import { DeleteNumber } from '../api/types';
 
 import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
 
-
 import HeaderView from '../components/HeaderView';
 import EmailAddressBox from '../components/EmailAddreessBox';
 import CircleView from '../components/CircleView';
 import FirstUseInfo from '../components/FirstUseInfo';
+import CountEmailClassification from '../components/CountEmailClassification';
 
 import {Bounce} from 'react-native-animated-spinkit';
+import CheckBox from '@react-native-community/checkbox';
 
 import Person from '../assets/icons/icon_person.svg';
 import Alarm from '../assets/icons/icon_alaram.svg';
@@ -46,10 +48,10 @@ import NewsLetter from '../assets/icons/icon_newsletter.svg';
 
 //분류 
 const classification = [
-  {id:1, sort:'개인', icon:<Person/>},
-  {id:2, sort:'알림', icon:<Alarm/>},
-  {id:3, sort:'광고', icon:<Ads/>},
-  {id:4, sort:'뉴스레터', icon:<NewsLetter/>},
+  {id:1, sort:'광고', icon:<Ads/>},
+  {id:2, sort:'뉴스레터', icon:<NewsLetter/>},
+  {id:3, sort:'알림', icon:<Alarm/>},
+  {id:4, sort:'개인', icon:<Person/>},
 ]
 
 //분류 응답 데이터 타입
@@ -62,23 +64,19 @@ interface ScanResult {
   pred:string;
 }
 
-interface ResultArray {
-  result: ScanResult[]
-}
-
 function HomeScreen()  {
   const [user] = useUserState();
   const user_no = user.no;
 
   //Tab 상태값
-  const [toggleState, setToggleState] = useState<string>("개인");
+  const [toggleState, setToggleState] = useState<string>("광고");
 
   //scan 결과 상태값
   const [scanResult, setScanResult] = useState<ScanResult[]>([]);
   const [isScanLoading, setIsScanLoading] = useState(false);
 
   //연동된 이메일 주소
-  const [emailAddress] = useEmailAddressState();
+  //const [emailAddress] = useEmailAddressState();
   //const email_id = emailAddress[0];
 
   //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
@@ -90,6 +88,11 @@ function HomeScreen()  {
   const emailList = scanResult.filter(item => (
     item.pred === toggleState
   ));
+  
+  //분류된 이메일 수 카운트
+  const classificationEmailCount = scanResult.filter(item => (
+    item.pred === toggleState
+  )).length;
 
   //Eventhandler: Tab
   const toggleTab = (index: string) => {
@@ -97,37 +100,35 @@ function HomeScreen()  {
   };
   
   //바텀시트
-  //const sheetRef = useRef<BottomSheet>(null);
+  const sheetRef = useRef<BottomSheet>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['1%', DEVICE_HEIGHT*525], []);
+  const snapPoints = useMemo(() => ['1%', DEVICE_HEIGHT * 525], []);
   const handleSheetChanges = useCallback((index: number) => {    
     console.log('handleSheetChanges', index);  
   }, []);
 
-  //이메일 주소 
-  const email_id = data.Ressult[0].email_address;
+  //이메일 주소
+    
   
+  const email_id = data.Ressult[0].email_address;
   //스캔 이후 응답 데이터 저장
   const fetchData = async () => {
+    //스캔 데이터 로딩
     setIsScanLoading(true);
     const res = await getEmailClassification({user_no, email_id});
     setScanResult(res);
     setIsScanLoading(false)
+    //바텀시트 실행
     bottomSheetModalRef.current?.present();  
   }
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
-     //스캔 데이터 로딩
     try{
       fetchData();
     } catch(error){
         console.log(error);
-     } //finally{
-    //   setIsScanLoading(false)
-    // }
-    //바텀시트 렌더링
-    //bottomSheetModalRef.current?.present();  
+    } 
   }, []);
 
   //서비스 사용 여부 API 
@@ -155,8 +156,7 @@ function HomeScreen()  {
       </>
     );
   };
-  //const email_id = data.Ressult[0].email_address;
-  console.log(isScanLoading);
+
   return (
     <>
       <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
@@ -172,14 +172,14 @@ function HomeScreen()  {
             onChange={handleSheetChanges}
             enablePanDownToClose={true}
           > 
-            <View style={styles.contentContainer}>
+            <ScrollView style={styles.contentContainer}>
               <View>
-                <Text style={{fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:24}}>스캔 작업을 완료했습니다🎊</Text>
-                <Text style={{textAlign:'center'}}>
-                  <Text style={{marginTop:DEVICE_HEIGHT * 5, fontFamily:'NotoSansKR-Bold', color:'red', fontSize:16  }}>삭제를 원하지 않는 메일은 &nbsp;</Text>
+                <Text style={{ textAlign:'center',fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:24, height:DEVICE_HEIGHT*45, }}>스캔 작업을 완료했습니다🎊</Text>
+                <Text style={{height:DEVICE_HEIGHT*30,textAlign:'center',}}>
+                  <Text style={{fontFamily:'NotoSansKR-Bold', color:'red', fontSize:16,}}>삭제를 원하지 않는 메일은 &nbsp;</Text>
                   <Text style={{fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:16  }}>체크를</Text>
                 </Text>          
-                <Text style={{textAlign:'center',fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:16, lineHeight:20, }}>해제시켜주세요.</Text>
+                <Text style={{marginBottom:5,textAlign:'center',fontFamily:'NotoSansKR-Bold', color:'#000000', fontSize:16, lineHeight:20, }}>해제시켜주세요.</Text>
               </View>
               <View 
                 style={{
@@ -194,32 +194,49 @@ function HomeScreen()  {
                     key={index}
                     onPress={() => toggleTab(item.sort)}
                     style={{
-                      width: DEVICE_WIDTH * 60,
-                      height: DEVICE_HEIGHT * 60,
+                      width: DEVICE_WIDTH * 70,
+                      height: DEVICE_HEIGHT * 70,
                       marginHorizontal: DEVICE_WIDTH * 8,
                       alignItems:'center',
                       justifyContent:'center',
                       borderWidth:3,
                       borderRadius: 15,
-                      borderColor:"#ECE6E6"
+                      borderColor:"#ECE6E6",
+                      backgroundColor: toggleState === item.sort ? '#b6e3b5' : '#FFFFFF'
+                      
                     }}
                   >
-                      <View>{item.icon}</View>
+                      <View style={{marginTop:15}}>{item.icon}</View>
                       <Text style={{fontFamily:'NotoSansKR-Medium', color:'#000000', fontSize:14}}>{item.sort}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
-              <View>
+              <View style={{marginRight:DEVICE_WIDTH * 110}}>
+                <Text style={{marginLeft:DEVICE_WIDTH * 15}}>
+                  <Text style={{fontFamily:'NotoSansKR-Black', fontSize:25, color:'#b6e3b5'}}>{classificationEmailCount}</Text>
+                  <Text style={{fontFamily:'NotoSansKR-Bold', fontSize:25, color:'#000000'}}>개의 메일이 있습니다.</Text>
+                </Text>
+              </View>
+              <View style={{marginTop:DEVICE_HEIGHT * 2}}>
+                <View style={{borderBottomWidth:2, borderBottomColor:'#c3c1c1', }}></View>
                   {emailList.map((item, index) => (
                     <>
-                      <View key={index} style={{marginLeft:35,flexDirection:'row'}}>
-                        <Text style={{color:'red', fontSize:16, }}>{item.index}</Text>
-                        <Text style={{color:'#000000', fontSize:16}}>{item.subject}</Text>
+                      <View key={index} style={{marginLeft:2,}}>
+                        <View style={{flexDirection:'row', marginHorizontal:17, alignItems:'center', }}>
+                          {/* <Text style={{color:'#000000', fontSize:16, }}>{index + 1}</Text> */}
+                          <CheckBox
+
+                          />
+                          <Text numberOfLines={2} style={{color:'#000000', marginLeft:DEVICE_WIDTH * 8,fontSize:16, fontFamily:'NotoSansKR-Bold', includeFontPadding:false,}}>{item.subject}</Text>
+                        </View>
+                        <Text style={{color:'#898D89', fontSize:16, marginLeft:DEVICE_WIDTH * 50}}>{item.sender}</Text>
+
                       </View>
+                      <View style={{borderBottomWidth:1, borderBottomColor:'#c3c1c1', marginHorizontal:DEVICE_WIDTH *25}}></View>
                     </>
                   ))}
               </View>            
-            </View> 
+            </ScrollView> 
           </BottomSheetModal>
           { !deleteNum ? (
               <View>
@@ -245,7 +262,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {    
     flex: 1,    
-    alignItems: 'center',
+    //alignItems: 'center',
   },
   shadow:{
     shadowColor:'#000',
