@@ -8,7 +8,7 @@ import {
 
 import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
 
-import {Bounce} from 'react-native-animated-spinkit';
+import {Fold} from 'react-native-animated-spinkit';
 
 import ScanButton from './ScanButton';
 
@@ -23,7 +23,7 @@ function CircleView({emailCount, onScanSubmit, isScanLoading}: EmailCountProps) 
         <View style={[styles.circle, styles.shadow]}>
             {isScanLoading ? (
                 <>
-                    <Bounce size={85} color="#F4EAE6"/>
+                    <Fold size={85} color="#F4EAE6"/>
                     <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Medium'}}>회원님의 이메일을 스캔중입니다.</Text>
                 </>
                 ):(
