@@ -11,14 +11,17 @@ import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
 import {Fold} from 'react-native-animated-spinkit';
 
 import ScanButton from './ScanButton';
+import DeleteButton from './DeleteButton';
 
 interface EmailCountProps {
     emailCount: number;
     onScanSubmit: any;
+    onDeleteSubmit: any;
+    homeScreenState: boolean;
     isScanLoading: boolean;
 };
 
-function CircleView({emailCount, onScanSubmit, isScanLoading}: EmailCountProps) {
+function CircleView({emailCount, onScanSubmit, onDeleteSubmit, homeScreenState, isScanLoading}: EmailCountProps) {
     return(
         <View style={[styles.circle, styles.shadow]}>
             {isScanLoading ? (
@@ -28,9 +31,18 @@ function CircleView({emailCount, onScanSubmit, isScanLoading}: EmailCountProps) 
                 </>
                 ):(
                     <>
-                        <Text style={styles.infoText}>현재 메일 수</Text>
-                        <Text style={styles.countText}>{emailCount}</Text>
-                        <ScanButton onScanSubmit={onScanSubmit}/>
+                        {homeScreenState ? (
+                            <View>
+                                <Text style={styles.infoText}>현재 메일 수</Text>
+                                <Text style={styles.countText}>{emailCount}</Text>
+                                <ScanButton onScanSubmit={onScanSubmit}/>
+                            </View>
+                        ) : (
+                            <View>
+                                <Text style={styles.infoText}>삭제될 메일 수</Text>
+                                <DeleteButton onDeleteSubmit={onDeleteSubmit}/>
+                            </View>
+                        )}
                     </>
                 )}
         </View>

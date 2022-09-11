@@ -17,6 +17,16 @@ export async function getEmailClassification(params: EmailScanParams) {
     return res.data;
 };
 
+//이메일 삭제 API
+export async function deleteEmail(params: EmailDeleteParams) {
+    console.log(params)
+    const res = await client.post(
+        'api/email/delete',
+        params
+    );
+    console.log('삭제 결과:', res.data);
+};
+
 export async function getDeleteEmailNum(no: number) {
     const res = await client.get<DeleteNumber>(`api/email/${no}`);
     return res.data;
@@ -26,4 +36,10 @@ export async function getDeleteEmailNum(no: number) {
 interface EmailScanParams {
     user_no: number;
     email_id: string;
+}
+
+interface EmailDeleteParams {
+    user_no: number;
+    email_id: string;
+    list: number[];
 }
