@@ -27,6 +27,7 @@ import { useEmailAddressState } from '../contexts/EmailAddressContext';
 
 import { getEmailCount } from "../api/email";
 import { getEmailClassification } from '../api/email';
+import { deleteEmail } from '../api/email';
 import { getDeleteEmailNum } from '../api/email';
 import { DeleteNumber } from '../api/types';
 
@@ -65,6 +66,10 @@ interface ScanResult {
 }
 
 function HomeScreen()  {
+  //HomeScreen 전체 상태값
+  const [homeScreenState, setHomeScreenState] = useState('scan');
+  
+  //사용자 번호 조회
   const [user] = useUserState();
   const user_no = user.no;
 
@@ -79,7 +84,8 @@ function HomeScreen()  {
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState([]);
   const [deleteEmailIndex, setDeleteEmailIndex] = useState([]);
-  
+  const list = [...deleteEmailIndex];
+
   const temp = scanResult.map((item) => {
     return item.index
   });
@@ -132,7 +138,6 @@ function HomeScreen()  {
   }, []);
 
   //이메일 주소
-    
   
   const email_id = data.Ressult[0].email_address;
   //스캔 이후 응답 데이터 저장
@@ -161,6 +166,11 @@ function HomeScreen()  {
     } 
   }, []);
 
+  //삭제 실행
+  const onDeleteSubmit = () => {
+    deleteEmail({user_no, email_id, list});
+  };
+
   //서비스 사용 여부 API 
   useEffect(() => {
     const fetchData = async () => {
@@ -174,31 +184,7 @@ function HomeScreen()  {
     fetchData();
   }, []);
   
-  // const temp = scanResult.map((item) => {
-  //   return item.index
-  // });
-  // console.log("데이터",temp);
-
-  // useEffect(()=> {
-  //   setToggleCheckBox(temp)
-  //   setDeleteEmailIndex(temp)
-  // },[])
-  
-  // const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
-  //   console.log("체크 해제 이메일 인덱스 번호 = ",dataIndex, "&","체크박스 상태 =",newValue);
-  //   if(newValue){
-  //     // 단일 선택 시 체크된 아이템을 배열에 추가
-  //     setToggleCheckBox(prev => [...prev, dataIndex])
-  //     setDeleteEmailIndex(prev => [...prev, dataIndex])
-  //   }
-  //   else{
-  //     // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
-  //     setToggleCheckBox(toggleCheckBox.filter((item) => item !== dataIndex))
-  //     setDeleteEmailIndex(deleteEmailIndex.filter((item) => item !== dataIndex))
-  //   }
-  // }
-  // console.log('삭제 예정 이메일 인덱스:',deleteEmailIndex);
-  //이메일 주소 & 이메일 수 조회 데이터 로딩
+  //로그인 이후 인박스 조회 loading
   if(isLoading) {
     return(
       <>
@@ -218,7 +204,11 @@ function HomeScreen()  {
         <HeaderView/>
         <View style={styles.main}>
           <EmailAddressBox email={data.Ressult[0].email_address}/>
-          <CircleView emailCount={data.Ressult[0].emailCount} onScanSubmit={onScanSubmit} isScanLoading={isScanLoading}/>
+          <CircleView 
+            emailCount={data.Ressult[0].emailCount} 
+            onScanSubmit={onScanSubmit} 
+            isScanLoading={isScanLoading}
+          />
           <BottomSheetModal
             ref={bottomSheetModalRef}          
             index={1}          
@@ -297,6 +287,9 @@ function HomeScreen()  {
           { !deleteNum ? (
               <View>
                 <Text>사용 내역이 있습니다.</Text>
+                <TouchableOpacity onPress={onDeleteSubmit}>
+                  <Text>삭제하기</Text>
+                </TouchableOpacity>
               </View>
             ) : (
               <FirstUseInfo/>
