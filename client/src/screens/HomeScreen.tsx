@@ -27,6 +27,7 @@ import { useEmailAddressState } from '../contexts/EmailAddressContext';
 
 import { getEmailCount } from "../api/email";
 import { getEmailClassification } from '../api/email';
+import { deleteEmail } from '../api/email';
 import { getDeleteEmailNum } from '../api/email';
 import { DeleteNumber } from '../api/types';
 
@@ -36,6 +37,7 @@ import HeaderView from '../components/HeaderView';
 import EmailAddressBox from '../components/EmailAddreessBox';
 import CircleView from '../components/CircleView';
 import FirstUseInfo from '../components/FirstUseInfo';
+import ActivityInfoView from '../components/ActivityInfoView';
 import CountEmailClassification from '../components/CountEmailClassification';
 
 import {Bounce} from 'react-native-animated-spinkit';
@@ -65,6 +67,10 @@ interface ScanResult {
 }
 
 function HomeScreen()  {
+  //HomeScreen 전체 상태값
+  const [homeScreenState, setHomeScreenState] = useState(true);
+  
+  //사용자 번호 조회
   const [user] = useUserState();
   const user_no = user.no;
 
@@ -79,12 +85,14 @@ function HomeScreen()  {
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState([]);
   const [deleteEmailIndex, setDeleteEmailIndex] = useState([]);
-  
+  const list = deleteEmailIndex;
+
   const temp = scanResult.map((item) => {
     return item.index
   });
   console.log("데이터",temp);
   
+  //체크박스 EventHandler
   const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
     console.log("체크 해제 이메일 인덱스 번호 = ",dataIndex, "&","체크박스 상태 =",newValue);
     if(newValue){
@@ -117,13 +125,16 @@ function HomeScreen()  {
   const classificationEmailCount = scanResult.filter(item => (
     item.pred === toggleState
   )).length;
-
+  
+  //삭제할 이메일 수 카운트
+  const deletionEmailCount = deleteEmailIndex.length;
+  console.log(deletionEmailCount);
   //Eventhandler: Tab
   const toggleTab = (index: string) => {
     setToggleState(index);
   };
   
-  //바텀시트
+  //스캔 이후 바텀시트
   const sheetRef = useRef<BottomSheet>(null);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['1%', DEVICE_HEIGHT * 525], []);
@@ -131,12 +142,20 @@ function HomeScreen()  {
     console.log('handleSheetChanges', index);  
   }, []);
 
+
+  //삭제 이후 바텀시트
+  const deleteBottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const deleteSnapPoints = useMemo(() => ['1%', DEVICE_HEIGHT * 375], []);
+  const deleteHandleSheetChanges = useCallback((index: number) => {    
+    console.log('handleSheetChanges', index);  
+  }, []);
+
+  console.log("스캔 누르기 전 상태", homeScreenState);
   //이메일 주소
-    
   
-  const email_id = data.Ressult[0].email_address;
   //스캔 이후 응답 데이터 저장
-  const fetchData = async () => {
+  const fetchScanData = async () => {
+    const email_id = data.Ressult[0].email_address;
     //스캔 데이터 로딩
     setIsScanLoading(true);
     const res = await getEmailClassification({user_no, email_id});
@@ -144,21 +163,39 @@ function HomeScreen()  {
     //체크박스 기본값을 true로 초기화
     setToggleCheckBox(new Array(res.length).fill(true));
     setIsScanLoading(false)
-
+    
     setToggleCheckBox(temp)
     setDeleteEmailIndex(temp)
     //바텀시트 실행
     bottomSheetModalRef.current?.present(); 
+    setHomeScreenState(false);
   }
   console.log("체크박스:", toggleCheckBox.length);
+  console.log("스캔 누른 이후 상태", homeScreenState);
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
     try{
-      fetchData();
+      fetchScanData();
     } catch(error){
         console.log(error);
     } 
+  }, []);
+
+  const fetchDeleteData = async () => {
+    const email_id = data.Ressult[0].email_address;
+    await deleteEmail({user_no, email_id, list});
+    deleteBottomSheetModalRef.current?.present();
+    setHomeScreenState(true);
+  }
+
+  //삭제 실행
+  const onDeleteSubmit = useCallback(() => {
+    try{
+      fetchDeleteData();
+    } catch(error){
+      console.log(error);
+    }
   }, []);
 
   //서비스 사용 여부 API 
@@ -174,31 +211,7 @@ function HomeScreen()  {
     fetchData();
   }, []);
   
-  // const temp = scanResult.map((item) => {
-  //   return item.index
-  // });
-  // console.log("데이터",temp);
-
-  // useEffect(()=> {
-  //   setToggleCheckBox(temp)
-  //   setDeleteEmailIndex(temp)
-  // },[])
-  
-  // const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
-  //   console.log("체크 해제 이메일 인덱스 번호 = ",dataIndex, "&","체크박스 상태 =",newValue);
-  //   if(newValue){
-  //     // 단일 선택 시 체크된 아이템을 배열에 추가
-  //     setToggleCheckBox(prev => [...prev, dataIndex])
-  //     setDeleteEmailIndex(prev => [...prev, dataIndex])
-  //   }
-  //   else{
-  //     // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
-  //     setToggleCheckBox(toggleCheckBox.filter((item) => item !== dataIndex))
-  //     setDeleteEmailIndex(deleteEmailIndex.filter((item) => item !== dataIndex))
-  //   }
-  // }
-  // console.log('삭제 예정 이메일 인덱스:',deleteEmailIndex);
-  //이메일 주소 & 이메일 수 조회 데이터 로딩
+  //로그인 이후 인박스 조회 loading
   if(isLoading) {
     return(
       <>
@@ -218,7 +231,13 @@ function HomeScreen()  {
         <HeaderView/>
         <View style={styles.main}>
           <EmailAddressBox email={data.Ressult[0].email_address}/>
-          <CircleView emailCount={data.Ressult[0].emailCount} onScanSubmit={onScanSubmit} isScanLoading={isScanLoading}/>
+          <CircleView 
+            emailCount={data.Ressult[0].emailCount} 
+            onScanSubmit={onScanSubmit}
+            onDeleteSubmit={onDeleteSubmit}
+            homeScreenState={homeScreenState} 
+            isScanLoading={isScanLoading}
+          />
           <BottomSheetModal
             ref={bottomSheetModalRef}          
             index={1}          
@@ -294,11 +313,40 @@ function HomeScreen()  {
               </View>            
             </ScrollView> 
           </BottomSheetModal>
-          { !deleteNum ? (
-              <View>
-                <Text>사용 내역이 있습니다.</Text>
+          <BottomSheetModal
+            ref={deleteBottomSheetModalRef}          
+            index={1}          
+            snapPoints={deleteSnapPoints}          
+            onChange={deleteHandleSheetChanges}
+            enablePanDownToClose={true}
+          >
+            <View>
+              <View style={{alignItems:'center'}}>
+                <Text style={{fontFamily: 'NotoSansKR-Bold',textAlign:'center', color:'#000000', fontSize:20}}>{deletionEmailCount}개의 이메일 삭제를 완료했습니다🎉</Text>
               </View>
-            ) : (
+              <View style={{backgroundColor:'#FFE9E9',width:DEVICE_WIDTH * 240, height: DEVICE_HEIGHT * 80, marginLeft: DEVICE_WIDTH * 60, alignItems:'center',borderRadius:15, }}>
+                <Text style={{fontFamily: 'NotoSansKR-Medium', color:'#000000', fontSize:14}}>감소시킨 탄소량</Text>
+                <Text style={{fontFamily: 'NotoSansKR-Bold', color:'#000000', fontSize:30, lineHeight:40}}>{deletionEmailCount * 4.22}g</Text>
+              </View>
+              <Text style={{fontFamily: 'NotoSansKR-Bold', textAlign:'center',color:'#000000', fontSize:16}}>일상 생활 속에서 또 다른 탄소 중립을 실천해 보세요🎁</Text>
+              <View style={{width:DEVICE_WIDTH * 315, height: DEVICE_HEIGHT * 115, marginLeft: DEVICE_WIDTH * 24, borderRadius:15, backgroundColor:'#F4EAE6'}}>
+                <Text style={{fontFamily: 'NotoSansKR-Bold',color:'#000000', fontSize:16}}>님, 이번에는</Text>    
+                <Text style={{fontFamily: 'NotoSansKR-Bold',color:'#000000', fontSize:16, lineHeight:20}}>샤워 시간을 1분 줄여보는게 어떨까요?😊</Text>
+                <Text style={{fontFamily: 'NotoSansKR-Light',color:'#000000', fontSize:16}}>샤워 시간을 1분 줄이면 가구당 연간 4.3kg의 CO2를 줄일 수 있습니다.</Text>    
+              </View>
+              <View>
+                <Text style={{textAlign:'center',fontFamily: 'NotoSansKR-Medium', color:'#000000', fontSize:14}}>현탁님이 성장시키고 있는 나무를 확인하러 가보세요🌲</Text>
+                <TouchableOpacity>
+                  <Text style={{textAlign:'center',fontFamily: 'NotoSansKR-Bold', color:'#000000', fontSize:16, lineHeight:18}}>
+                    이동하기
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </BottomSheetModal>
+          { !deleteNum ? (
+              <ActivityInfoView homeScreenState={homeScreenState}/>
+              ) : (
               <FirstUseInfo/>
           )}
         </View>
