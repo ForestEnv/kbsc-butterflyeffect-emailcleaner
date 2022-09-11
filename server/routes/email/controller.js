@@ -191,3 +191,19 @@ exports.restoreEmailList = async (req, res, next) => {
     });
   }
 };
+
+exports.getDeleteNumber = async (req, res, next) => {
+  try{
+    const { no } = req.params;
+    const result = await emailServices.getDeleteNumber(no);
+    console.log('삭제된 이메일 수:'+ result);
+    const deleteNum = result.total_no;
+    res.status(OK).json({
+      deleteNum
+    })
+  }catch(error){
+    res.status(BAD_REQUEST).json({
+      message: "조회 실패!",
+    });
+  }
+}

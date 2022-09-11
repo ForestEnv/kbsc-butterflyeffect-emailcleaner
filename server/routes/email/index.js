@@ -4,9 +4,8 @@ const controller = require("./controller");
 
 router.post("/connection", controller.connectionEmail);
 router.post("/connectionAdd", controller.connectionAddEmail);
-//이메일 수 조회는 get 방식으로 변경 필요
+router.get("/:no", middlewares.jwtAuth, controller.getDeleteNumber);
 router.get("/count/:user_no", middlewares.jwtAuth, controller.countEmail);
-//분류된 결과 조회는 get 방식으로 변경 필요
 router.post("/predict", middlewares.jwtAuth, controller.predictEmail);
 router.post("/delete", middlewares.jwtAuth, controller.deleteEmail);
 
