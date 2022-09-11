@@ -140,7 +140,7 @@ exports.deleteEmail = async (req, res, next) => {
 
 exports.showDeleteEmail = async (req, res, next) => {
   try {
-    let user_no = req.params.userNo;
+    let user_no = req.params.user_no;
     console.log(user_no);
     const Emails = await deleteServices.getDeleteEmails(user_no);
     res.status(CREATED).json({ result: Emails });

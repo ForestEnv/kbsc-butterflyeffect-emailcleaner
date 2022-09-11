@@ -85,13 +85,14 @@ function HomeScreen()  {
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState([]);
   const [deleteEmailIndex, setDeleteEmailIndex] = useState([]);
-  const list = [...deleteEmailIndex];
+  const list = deleteEmailIndex;
 
   const temp = scanResult.map((item) => {
     return item.index
   });
   console.log("데이터",temp);
   
+  //체크박스 EventHandler
   const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
     console.log("체크 해제 이메일 인덱스 번호 = ",dataIndex, "&","체크박스 상태 =",newValue);
     if(newValue){
@@ -151,10 +152,10 @@ function HomeScreen()  {
 
   console.log("스캔 누르기 전 상태", homeScreenState);
   //이메일 주소
-  const email_id = data.Ressult[0].email_address;
   
   //스캔 이후 응답 데이터 저장
   const fetchScanData = async () => {
+    const email_id = data.Ressult[0].email_address;
     //스캔 데이터 로딩
     setIsScanLoading(true);
     const res = await getEmailClassification({user_no, email_id});
@@ -182,14 +183,14 @@ function HomeScreen()  {
   }, []);
 
   const fetchDeleteData = async () => {
-    //await deleteEmail({user_no, email_id, list});
+    const email_id = data.Ressult[0].email_address;
+    await deleteEmail({user_no, email_id, list});
     deleteBottomSheetModalRef.current?.present();
     setHomeScreenState(true);
   }
 
   //삭제 실행
   const onDeleteSubmit = useCallback(() => {
-    const email_id = data.Ressult[0].email_address;
     try{
       fetchDeleteData();
     } catch(error){

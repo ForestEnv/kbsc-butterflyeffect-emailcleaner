@@ -9,11 +9,8 @@ router.get("/count/:user_no", middlewares.jwtAuth, controller.countEmail);
 router.post("/predict", middlewares.jwtAuth, controller.predictEmail);
 router.post("/delete", middlewares.jwtAuth, controller.deleteEmail);
 
-router.get(
-  "/deleteTable/:userNo",
-  middlewares.jwtAuth,
-  controller.showDeleteEmail
-);
+router.get("/deleteTable/:user_no", middlewares.jwtAuth, controller.showDeleteEmail);
+
 router.post("/restore", middlewares.jwtAuth, controller.restoreEmailList);
 
 module.exports = router;
