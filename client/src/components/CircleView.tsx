@@ -27,7 +27,7 @@ function CircleView({emailCount, onScanSubmit, onDeleteSubmit, homeScreenState, 
             {isScanLoading ? (
                 <>
                     <Fold size={85} color="#F4EAE6"/>
-                    <Text style={{marginTop: DEVICE_HEIGHT * 7,textAlign:'center',color:'#c3c1c1', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>회원님의 이메일을 스캔중입니다.</Text>
+                    <Text style={{marginTop: DEVICE_HEIGHT * 20, textAlign:'center',color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>회원님의 이메일을 스캔중입니다.</Text>
                 </>
                 ):(
                     <>
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
         textAlign: 'center', 
         width: DEVICE_WIDTH * 108, 
         height: DEVICE_HEIGHT * 29, 
-        marginTop: DEVICE_HEIGHT * 30, 
+        marginTop: DEVICE_HEIGHT * 30,
+        marginLeft: DEVICE_WIDTH *20, 
         fontSize: FONTS.regular, 
         fontWeight:'600', 
         color:'#000000'
@@ -73,7 +74,8 @@ const styles = StyleSheet.create({
         textAlign: 'center', 
         width: DEVICE_WIDTH * 100, 
         height: DEVICE_HEIGHT * 58, 
-        marginTop: DEVICE_HEIGHT * 4, 
+        marginTop: DEVICE_HEIGHT * 2,
+        marginLeft: DEVICE_WIDTH * 24, 
         includeFontPadding:false, 
         fontSize: FONTS.mailCount, 
         fontFamily:'NotoSansKR-Bold',

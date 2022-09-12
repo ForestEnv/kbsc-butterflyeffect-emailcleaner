@@ -15,17 +15,22 @@ function DeleteEmailCountBox() {
                     marginTop: DEVICE_HEIGHT * 9,
                     marginLeft:DEVICE_WIDTH * 9, 
                     color:'#000000', 
-                    fontSize:14
+                    fontSize:14,
+                    fontFamily:'NotoSansKR-Bold',
+                    lineHeight:24
                 }}
-            > 삭제한 총
+            > 📜삭제한 총
             </Text>
             <Text style={{
-                    marginLeft:DEVICE_WIDTH * 12.5, 
+                    marginLeft:DEVICE_WIDTH * 15.5, 
                     color:'#000000', 
-                    fontSize:14
+                    fontSize:14,
+                    fontFamily:'NotoSansKR-Bold',
+                    lineHeight:20
                 }}
             >메일 수
             </Text>
+            
         </View>
     );
 };
