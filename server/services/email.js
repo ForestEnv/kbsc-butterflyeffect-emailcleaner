@@ -31,3 +31,8 @@ exports.declineTotalNum = async (data) => {
   const result = await db.declineTotalNum(data);
   return result;
 };
+
+exports.getEmailId = async (data) => {
+  const result = await db.getEmailId(data);
+  return result;
+}

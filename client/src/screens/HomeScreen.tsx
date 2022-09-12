@@ -30,6 +30,7 @@ import { getEmailClassification } from '../api/email';
 import { deleteEmail } from '../api/email';
 import { getDeleteEmailNum } from '../api/email';
 import { DeleteNumber } from '../api/types';
+import { getEmailAddress } from '../api/email';
 
 import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
 
@@ -40,6 +41,7 @@ import FirstUseInfo from '../components/FirstUseInfo';
 import ActivityInfoView from '../components/ActivityInfoView';
 import CountEmailClassification from '../components/CountEmailClassification';
 
+import {Fold} from 'react-native-animated-spinkit';
 import {Bounce} from 'react-native-animated-spinkit';
 import CheckBox from '@react-native-community/checkbox';
 
@@ -47,6 +49,7 @@ import Person from '../assets/icons/icon_person.svg';
 import Alarm from '../assets/icons/icon_alaram.svg';
 import Ads from '../assets/icons/icon_ads.svg';
 import NewsLetter from '../assets/icons/icon_newsletter.svg';
+import authStorage from '../storages/authStorage';
 
 //분류 
 const classification = [
@@ -74,6 +77,13 @@ function HomeScreen()  {
   const [user] = useUserState();
   const user_no = user.no;
 
+  const [emailAddress, setEmailAddress] = useEmailAddressState();
+  
+  const [emailId, setEmailId] = useState('');
+
+  //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
+  const {data, isLoading} = useQuery(['count', user.no], () => getEmailCount(user.no));
+  
   //Tab 상태값
   const [toggleState, setToggleState] = useState<string>("광고");
   
@@ -90,10 +100,8 @@ function HomeScreen()  {
   const temp = scanResult.map((item) => {
     return item.index
   });
-  console.log("데이터",temp);
   
   const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
-    console.log("체크 해제 이메일 인덱스 번호 = ",dataIndex, "&","체크박스 상태 =",newValue);
     if(newValue){
       // 단일 선택 시 체크된 아이템을 배열에 추가
       setToggleCheckBox(prev => [...prev, dataIndex])
@@ -106,12 +114,6 @@ function HomeScreen()  {
     }
   }
   console.log('삭제 예정 이메일 인덱스:',deleteEmailIndex);
-  //연동된 이메일 주소
-  //const [emailAddress] = useEmailAddressState();
-  //const email_id = emailAddress[0];
-
-  //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
-  const {data, isLoading} = useQuery(['count', user.no], () => getEmailCount(user.no));
 
   //이메일 삭제 수 State
   const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
@@ -127,7 +129,6 @@ function HomeScreen()  {
   
   //삭제할 이메일 수 카운트
   const deletionEmailCount = deleteEmailIndex.length;
-  console.log(deletionEmailCount);
   //Eventhandler: Tab
   const toggleTab = (index: string) => {
     setToggleState(index);
@@ -149,28 +150,35 @@ function HomeScreen()  {
     console.log('handleSheetChanges', index);  
   }, []);
 
-  console.log("스캔 누르기 전 상태", homeScreenState);
-  //이메일 주소
-  const email_id = data.Ressult[0].email_address;
+    console.log("씨발",emailAddress);
   
-  //스캔 이후 응답 데이터 저장
+
+    //스캔 이후 응답 데이터 저장
   const fetchScanData = async () => {
+    const email_id = emailAddress;
+    console.log("씨발",email_id)
     //스캔 데이터 로딩
     setIsScanLoading(true);
+    //분류 결과 받아옴
     const res = await getEmailClassification({user_no, email_id});
+    //상태값에 분류 결과 저장
     setScanResult(res);
     //체크박스 기본값을 true로 초기화
-    setToggleCheckBox(new Array(res.length).fill(true));
     setIsScanLoading(false)
-    
-    setToggleCheckBox(temp)
-    setDeleteEmailIndex(temp)
+    //체크박스 TRUE로 초기화 
+    //setToggleCheckBox(new Array(res.length).fill(true));
     //바텀시트 실행
-    bottomSheetModalRef.current?.present(); 
+    bottomSheetModalRef.current?.present();
+    
+    //setToggleCheckBox(temp)
+    setDeleteEmailIndex(temp)
+
     setHomeScreenState(false);
   }
-  console.log("체크박스:", toggleCheckBox.length);
-  console.log("스캔 누른 이후 상태", homeScreenState);
+  useEffect(() => {
+    setToggleCheckBox(temp);  
+  },[]);
+  console.log('체크박스 상태',toggleCheckBox)
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
@@ -182,14 +190,15 @@ function HomeScreen()  {
   }, []);
 
   const fetchDeleteData = async () => {
-    //await deleteEmail({user_no, email_id, list});
+    const email_id = emailAddress;
+
+    await deleteEmail({user_no, email_id, list});
     deleteBottomSheetModalRef.current?.present();
     setHomeScreenState(true);
   }
 
   //삭제 실행
   const onDeleteSubmit = useCallback(() => {
-    const email_id = data.Ressult[0].email_address;
     try{
       fetchDeleteData();
     } catch(error){
@@ -209,15 +218,28 @@ function HomeScreen()  {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const res = await getEmailAddress(user.no);
+        setEmailId(res);
+        setEmailAddress(res);
+      } catch(error) {
+        console.log('이메일 데이터 조회 실패');
+      }
+    };
+    fetchData();
+  },[]);
   
   //로그인 이후 인박스 조회 loading
   if(isLoading) {
     return(
       <>
         <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
-        <View style={{flex:1, backgroundColor: 'rgba(0, 0, 0, 0.25)', alignItems:'center', justifyContent:'center'}}>
-          <Bounce size={65} color="#B6E3B5"/>
-          <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Medium'}}>인박스 정보를 가져오고 있습니다. </Text>
+        <View style={{flex:1, backgroundColor: COLORS.main, alignItems:'center', justifyContent:'center'}}>
+          <Fold size={65} color="#FFFFFF"/>
+          <Text style={{color:'#000000', fontSize:20, fontFamily:'NotoSansKR-Bold', marginTop: DEVICE_HEIGHT * 20}}>인박스 정보를 가져오고 있습니다. </Text>
         </View>
       </>
     );
@@ -286,7 +308,7 @@ function HomeScreen()  {
               <View style={{marginRight:DEVICE_WIDTH * 110}}>
                 <Text style={{marginLeft:DEVICE_WIDTH * 15}}>
                   <Text style={{fontFamily:'NotoSansKR-Black', fontSize:25, color:'#b6e3b5'}}>{classificationEmailCount}</Text>
-                  <Text style={{fontFamily:'NotoSansKR-Bold', fontSize:25, color:'#000000'}}>개의 메일이 있습니다.</Text>
+                  <Text style={{fontFamily:'NotoSansKR-Bold', fontSize:23, color:'#000000', }}>개의 메일이 있습니다.</Text>
                 </Text>
               </View>
               <View style={{marginTop:DEVICE_HEIGHT * 2}}>
@@ -297,6 +319,7 @@ function HomeScreen()  {
                         <View style={{flexDirection:'row', marginHorizontal:17, alignItems:'center', }}>
                           {/* <Text style={{color:'#000000', fontSize:16, }}>{index + 1}</Text> */}
                           <CheckBox
+                            key={index}
                             disabled={false}
                             value={toggleCheckBox.includes(item.index) ? true : false}
                             onValueChange={(newValue) => onHandleCheckBox(newValue, item.index)}

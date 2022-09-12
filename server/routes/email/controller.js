@@ -207,3 +207,19 @@ exports.getDeleteNumber = async (req, res, next) => {
     });
   }
 }
+
+exports.getEmailId = async (req, res, next) => {
+  try{
+    const {user_no} = req.params;
+    console.log(user_no);
+    const result = await emailServices.getEmailId(user_no);
+    const email_id = result.email_id
+    res.status(OK).json({
+      email_id,
+    })
+  }catch(error){
+    res.status(BAD_REQUEST).json({
+      message: "이메일 아이디 조회 실패!",
+    });
+  }
+}
