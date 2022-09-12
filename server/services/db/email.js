@@ -54,3 +54,11 @@ exports.declineTotalNum = async ({ email_no, emailsLen }) => {
   );
   return result;
 };
+
+exports.getEmailId = async(user_no) => {
+  const result = await Email.findOne({
+    attributes: ['email_id'],
+    where: {user_no},
+  });
+  return result;
+}
