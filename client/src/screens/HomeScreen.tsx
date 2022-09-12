@@ -95,12 +95,13 @@ function HomeScreen()  {
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState([]);
   const [deleteEmailIndex, setDeleteEmailIndex] = useState([]);
-  const list = [...deleteEmailIndex];
+  const list = deleteEmailIndex;
 
   const temp = scanResult.map((item) => {
     return item.index
   });
   
+  //체크박스 EventHandler
   const onHandleCheckBox = (newValue:boolean, dataIndex: number) => {
     if(newValue){
       // 단일 선택 시 체크된 아이템을 배열에 추가
@@ -149,14 +150,13 @@ function HomeScreen()  {
   const deleteHandleSheetChanges = useCallback((index: number) => {    
     console.log('handleSheetChanges', index);  
   }, []);
-
-    console.log("씨발",emailAddress);
   
 
     //스캔 이후 응답 데이터 저장
   const fetchScanData = async () => {
     const email_id = emailAddress;
     console.log("씨발",email_id)
+    const email_id = data.Ressult[0].email_address;
     //스캔 데이터 로딩
     setIsScanLoading(true);
     //분류 결과 받아옴
@@ -191,6 +191,7 @@ function HomeScreen()  {
 
   const fetchDeleteData = async () => {
     const email_id = emailAddress;
+
 
     await deleteEmail({user_no, email_id, list});
     deleteBottomSheetModalRef.current?.present();
