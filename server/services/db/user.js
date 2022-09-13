@@ -102,7 +102,7 @@ exports.updateMiles = async () => {
 };
 
 // 사용자 마일리지 확인
-exports.getUserMiles = async ({ user_no, miles }) => {
+exports.getUserMiles = async ({ user_no }) => {
   const result = await User.findOne({
     attributes: ["miles"],
     where: { no: user_no },
@@ -115,5 +115,14 @@ exports.declineMiles = async ({ user_no, miles }) => {
     { miles: miles.miles },
     { where: { no: user_no } }
   );
+  return result;
+};
+
+// 사용자 경험치 확인
+exports.getUserExperience = async ({ user_no }) => {
+  const result = await User.findOne({
+    attributes: ["experience"],
+    where: { no: user_no },
+  });
   return result;
 };

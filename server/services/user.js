@@ -48,9 +48,9 @@ exports.updateMiles = async () => {
 
 // 사용자 마일리지 감소
 exports.declineMiles = async (data) => {
-  console.log(data);
+  console.log(data.user_no);
   // conditon setting
-  const user_miles = await db.getUserMilse(data);
+  const user_miles = await db.getUserMiles(data);
   console.log(user_miles.miles);
   if (data.miles.miles > user_miles.miles) {
     return "fail";
@@ -58,4 +58,16 @@ exports.declineMiles = async (data) => {
     await db.declineMiles(data);
     return "success";
   }
+};
+
+// 사용자 경험치 확인
+exports.getUserExperience = async (data) => {
+  const result = await db.getUserExperience(data);
+  return result;
+};
+
+// 사용자 마일리지 확인
+exports.getUserMiles = async (data) => {
+  const result = await db.getUserMiles(data);
+  return result;
 };
