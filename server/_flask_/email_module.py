@@ -201,7 +201,7 @@ def isEnglishOrKorean(input_s):
         return "o"  # 영어
 
 
-def delete_email(email_address, password, emailList, email_no,user_no):
+def delete_email(email_address, password, emailList, email_no,user_no,total_no):
     """
     사용자의 메일 주소, 비밀번호, 삭제하려는 메일 리스트를 받아 삭제하고 결과, 삭제한 메일 개수와 데이터 리스트를 리턴하는 함수
     """
@@ -262,8 +262,10 @@ def delete_email(email_address, password, emailList, email_no,user_no):
 
     obj.close()
     obj.logout()
+
+    userPoint = point( total_no ) * len(deleted)
     
-    return res, len(deleted), emailRsult
+    return res, len(deleted), emailRsult , userPoint
 
 def send_email(email_address, emailList):
     """
@@ -305,5 +307,12 @@ def send_email(email_address, emailList):
     smtp.quit()
 
     res = "OK"
-
     return res, suc_cnt, err_cnt
+
+## 경험치 관련 
+def point(total_emails):
+    """
+    메일 하나 삭제할때마다 받는 경험치
+    """
+    return (500/(0.5*(total_emails-200)+500) + 0.5 )*4
+
