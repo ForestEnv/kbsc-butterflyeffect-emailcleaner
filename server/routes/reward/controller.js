@@ -64,6 +64,7 @@ exports.desclineUserMiles = async (req, res, next) => {
   try {
     let user_no = req.params.userNo;
     const miles = req.body;
+    console.log('server from data',miles)
     result = await userServices.declineMiles({ user_no, miles });
     console.log(result);
     res.status(CREATED).json({

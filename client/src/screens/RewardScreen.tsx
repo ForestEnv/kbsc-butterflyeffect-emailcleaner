@@ -117,7 +117,7 @@ function RewardScreen() {
     }
   },[]);
 
-  console.log('데이터:', userActivity[0]);
+  console.log('데이터:', userActivity);
   return (
     <>
       <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
@@ -125,11 +125,11 @@ function RewardScreen() {
         {/* 마일리지 & 레벨 */}
         <View style={styles.box}>
           <TouchableOpacity onPress={onClick} style={[styles.levelInfo]}>
-            <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Regular',position:'absolute', left:3, top:2}}>🎖️{data.user}님의 레벨</Text>
+            <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Regular',position:'absolute', left:3, top:2}}>🎖️회원님의 레벨</Text>
             <Text style={{color:'#000000', fontSize:30, fontFamily:'NotoSansKR-Bold', includeFontPadding:false, position:'absolute', left:10, bottom:3}}>{data.level}</Text>
           </TouchableOpacity>
           <View style={[styles.info, styles.shadow]}>
-            <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Regular', position:'absolute', left:3, top:2 }}>🏆{data.user}님의 마일리지</Text>
+            <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Regular', position:'absolute', left:3, top:2 }}>🏆회원님의 마일리지</Text>
             <Text style={{color:'#000000', fontSize:30, fontFamily:'NotoSansKR-Bold', includeFontPadding:false, position:'absolute', left:10, bottom:3}}>{userActivity[1]}P</Text>
           </View>
         </View>
@@ -143,7 +143,7 @@ function RewardScreen() {
             <View>
               <Text>
                 <Text style={{textAlign:'center',color:'#000000', fontSize:24, fontFamily:'NotoSansKR-Black'}}>✨현재 회원님의 경험치는 </Text>
-                <Text style={{textAlign:'center',color:COLORS.subTwo, fontSize:24, fontFamily:'NotoSansKR-Black'}}>{userActivity[0]} </Text>
+                <Text style={{textAlign:'center',color:COLORS.subTwo, fontSize:24, fontFamily:'NotoSansKR-Black'}}>{userActivity[1]} </Text>
                 <Text style={{textAlign:'center',color:'#000000', fontSize:24, fontFamily:'NotoSansKR-Black'}}>입니다. </Text>
               </Text>
             </View>
@@ -176,7 +176,7 @@ function RewardScreen() {
               </View>
               <View style={{marginTop: DEVICE_HEIGHT * 25}}>
                 <Text style={{color:'#000000', fontFamily:'NotoSansKR-Bold', fontSize:16}}>기부할 나무가 아닌 여러분만의 나무를 구매해보세요🌲</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('TreeStore')}>
+                <TouchableOpacity onPress={() => navigation.navigate('TreeStore', {miles: userActivity[1]})}>
                   <Text style={{color:'#736E6E', fontFamily:'NotoSansKR-Bold', fontSize:16, textAlign:'center', lineHeight:20, textDecorationLine:'underline'}}>상점으로 이동🏡</Text>
                 </TouchableOpacity>
               </View>

@@ -37,7 +37,7 @@ function ConnectionEmailPwScreen() {
         if(isLoading) {
             return;
         }
-        setEmailAddress([email_id]);
+        setEmailAddress(email_id);
         setConnection({
             no:user.no,
             id:user?.id,
