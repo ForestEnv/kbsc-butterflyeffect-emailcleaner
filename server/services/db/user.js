@@ -43,9 +43,9 @@ exports.selectIsConnectionEmail = async (no) => {
   return result;
 };
 
-exports.updateExperience = async ({ user_no, emailLen }) => {
+exports.updateExperience = async ({ user_no, userPoint }) => {
   const result = await User.increment(
-    { experience: emailLen },
+    { experience: userPoint },
     { where: { no: user_no } }
   );
   return result;
