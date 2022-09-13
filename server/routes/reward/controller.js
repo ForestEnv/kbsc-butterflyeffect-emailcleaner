@@ -6,7 +6,8 @@ const emailServices = require("../../services/email");
 
 exports.showRewardInfo = async (req, res, next) => {
   try {
-    let user_no = req.params.userNo;
+    let user_no = req.params.user_no;
+    console.log('server',user_no);
     const experience = await userServices.getUserExperience({ user_no });
     console.log(experience);
     const miles = await userServices.getUserMiles({ user_no });
@@ -36,7 +37,7 @@ exports.showMiles = async (req, res, next) => {
 
 exports.showStatistics = async (req, res, next) => {
   try {
-    let user_no = req.params.userNo;
+    let user_no = req.params.user_no;
     console.log(user_no);
     const count = await emailServices.getTotalNum(user_no);
     res.status(CREATED).json({ totalCount: count });

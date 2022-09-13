@@ -180,7 +180,6 @@ function HomeScreen()  {
     setHomeScreenState(false);
   }
 
- 
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
