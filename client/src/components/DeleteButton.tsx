@@ -8,20 +8,20 @@ import {
 } from 'react-native';
 
 import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
-import Scan from '../assets/icons/icon_scan.svg';
+import Delete from '../assets/icons/icon_delete.svg';
 
 interface EventProps {
-    onScanSubmit : any;
+    onDeleteSubmit : any;
 }
-function ScanButton({onScanSubmit}: EventProps) {
+function DeleteButton({onDeleteSubmit}: EventProps) {
     return(
         <View style={styles.container}>
-            <Text style={{color:'#a19f9f', fontFamily:'NotoSansKR-Bold' }}>아래 스캔 버튼을 클릭하세요.</Text>
+            <Text style={{color:'#a19f9f', fontFamily:'NotoSansKR-Bold' }}>아래 삭제 버튼을 클릭하세요.</Text>
             <TouchableOpacity
-                onPress={onScanSubmit}
+                onPress={onDeleteSubmit}
                 style={[styles.button, styles.shadow]}
             >
-                <Scan/>
+                <Delete/>
             </TouchableOpacity>
         </View>
     );
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ScanButton;
+export default DeleteButton;

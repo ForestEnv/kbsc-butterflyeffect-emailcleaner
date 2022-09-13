@@ -142,7 +142,7 @@ exports.deleteEmail = async (req, res, next) => {
 
 exports.showDeleteEmail = async (req, res, next) => {
   try {
-    let user_no = req.params.userNo;
+    let user_no = req.params.user_no;
     console.log(user_no);
     const Emails = await deleteServices.getDeleteEmails(user_no);
     res.status(CREATED).json({ result: Emails });
@@ -185,3 +185,35 @@ exports.restoreEmailList = async (req, res, next) => {
     });
   }
 };
+
+exports.getDeleteNumber = async (req, res, next) => {
+  try{
+    const { no } = req.params;
+    const result = await emailServices.getDeleteNumber(no);
+    console.log('삭제된 이메일 수:'+ result);
+    const deleteNum = result.total_no;
+    res.status(OK).json({
+      deleteNum
+    })
+  }catch(error){
+    res.status(BAD_REQUEST).json({
+      message: "조회 실패!",
+    });
+  }
+}
+
+exports.getEmailId = async (req, res, next) => {
+  try{
+    const {user_no} = req.params;
+    console.log(user_no);
+    const result = await emailServices.getEmailId(user_no);
+    const email_id = result.email_id
+    res.status(OK).json({
+      email_id,
+    })
+  }catch(error){
+    res.status(BAD_REQUEST).json({
+      message: "이메일 아이디 조회 실패!",
+    });
+  }
+}
