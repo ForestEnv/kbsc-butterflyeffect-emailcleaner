@@ -24,6 +24,7 @@ import ConnectionEmailScreen from '../screens/ConnectionEmailScreen';
 import ConnectionEmailPwScreen from '../screens/ConnectionEmailPwScreen';
 import MainTab from './MainTab';
 import RestoreEmailScreen from '../screens/RestoreEmailScreen';
+import TreeStoreScreen from '../screens/TreeStoreScreen';
 
 import Back from '../assets/icons/icon-back.svg';
 
@@ -64,11 +65,24 @@ function RootStack() {
                                     <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>휴지통</Text>
                                 </View>
                             ),
-                            // headerRight: () => (
-                            //     <TouchableOpacity onPress={() => navigation.goBack()}>
-                            //         <Text style={{fontSize:18, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>복구하기</Text>
-                            //     </TouchableOpacity>
-                            // ),
+                        }}/>
+                    <Stack.Screen 
+                        name="TreeStore" 
+                        component={TreeStoreScreen} 
+                        options={{
+                            headerTitleAlign: 'center',
+                            headerTransparent: true,
+                            headerBackVisible: false,
+                            headerLeft: () => (
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Back/>
+                                </TouchableOpacity>
+                            ),
+                            headerTitle: () => (
+                                <View>
+                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>나무 구매</Text>
+                                </View>
+                            ),
                         }}/>
 
                 </>
