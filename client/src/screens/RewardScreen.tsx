@@ -9,6 +9,11 @@ import UserThree from '../assets/icons/user_3.svg';
 import UserFour from '../assets/icons/user_4.svg';
 import UserFive from '../assets/icons/user_5.svg';
 
+import LevelOne from '../assets/icons/icon_levelOne.svg';
+
+import { RootStackNavigationProp } from '../stacks/types';
+import { useNavigation } from '@react-navigation/native';
+
 const data = {
   user:'현탁',
   point: 3423,
@@ -70,8 +75,8 @@ interface HeaderProps {
 
 function RewardScreen() {
   const [activeTab, setActiveTab] = useState('나의 나무');
+  const navigation = useNavigation<RootStackNavigationProp>();
 
-  console.log('DEBUG TEST = ', activeTab);
   return (
     <>
       <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
@@ -103,9 +108,23 @@ function RewardScreen() {
           />
         </View>
           {activeTab === '나의 나무' ? (
-              <View>
-                <Text>나무</Text>
+            <>
+              <View style={styles.circle}>
+                <TouchableOpacity style={styles.button}>
+                  <LevelOne style={{marginBottom:DEVICE_HEIGHT * 25}}/>
+                  <View>
+                    <Text style={{color:'#736E6E', fontFamily:'NotoSansKR-Bold', fontSize:14, lineHeight:20}}>레벨 1에서는 기부할 나무가</Text>
+                    <Text style={{color:'#736E6E', fontFamily:'NotoSansKR-Bold', fontSize:14, lineHeight:30, textAlign:'center'}}>아직 없습니다😣</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
+              <View style={{marginTop: DEVICE_HEIGHT * 25}}>
+                <Text style={{color:'#000000', fontFamily:'NotoSansKR-Bold', fontSize:16}}>기부할 나무가 아닌 여러분만의 나무를 구매해보세요🌲</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('TreeStore')}>
+                  <Text style={{color:'#736E6E', fontFamily:'NotoSansKR-Bold', fontSize:16, textAlign:'center', lineHeight:20, textDecorationLine:'underline'}}>상점으로 이동🏡</Text>
+                </TouchableOpacity>
+              </View>
+            </>
             ) : (
                   <>
                     <View>
@@ -172,7 +191,7 @@ const styles = StyleSheet.create({
   },
   box:{
     flexDirection:'row',
-    marginTop: DEVICE_HEIGHT * 6,
+    marginTop: DEVICE_HEIGHT * 26,
   },
   info:{
     backgroundColor: '#FFF9F9',
@@ -197,8 +216,27 @@ const styles = StyleSheet.create({
 
   },
   shadow:{
-    elevation:79,
-}
+    elevation:59,
+  },
+  circle:{
+    width: DEVICE_WIDTH * 249,
+    height: DEVICE_HEIGHT * 236,
+    marginTop: DEVICE_HEIGHT * 30,
+    padding:15,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:160,
+    backgroundColor:COLORS.subOne,
+  },
+  button:{
+    width: DEVICE_WIDTH * 230,
+    height: DEVICE_HEIGHT * 216,
+    padding:15,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:160,
+    backgroundColor:COLORS.subTwo,
+  },
 })
 
 export default RewardScreen;

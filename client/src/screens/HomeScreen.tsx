@@ -151,12 +151,16 @@ function HomeScreen()  {
     console.log('handleSheetChanges', index);  
   }, []);
   
-
+  useEffect(() => {
+    setToggleCheckBox(temp);  
+  },[]);
+  console.log('체크박스 상태',toggleCheckBox);
+  
     //스캔 이후 응답 데이터 저장
   const fetchScanData = async () => {
     const email_id = emailAddress;
     console.log("씨발",email_id)
-    const email_id = data.Ressult[0].email_address;
+    
     //스캔 데이터 로딩
     setIsScanLoading(true);
     //분류 결과 받아옴
@@ -175,10 +179,8 @@ function HomeScreen()  {
 
     setHomeScreenState(false);
   }
-  useEffect(() => {
-    setToggleCheckBox(temp);  
-  },[]);
-  console.log('체크박스 상태',toggleCheckBox)
+
+ 
 
   //스캔 실행
   const onScanSubmit = useCallback(() => {
