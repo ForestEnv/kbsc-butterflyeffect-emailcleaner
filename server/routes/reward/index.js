@@ -20,4 +20,6 @@ router.get(
   controller.showRewardInfo
 );
 
+router.get("/userMiles/:userNo", middlewares.jwtAuth, controller.showMiles);
+
 module.exports = router;
