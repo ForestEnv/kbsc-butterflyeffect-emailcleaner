@@ -11,6 +11,9 @@ import UserFive from '../assets/icons/user_5.svg';
 
 import LevelOne from '../assets/icons/icon_levelOne.svg';
 
+import { RootStackNavigationProp } from '../stacks/types';
+import { useNavigation } from '@react-navigation/native';
+
 const data = {
   user:'현탁',
   point: 3423,
@@ -72,8 +75,8 @@ interface HeaderProps {
 
 function RewardScreen() {
   const [activeTab, setActiveTab] = useState('나의 나무');
+  const navigation = useNavigation<RootStackNavigationProp>();
 
-  console.log('DEBUG TEST = ', activeTab);
   return (
     <>
       <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
@@ -117,7 +120,7 @@ function RewardScreen() {
               </View>
               <View style={{marginTop: DEVICE_HEIGHT * 25}}>
                 <Text style={{color:'#000000', fontFamily:'NotoSansKR-Bold', fontSize:16}}>기부할 나무가 아닌 여러분만의 나무를 구매해보세요🌲</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('TreeStore')}>
                   <Text style={{color:'#736E6E', fontFamily:'NotoSansKR-Bold', fontSize:16, textAlign:'center', lineHeight:20, textDecorationLine:'underline'}}>상점으로 이동🏡</Text>
                 </TouchableOpacity>
               </View>
