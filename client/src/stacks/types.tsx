@@ -29,6 +29,8 @@ export type RootStackParamList = {
         email:string;
     };
     MainTab: MainTabNavigationScreenParams;
+    Restore: undefined;
+    TreeStore: undefined;
 };
 
 export type ConnectionPwRouteProp =  RouteProp<RootStackParamList, 'ConnectionPw'>;

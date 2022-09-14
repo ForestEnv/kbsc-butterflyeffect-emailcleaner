@@ -2,6 +2,7 @@ import React from 'react';
 import { 
   View,
   StyleSheet,
+  Text
 } from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -62,7 +63,13 @@ function MainTab() {
           name="설정" 
           component={MyProfileScreen}
           options={{
-            headerShown: false,
+            headerTitleAlign:'center',
+            headerTransparent: true,
+            headerTitle: () => (
+              <View>
+                <Text style={{fontSize:25, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>설정</Text>
+              </View>
+            ),
             tabBarIcon: ({color, size}) => (
                 <Settings width={DEVICE_WIDTH * 30} height={DEVICE_WIDTH *28} color={color}/>
               )

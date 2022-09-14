@@ -14,4 +14,12 @@ router.post(
   controller.desclineUserMiles
 );
 
+router.get(
+  "/userRewardInfo/:userNo",
+  middlewares.jwtAuth,
+  controller.showRewardInfo
+);
+
+router.get("/userMiles/:userNo", middlewares.jwtAuth, controller.showMiles);
+
 module.exports = router;

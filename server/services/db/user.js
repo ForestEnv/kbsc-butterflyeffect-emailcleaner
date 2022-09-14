@@ -43,9 +43,9 @@ exports.selectIsConnectionEmail = async (no) => {
   return result;
 };
 
-exports.updateExperience = async ({ user_no, emailLen }) => {
+exports.updateExperience = async ({ user_no, userPoint }) => {
   const result = await User.increment(
-    { experience: emailLen },
+    { experience: userPoint },
     { where: { no: user_no } }
   );
   return result;
@@ -86,23 +86,21 @@ exports.getTotalNum = async ({ no }) => {
   return result;
 };
 
+// 사용자 마일리지 증가
 exports.updateMiles = async () => {
-  console.log("*********0");
   const result_1 = await User.increment(
-    { miles: 100 },
-    { where: { experience: { [Op.and]: { [Op.lte]: 5, [Op.gte]: 0 } } } }
+    { miles: 10000 },
+    { where: { experience: { [Op.and]: { [Op.lte]: 1000, [Op.gte]: 0 } } } }
   );
-  console.log("*********1");
   const result_2 = await User.increment(
-    { miles: 200 },
-    { where: { experience: { [Op.and]: { [Op.lte]: 20, [Op.gte]: 6 } } } }
+    { miles: 20000 },
+    { where: { experience: { [Op.and]: { [Op.gte]: 1001 } } } }
   );
-  console.log("*********2");
   return { result_1, result_2 };
 };
 
 // 사용자 마일리지 확인
-exports.getUserMilse = async ({ user_no, miles }) => {
+exports.getUserMiles = async ({ user_no }) => {
   const result = await User.findOne({
     attributes: ["miles"],
     where: { no: user_no },
@@ -115,5 +113,14 @@ exports.declineMiles = async ({ user_no, miles }) => {
     { miles: miles.miles },
     { where: { no: user_no } }
   );
+  return result;
+};
+
+// 사용자 경험치 확인
+exports.getUserExperience = async ({ user_no }) => {
+  const result = await User.findOne({
+    attributes: ["experience"],
+    where: { no: user_no },
+  });
   return result;
 };

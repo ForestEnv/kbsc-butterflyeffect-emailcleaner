@@ -23,6 +23,8 @@ import RegisterScreen from '../screens/RegisterScreen';
 import ConnectionEmailScreen from '../screens/ConnectionEmailScreen';
 import ConnectionEmailPwScreen from '../screens/ConnectionEmailPwScreen';
 import MainTab from './MainTab';
+import RestoreEmailScreen from '../screens/RestoreEmailScreen';
+import TreeStoreScreen from '../screens/TreeStoreScreen';
 
 import Back from '../assets/icons/icon-back.svg';
 
@@ -46,6 +48,43 @@ function RootStack() {
             { user && isConnectionEmail ? (
                 <>
                     <Stack.Screen name="MainTab" component={MainTab} options={{headerShown: false}}/>
+                    <Stack.Screen 
+                        name="Restore" 
+                        component={RestoreEmailScreen} 
+                        options={{
+                            headerTitleAlign: 'center',
+                            headerTransparent: true,
+                            headerBackVisible: false,
+                            headerLeft: () => (
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Back/>
+                                </TouchableOpacity>
+                            ),
+                            headerTitle: () => (
+                                <View>
+                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>휴지통</Text>
+                                </View>
+                            ),
+                        }}/>
+                    <Stack.Screen 
+                        name="TreeStore" 
+                        component={TreeStoreScreen} 
+                        options={{
+                            headerTitleAlign: 'center',
+                            headerTransparent: true,
+                            headerBackVisible: false,
+                            headerLeft: () => (
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Back/>
+                                </TouchableOpacity>
+                            ),
+                            headerTitle: () => (
+                                <View>
+                                    <Text style={{fontSize:23, color:'#000000', fontFamily:'NotoSansKR-Bold'}}>나무 구매</Text>
+                                </View>
+                            ),
+                        }}/>
+
                 </>
             ) : (
                 <>

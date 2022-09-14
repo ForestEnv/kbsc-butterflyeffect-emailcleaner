@@ -22,11 +22,8 @@ def main():
 def link():
     try:
         req = request.get_json()
-        print(req)
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']
-        print(emailId)
-        print(emailPw)
         success_message = link_inbox(emailId , emailPw)
         result = {'success_message' : success_message}
         return jsonify(result)
@@ -41,7 +38,6 @@ def link():
 def count():
     try:
         req = request.get_json()
-        print(req)
         emailList = []
         for em in req['Emails']:
             emailId = em['email_id']
@@ -64,11 +60,8 @@ def predict():
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']
         result = fetch_emails(emailId , emailPw)
-        print("hhhh1")
         classification = result.to_json(orient = 'records',force_ascii=False)
-        print("hhhh2")
         res = make_response(classification)
-        print("hhhh3")
         return res
     except Exception as e: 
         return jsonify({
@@ -80,14 +73,14 @@ def predict():
 def delete():
     try:
         req = request.get_json()
-        print(req)
         email_address = req['Emails']['email_address']
         password = req['Emails']['password']
         emailList = req['Emails']['list']
         email_no = req['Emails']['email_no']
         user_no = req['Emails']['user_no']
-        result, lenEmail, emailRsult = delete_email(email_address , password , emailList, email_no, user_no)
-        data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult}
+        total_no = req['Emails']['total_no']
+        result, lenEmail, emailRsult, userPoint = delete_email(email_address , password , emailList, email_no, user_no,total_no)
+        data = {'success' : result, "emailLen" : lenEmail, 'Emails': emailRsult, 'userPoint' : userPoint}
         res = make_response(data)
         return res
     except Exception as e: 
@@ -101,10 +94,8 @@ def restore():
     try:
         req = request.get_json()
         email_address = req['Emails']['email_address']
-        print(email_address)
         emailList = req['Emails']['list']
-        print(emailList)
-        msg, suc_cnt, err_cnt = send_email(email_address, emailList)
+        msg, suc_cnt, err_cnt = send_email(email_address, emailList,total_no)
         return jsonify({
             'success_message' : msg,
             'successCount' : suc_cnt,

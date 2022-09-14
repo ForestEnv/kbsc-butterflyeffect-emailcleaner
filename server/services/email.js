@@ -1,13 +1,11 @@
 const db = require("./db/email");
 
 exports.setEmail = async (data) => {
-  console.log(data);
   const result = await db.insertEmail(data);
   return result;
 };
 
 exports.getEmail = async (data) => {
-  console.log(data);
   const result = await db.getEmail(data);
   return result;
 };
@@ -29,5 +27,10 @@ exports.getTotalNum = async (data) => {
 
 exports.declineTotalNum = async (data) => {
   const result = await db.declineTotalNum(data);
+  return result;
+};
+
+exports.getEmailId = async (data) => {
+  const result = await db.getEmailId(data);
   return result;
 };

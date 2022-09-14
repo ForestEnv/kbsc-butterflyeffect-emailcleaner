@@ -24,7 +24,6 @@ exports.updateExperience = async (data) => {
 
 // 사용자 경험치 감소
 exports.declineExperience = async (data) => {
-  console.log(data);
   const result = await db.declineExperience(data);
   return result;
 };
@@ -35,7 +34,6 @@ exports.getRank = async (data) => {
   for (let index = 0; index < rankList.length; index++) {
     toatl_no = await db.getTotalNum(rankList[index]);
     rankList[index].dataValues.toatl_no = toatl_no;
-    console.log(rankList[index]);
   }
   return rankList;
 };
@@ -48,14 +46,24 @@ exports.updateMiles = async () => {
 
 // 사용자 마일리지 감소
 exports.declineMiles = async (data) => {
-  console.log(data);
   // conditon setting
-  const user_miles = await db.getUserMilse(data);
-  console.log(user_miles.miles);
+  const user_miles = await db.getUserMiles(data);
   if (data.miles.miles > user_miles.miles) {
     return "fail";
   } else {
     await db.declineMiles(data);
     return "success";
   }
+};
+
+// 사용자 경험치 확인
+exports.getUserExperience = async (data) => {
+  const result = await db.getUserExperience(data);
+  return result;
+};
+
+// 사용자 마일리지 확인
+exports.getUserMiles = async (data) => {
+  const result = await db.getUserMiles(data);
+  return result;
 };
