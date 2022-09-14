@@ -12,13 +12,14 @@ import Delete from '../assets/icons/icon_delete.svg';
 
 interface EventProps {
     onDeleteSubmit : any;
+    list: number[];
 }
-function DeleteButton({onDeleteSubmit}: EventProps) {
+function DeleteButton({onDeleteSubmit, list}: EventProps) {
     return(
         <View style={styles.container}>
             <Text style={{color:'#a19f9f', fontFamily:'NotoSansKR-Bold' }}>아래 삭제 버튼을 클릭하세요.</Text>
             <TouchableOpacity
-                onPress={onDeleteSubmit}
+                onPress={() => onDeleteSubmit(list)}
                 style={[styles.button, styles.shadow]}
             >
                 <Delete/>

@@ -63,7 +63,7 @@ exports.connectionAddEmail = async (req, res, next) => {
 
 exports.countEmail = async (req, res, next) => {
   try {
-    console.log('HI!!!!!!!')
+    console.log("HI!!!!!!!");
     const { user_no } = req.params;
     console.log(user_no);
     const emailData = await emailServices.getEmail({ user_no });
@@ -107,6 +107,7 @@ exports.deleteEmail = async (req, res, next) => {
     user_no,
     email_id,
   });
+  const total_no = await emailServices.getTotalNum({ user_no });
   //await emailServices.setDeleteEmail({ Emails, deleteDate, emailLen });
   try {
     const response = await axios.post("http://127.0.0.1:5000/delete", {
@@ -116,6 +117,7 @@ exports.deleteEmail = async (req, res, next) => {
         user_no,
         email_no: email_info.dataValues.no,
         list,
+        total_no,
       },
     });
     console.log(response.data.Emails);
@@ -123,7 +125,7 @@ exports.deleteEmail = async (req, res, next) => {
     // await deleteServices.setDeleteEmails({response.data.Emails})
     await userServices.updateExperience({
       user_no,
-      emailLen: response.data.emailLen,
+      userPoint: response.data.userPoint,
     });
     await emailServices.updateTotalNum({
       email_no: email_info.dataValues.no,
@@ -157,11 +159,6 @@ exports.restoreEmailList = async (req, res, next) => {
     email_no,
     list,
   });
-  console.log("-------------");
-  console.log(result.emailList);
-  console.log(result.emailLen);
-  console.log("-------------");
-  console.log(result);
   try {
     const response = await axios.post("http://127.0.0.1:5000/restore", {
       Emails: {
@@ -169,17 +166,14 @@ exports.restoreEmailList = async (req, res, next) => {
         list: result.emailList,
       },
     });
-    console.log("*********1");
     await userServices.declineExperience({
       user_no,
       emailsLen: result.emailLen,
     });
-    console.log("*********2");
     await emailServices.declineTotalNum({
       email_no,
       emailsLen: result.emailLen,
     });
-    console.log("*********3");
     res.status(CREATED).json({
       success_message: response.data.success_message,
       //emailList: result.emailList,

@@ -15,19 +15,25 @@ import DeleteButton from './DeleteButton';
 
 interface EmailCountProps {
     emailCount: number;
+    deletionEmailCount: number;
     onScanSubmit: any;
     onDeleteSubmit: any;
     homeScreenState: boolean;
     isScanLoading: boolean;
+    isDeleteLoading: boolean;
+    email_id: string;
+    list: number[];
 };
 
-function CircleView({emailCount, onScanSubmit, onDeleteSubmit, homeScreenState, isScanLoading}: EmailCountProps) {
+function CircleView({emailCount, deletionEmailCount, onScanSubmit, onDeleteSubmit, homeScreenState, isScanLoading, isDeleteLoading, email_id, list}: EmailCountProps) {
     return(
         <View style={[styles.circle, styles.shadow]}>
-            {isScanLoading ? (
+            {isScanLoading || isDeleteLoading ? (
                 <>
                     <Fold size={85} color="#F4EAE6"/>
-                    <Text style={{marginTop: DEVICE_HEIGHT * 20, textAlign:'center',color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>회원님의 이메일을 스캔중입니다.</Text>
+                    <Text style={{marginTop: DEVICE_HEIGHT * 20, textAlign:'center',color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>
+                        회원님의 이메일을 스캔중입니다.
+                    </Text>
                 </>
                 ):(
                     <>
@@ -35,12 +41,19 @@ function CircleView({emailCount, onScanSubmit, onDeleteSubmit, homeScreenState, 
                             <View>
                                 <Text style={styles.infoText}>현재 메일 수</Text>
                                 <Text style={styles.countText}>{emailCount}</Text>
-                                <ScanButton onScanSubmit={onScanSubmit}/>
+                                <ScanButton 
+                                    onScanSubmit={onScanSubmit}
+                                    email_id={email_id}
+                                />
                             </View>
                         ) : (
                             <View>
                                 <Text style={styles.infoText}>삭제될 메일 수</Text>
-                                <DeleteButton onDeleteSubmit={onDeleteSubmit}/>
+                                <Text style={styles.countText}>{deletionEmailCount}</Text>
+                                <DeleteButton 
+                                    onDeleteSubmit={onDeleteSubmit}
+                                    list={list}
+                                />
                             </View>
                         )}
                     </>
