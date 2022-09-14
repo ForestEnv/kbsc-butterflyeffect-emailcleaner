@@ -8,20 +8,25 @@ import {
 
 import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS, } from '../constants/theme';
 
+interface DeleteEmailCountProp {
+    deleteEmailCount: number;
+}
+
 function DeleteEmailCountBox() {
     return(
         <View style={[styles.container, styles.shadow]}>
             <Text style={{
                     marginTop: DEVICE_HEIGHT * 9,
-                    marginLeft:DEVICE_WIDTH * 9, 
+                    marginLeft:DEVICE_WIDTH * 2, 
                     color:'#000000', 
-                    fontSize:14,
-                    fontFamily:'NotoSansKR-Bold',
-                    lineHeight:24
+                    fontSize:16,
+                    fontFamily:'NotoSansKR-Medium',
+                    lineHeight:24,
+                    textAlign:'center'
                 }}
-            > 📜삭제한 총
+            > 📜삭제한 총 메일 수
             </Text>
-            <Text style={{
+            {/* <Text style={{
                     marginLeft:DEVICE_WIDTH * 15.5, 
                     color:'#000000', 
                     fontSize:14,
@@ -29,7 +34,7 @@ function DeleteEmailCountBox() {
                     lineHeight:20
                 }}
             >메일 수
-            </Text>
+            </Text> */}
             
         </View>
     );
@@ -37,7 +42,7 @@ function DeleteEmailCountBox() {
 
 const styles = StyleSheet.create({
     container:{
-        width: DEVICE_WIDTH * 102,
+        width: DEVICE_WIDTH * 140,
         height: DEVICE_HEIGHT * 118,
         marginRight: DEVICE_WIDTH * 20,
         backgroundColor: COLORS.white,

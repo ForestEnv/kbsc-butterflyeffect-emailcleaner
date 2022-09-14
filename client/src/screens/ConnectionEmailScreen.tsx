@@ -34,6 +34,26 @@ function ConnectionEmailScreen() {
           </TouchableOpacity>
         </View>
       </View>
+      <View style={styles.info}>
+        <Text style={{fontSize:16, color:'#000000', fontFamily:'NotoSansKR-Medium', lineHeight:30, marginLeft:DEVICE_WIDTH *30, marginTop: DEVICE_HEIGHT * 15}}>
+            ❗회원님들의 이메일 계정에서 연동을
+        </Text>
+        <Text style={{fontSize:16, color:'#000000', fontFamily:'NotoSansKR-Medium', lineHeight:30, marginLeft:DEVICE_WIDTH *30,}}>
+            위한 설정을 진행해 주세요.
+        </Text>
+        <Text style={{marginLeft: DEVICE_WIDTH * 30}}> 아래 링크를 통해 설정 방법을 확인하세요.</Text>
+        <View style={{marginLeft: DEVICE_WIDTH * 30, marginTop: DEVICE_HEIGHT * 10}}>
+          <Text style={{color:'#000000', fontFamily:'NotoSansKR-Bold', lineHeight:20}}>구글</Text>
+          <Text>https://support.google.com/mail/</Text>
+          <Text>answer/7126229?hl=ko</Text>
+          <Text style={{color:'#000000', fontFamily:'NotoSansKR-Bold', lineHeight:20}}>네이버</Text>
+          <Text>https://guide.worksmobile.com/kr/mail/mail-</Text>
+          <Text>guide/settings/pop3-imap-smtp/</Text>
+          <Text style={{color:'#000000', fontFamily:'NotoSansKR-Bold', lineHeight:20}}>네이트</Text>
+          <Text>네이트는 이메일 주소와 비밀번호를 그대로 입력하</Text>
+          <Text>시면 됩니다😁</Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -75,6 +95,14 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT * 40,
     marginBottom: DEVICE_HEIGHT * 5
   },
+  info: {
+    width: DEVICE_WIDTH * 294,
+    height: DEVICE_HEIGHT * 268,
+    marginTop: DEVICE_HEIGHT * 30,
+    marginLeft: DEVICE_WIDTH * 32,
+    borderRadius: 20,
+    backgroundColor: COLORS.white
+  }
 });
 
 export default ConnectionEmailScreen;

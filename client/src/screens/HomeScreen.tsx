@@ -94,7 +94,10 @@ function HomeScreen()  {
 
   //delete 로딩 상태값
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-  
+
+   //이메일 삭제 수 State
+  const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
+  console.log(deleteNum);
   //체크박스 상태값
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState([]);
@@ -127,9 +130,6 @@ function HomeScreen()  {
       setDeleteEmailIndex(deleteEmailIndex.filter((item) => item !== dataIndex))
     }
   }
-
-  //이메일 삭제 수 State
-  const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
 
   const emailList = scanResult.filter(item => (
     item.pred === toggleState
