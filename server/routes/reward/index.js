@@ -3,7 +3,7 @@ const middlewares = require("../../middlewares/auth");
 const controller = require("./controller");
 
 router.get(
-  "/getStatistics/:userNo",
+  "/getStatistics/:user_no",
   middlewares.jwtAuth,
   controller.showStatistics
 );

@@ -35,7 +35,7 @@ exports.showMiles = async (req, res, next) => {
 exports.showStatistics = async (req, res, next) => {
   try {
     let user_no = req.params.user_no;
-    const count = await emailServices.getTotalNum(user_no);
+    const count = await emailServices.getTotalNum({ user_no });
     res.status(CREATED).json({ totalCount: count });
   } catch (error) {
     res.status(BAD_REQUEST).json({
