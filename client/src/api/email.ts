@@ -35,8 +35,7 @@ export async function deleteEmail(params: EmailDeleteParams) {
 };
 
 export async function getDeleteEmailNum(no: number) {
-    const res = await client.get<DeleteNumber>(`api/email/${no}`);
-    console.log("yo",res.data.deleteNum)
+    const res = await client.get(`api/reward/getStatistics/${no}`);
     return res.data;
 }
 
@@ -53,6 +52,9 @@ interface EmailDeleteParams {
     list: number[];
 }
 
+interface DeleteEmailNum {
+    totalCount: number;
+}
 //이메일 아이디 조회 결과값 타입
 interface EmailAddressResult {
     email_id: string;

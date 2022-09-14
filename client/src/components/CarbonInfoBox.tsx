@@ -12,10 +12,19 @@ interface DeleteEmailCountProp {
     deleteEmailCount: number;
 };
 
-function CarbonInfoBox() {
+function CarbonInfoBox({deleteEmailCount}: DeleteEmailCountProp) {
     return(
         <View style={[styles.container, styles.shadow]}>
             <Text style={{color:'#000000', fontFamily:'NotoSansKR-Medium', fontSize:16, textAlign:'center'}}>🌏감소시킨 총 탄소량</Text>
+            <Text style={{
+                textAlign:'center',
+                color:'#FFFFFF', 
+                fontSize: 35, 
+                lineHeight:81,
+                fontFamily:'NotoSansKR-Bold'
+            }}
+            
+            >{deleteEmailCount * 4.253}g</Text>
         </View>
     );
 };

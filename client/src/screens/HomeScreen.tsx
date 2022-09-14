@@ -51,6 +51,8 @@ import Ads from '../assets/icons/icon_ads.svg';
 import NewsLetter from '../assets/icons/icon_newsletter.svg';
 import authStorage from '../storages/authStorage';
 
+import { useNavigation } from '@react-navigation/native';
+import { MainTabNavigationProp } from '../stacks/types';
 //분류 
 const classification = [
   {id:1, sort:'광고', icon:<Ads/>},
@@ -72,6 +74,7 @@ interface ScanResult {
 function HomeScreen()  {
   //HomeScreen 전체 상태값
   const [homeScreenState, setHomeScreenState] = useState(true);
+  const navigation = useNavigation<MainTabNavigationProp>();
   
   //사용자 번호 조회
   const [user] = useUserState();
@@ -96,8 +99,10 @@ function HomeScreen()  {
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
    //이메일 삭제 수 State
-  const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
-  console.log(deleteNum);
+  const [deleteNum, setDeleteNum] = useState<{totalCount:number;}|null>(null);
+  //console.log(deleteNum.totalCount);
+  //const deleteEmailCount: number = deleteNum.totalCount;
+  //console.log('s', deleteEmailCount)
   //체크박스 상태값
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState([]);
@@ -367,13 +372,13 @@ function HomeScreen()  {
               </View>
               <Text style={{fontFamily: 'NotoSansKR-Bold', textAlign:'center',color:'#000000', fontSize:16}}>일상 생활 속에서 또 다른 탄소 중립을 실천해 보세요🎁</Text>
               <View style={{width:DEVICE_WIDTH * 315, height: DEVICE_HEIGHT * 115, marginLeft: DEVICE_WIDTH * 24, borderRadius:15, backgroundColor:'#F4EAE6'}}>
-                <Text style={{fontFamily: 'NotoSansKR-Bold',color:'#000000', fontSize:16}}>님, 이번에는</Text>    
-                <Text style={{fontFamily: 'NotoSansKR-Bold',color:'#000000', fontSize:16, lineHeight:20}}>샤워 시간을 1분 줄여보는게 어떨까요?😊</Text>
-                <Text style={{fontFamily: 'NotoSansKR-Light',color:'#000000', fontSize:16}}>샤워 시간을 1분 줄이면 가구당 연간 4.3kg의 CO2를 줄일 수 있습니다.</Text>    
+                <Text style={{fontFamily: 'NotoSansKR-Bold',color:'#000000', fontSize:16}}>회원님, 이번에는</Text>    
+                <Text style={{fontFamily: 'NotoSansKR-Bold',color:COLORS.subTwo, fontSize:16, lineHeight:20}}>샤워 시간을 1분 줄여보는게 어떨까요?😊</Text>
+                <Text style={{fontFamily: 'NotoSansKR-Medium',color:'#000000', fontSize:16}}>샤워 시간을 1분 줄이면 가구당 연간 4.3kg의 CO2를 줄일 수 있습니다.</Text>    
               </View>
               <View>
                 <Text style={{textAlign:'center',fontFamily: 'NotoSansKR-Medium', color:'#000000', fontSize:14}}>현탁님이 성장시키고 있는 나무를 확인하러 가보세요🌲</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('마이트리')}>
                   <Text style={{textAlign:'center',fontFamily: 'NotoSansKR-Bold', color:'#000000', fontSize:16, lineHeight:18}}>
                     이동하기
                   </Text>
@@ -381,11 +386,11 @@ function HomeScreen()  {
               </View>
             </View>
           </BottomSheetModal>
-          { !deleteNum ? (
-              <ActivityInfoView homeScreenState={homeScreenState}/>
-              ) : (
+          { deleteNum ? (
+              <ActivityInfoView homeScreenState={homeScreenState} deleteEmailCount={deleteNum.totalCount}/>
+            ) : (
               <FirstUseInfo/>
-          )}
+            )}
         </View>
       </View>
     </>
