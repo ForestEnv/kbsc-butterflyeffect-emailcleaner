@@ -80,6 +80,7 @@ function HomeScreen()  {
   const [emailAddress, setEmailAddress] = useEmailAddressState();
   
   const [emailId, setEmailId] = useState('');
+  const email_id = emailId;
 
   //리액트 쿼리를 사용한 데이터 페칭 : 연동된 이메일 아이디, 이메일 수
   const {data, isLoading} = useQuery(['count', user.no], () => getEmailCount(user.no));
@@ -90,6 +91,9 @@ function HomeScreen()  {
   //scan 결과 상태값
   const [scanResult, setScanResult] = useState<ScanResult[]>([]);
   const [isScanLoading, setIsScanLoading] = useState(false);
+
+  //delete 로딩 상태값
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   
   //체크박스 상태값
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
@@ -103,6 +107,8 @@ function HomeScreen()  {
       const indexArray: number[] = [];
       scanResult.forEach((item) => indexArray.push(item.index));
       setToggleCheckBox(indexArray);
+      //삭제 예정 인덱스에 전체 체크된 인덱스 저장
+      setDeleteEmailIndex(indexArray);
     } else{
       setToggleCheckBox([]);
     }
@@ -121,7 +127,6 @@ function HomeScreen()  {
       setDeleteEmailIndex(deleteEmailIndex.filter((item) => item !== dataIndex))
     }
   }
-  console.log('삭제 예정 이메일 인덱스:', deleteEmailIndex);
 
   //이메일 삭제 수 State
   const [deleteNum, setDeleteNum] = useState<DeleteNumber>();
@@ -151,18 +156,13 @@ function HomeScreen()  {
     console.log('handleSheetChanges', index);  
   }, []);
 
-
   //삭제 이후 바텀시트
   const deleteBottomSheetModalRef = useRef<BottomSheetModal>(null);
   const deleteSnapPoints = useMemo(() => ['1%', DEVICE_HEIGHT * 375], []);
   const deleteHandleSheetChanges = useCallback((index: number) => {}, []);
   
-  console.log('체크박스 상태',toggleCheckBox);
-  
-  //스캔 이후 응답 데이터 저장
-  const fetchScanData = async () => {
-    const email_id = emailAddress;
-    console.log("씨발",email_id)
+  //스캔 API
+  const fetchScanData = async (email_id: string) => {
     
     //스캔 데이터 로딩
     setIsScanLoading(true);
@@ -172,8 +172,6 @@ function HomeScreen()  {
     setScanResult(res);
     //체크박스 기본값을 true로 초기화
     setIsScanLoading(false)
-    //체크박스 TRUE로 초기화 
-    //setToggleCheckBox(new Array(res.length).fill(true));
     //바텀시트 실행
     bottomSheetModalRef.current?.present();
     setHomeScreenState(false);
@@ -181,27 +179,33 @@ function HomeScreen()  {
 
 
   //스캔 실행
-  const onScanSubmit = useCallback(() => {
+  const onScanSubmit = useCallback((email_id: string) => {
     try{
-      fetchScanData();
+      fetchScanData(email_id);
     } catch(error){
         console.log(error);
     } 
   }, []);
-
-  const fetchDeleteData = async () => {
+  
+  //삭제 API
+  const fetchDeleteData = async (list: number[]) => {
     const email_id = emailAddress;
 
-
+    setIsDeleteLoading(true);
+    console.log('REQUEST DATA TO SERVER', user_no, email_id, list)
+    //삭제 실행
     await deleteEmail({user_no, email_id, list});
+    
+    setIsDeleteLoading(false);
+    //바텀시트 실행
     deleteBottomSheetModalRef.current?.present();
     setHomeScreenState(true);
   }
 
   //삭제 실행
-  const onDeleteSubmit = useCallback(() => {
+  const onDeleteSubmit = useCallback((list: number[]) => {
     try{
-      fetchDeleteData();
+      fetchDeleteData(list);
     } catch(error){
       console.log(error);
     }
@@ -254,11 +258,15 @@ function HomeScreen()  {
         <View style={styles.main}>
           <EmailAddressBox email={data.Ressult[0].email_address}/>
           <CircleView 
-            emailCount={data.Ressult[0].emailCount} 
+            emailCount={data.Ressult[0].emailCount}
+            deletionEmailCount={deletionEmailCount} 
             onScanSubmit={onScanSubmit}
             onDeleteSubmit={onDeleteSubmit}
             homeScreenState={homeScreenState} 
             isScanLoading={isScanLoading}
+            isDeleteLoading={isDeleteLoading}
+            email_id={email_id}
+            list={list}
           />
           <BottomSheetModal
             ref={bottomSheetModalRef}          
