@@ -30,9 +30,12 @@ export type RootStackParamList = {
     };
     MainTab: MainTabNavigationScreenParams;
     Restore: undefined;
-    TreeStore: undefined;
+    TreeStore: {
+        miles: number;
+    };
 };
 
 export type ConnectionPwRouteProp =  RouteProp<RootStackParamList, 'ConnectionPw'>;
+export type TreeStoreProp = RouteProp<RootStackParamList, 'TreeStore'>;
 
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;

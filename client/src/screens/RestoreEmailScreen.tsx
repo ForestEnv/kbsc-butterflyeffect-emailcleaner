@@ -100,7 +100,7 @@ function RestoreEmailScreen() {
                 >총개의 메일이 있습니다.</Text>
                 {data.result.map((item, index) => (
                     <>
-                        <View key={index} style={{marginLeft:2,}}>
+                        <View key={item.no} style={{marginLeft:2,}}>
                             <View style={{flexDirection:'row', marginHorizontal:17, alignItems:'center', }}>
                                 <CheckBox
                                     disabled={false}
