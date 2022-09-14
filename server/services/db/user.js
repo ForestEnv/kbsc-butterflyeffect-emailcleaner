@@ -86,18 +86,16 @@ exports.getTotalNum = async ({ no }) => {
   return result;
 };
 
+// 사용자 마일리지 증가
 exports.updateMiles = async () => {
-  console.log("*********0");
   const result_1 = await User.increment(
-    { miles: 100 },
-    { where: { experience: { [Op.and]: { [Op.lte]: 5, [Op.gte]: 0 } } } }
+    { miles: 10000 },
+    { where: { experience: { [Op.and]: { [Op.lte]: 1000, [Op.gte]: 0 } } } }
   );
-  console.log("*********1");
   const result_2 = await User.increment(
-    { miles: 200 },
-    { where: { experience: { [Op.and]: { [Op.lte]: 20, [Op.gte]: 6 } } } }
+    { miles: 20000 },
+    { where: { experience: { [Op.and]: { [Op.gte]: 1001 } } } }
   );
-  console.log("*********2");
   return { result_1, result_2 };
 };
 

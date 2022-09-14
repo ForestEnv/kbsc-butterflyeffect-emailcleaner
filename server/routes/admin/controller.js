@@ -9,9 +9,7 @@ const axios = require("axios");
 exports.adminlogin = async (req, res, next) => {
   try {
     const adminuser = req.body;
-    console.log(adminuser);
     const accesstoken = createID(adminuser.id);
-    console.log(accesstoken);
     res.status(CREATED).json({
       message: "로그인 성공!",
       adminuser: {
@@ -29,7 +27,6 @@ exports.adminlogin = async (req, res, next) => {
 
 exports.adminregister = async (req, res, next) => {
   try {
-    console.log(req);
     const { id, name, password } = req.body;
     await adminServices.setadmin({ id, name, password });
     res.status(CREATED).json({

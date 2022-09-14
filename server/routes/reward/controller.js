@@ -8,9 +8,7 @@ exports.showRewardInfo = async (req, res, next) => {
   try {
     let user_no = req.params.userNo;
     const experience = await userServices.getUserExperience({ user_no });
-    console.log(experience);
     const miles = await userServices.getUserMiles({ user_no });
-    console.log(miles);
     res.status(CREATED).json({
       experience: experience.dataValues.experience,
       miles: miles.dataValues.miles,
@@ -37,7 +35,6 @@ exports.showMiles = async (req, res, next) => {
 exports.showStatistics = async (req, res, next) => {
   try {
     let user_no = req.params.userNo;
-    console.log(user_no);
     const count = await emailServices.getTotalNum(user_no);
     res.status(CREATED).json({ totalCount: count });
   } catch (error) {
@@ -64,7 +61,6 @@ exports.desclineUserMiles = async (req, res, next) => {
     let user_no = req.params.userNo;
     const miles = req.body;
     result = await userServices.declineMiles({ user_no, miles });
-    console.log(result);
     res.status(CREATED).json({
       message: result,
     });

@@ -6,17 +6,17 @@ exports.setDeleteEmails = async (Emails) => {
 };
 
 exports.getDeleteEmails = async (user_no) => {
-  console.log("**********1");
   const result = await Delete.findAll({ where: { user_no }, raw: true });
-  console.log("**********2");
   return result;
 };
 
 exports.removeDeleteEmails = async ({ email_no, list }) => {
-  console.log("************11");
-  const emailList = await Delete.findAll({ where: { email_no: email_no, no: list }, raw: true })
-  const emailLen = await Delete.destroy({ where: { email_no: email_no, no: list } });
-  console.log("************22");
-  return {emailList,emailLen};
+  const emailList = await Delete.findAll({
+    where: { email_no: email_no, no: list },
+    raw: true,
+  });
+  const emailLen = await Delete.destroy({
+    where: { email_no: email_no, no: list },
+  });
+  return { emailList, emailLen };
 };
-

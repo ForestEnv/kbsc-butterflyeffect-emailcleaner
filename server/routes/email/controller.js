@@ -9,7 +9,6 @@ const axios = require("axios");
 
 exports.connectionEmail = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { no, id, email_id, email_Pw } = req.body;
     await userServices.updateIsConnectionEmail(no);
     await emailServices.setEmail({ no, email_id, email_Pw });
@@ -36,7 +35,6 @@ exports.connectionEmail = async (req, res, next) => {
 
 exports.connectionAddEmail = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { no, id, email_id, email_Pw } = req.body;
     await emailServices.setEmail({ no, email_id, email_Pw });
     // const isConnectionEmail = await userServices.getIsConnectionEmail(no);
@@ -48,7 +46,6 @@ exports.connectionAddEmail = async (req, res, next) => {
       },
     });
     const connectionMsg = response.data.success_message;
-    console.log("DATA FROM FLASK=" + connectionMsg);
     res.status(CREATED).json({
       message: "이메일 연동 작업!",
       //totalEmailNum,
@@ -63,11 +60,8 @@ exports.connectionAddEmail = async (req, res, next) => {
 
 exports.countEmail = async (req, res, next) => {
   try {
-    console.log("HI!!!!!!!");
     const { user_no } = req.params;
-    console.log(user_no);
     const emailData = await emailServices.getEmail({ user_no });
-    console.log(emailData);
     const response = await axios.post("http://localhost:5000/count", {
       Emails: emailData,
     });
@@ -108,7 +102,6 @@ exports.deleteEmail = async (req, res, next) => {
     email_id,
   });
   const total_no = await emailServices.getTotalNum({ user_no });
-  //await emailServices.setDeleteEmail({ Emails, deleteDate, emailLen });
   try {
     const response = await axios.post("http://127.0.0.1:5000/delete", {
       Emails: {
@@ -120,7 +113,6 @@ exports.deleteEmail = async (req, res, next) => {
         total_no,
       },
     });
-    console.log(response.data.Emails);
     await deleteServices.setDeleteEmails(response.data.Emails);
     // await deleteServices.setDeleteEmails({response.data.Emails})
     await userServices.updateExperience({
@@ -143,7 +135,6 @@ exports.deleteEmail = async (req, res, next) => {
 exports.showDeleteEmail = async (req, res, next) => {
   try {
     let user_no = req.params.user_no;
-    console.log(user_no);
     const Emails = await deleteServices.getDeleteEmails(user_no);
     res.status(CREATED).json({ result: Emails });
   } catch (error) {
@@ -187,33 +178,31 @@ exports.restoreEmailList = async (req, res, next) => {
 };
 
 exports.getDeleteNumber = async (req, res, next) => {
-  try{
+  try {
     const { no } = req.params;
     const result = await emailServices.getDeleteNumber(no);
-    console.log('삭제된 이메일 수:'+ result);
     const deleteNum = result.total_no;
     res.status(OK).json({
-      deleteNum
-    })
-  }catch(error){
+      deleteNum,
+    });
+  } catch (error) {
     res.status(BAD_REQUEST).json({
       message: "조회 실패!",
     });
   }
-}
+};
 
 exports.getEmailId = async (req, res, next) => {
-  try{
-    const {user_no} = req.params;
-    console.log(user_no);
+  try {
+    const { user_no } = req.params;
     const result = await emailServices.getEmailId(user_no);
-    const email_id = result.email_id
+    const email_id = result.email_id;
     res.status(OK).json({
       email_id,
-    })
-  }catch(error){
+    });
+  } catch (error) {
     res.status(BAD_REQUEST).json({
       message: "이메일 아이디 조회 실패!",
     });
   }
-}
+};

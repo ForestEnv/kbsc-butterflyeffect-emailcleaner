@@ -22,11 +22,8 @@ def main():
 def link():
     try:
         req = request.get_json()
-        print(req)
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']
-        print(emailId)
-        print(emailPw)
         success_message = link_inbox(emailId , emailPw)
         result = {'success_message' : success_message}
         return jsonify(result)
@@ -41,7 +38,6 @@ def link():
 def count():
     try:
         req = request.get_json()
-        print(req)
         emailList = []
         for em in req['Emails']:
             emailId = em['email_id']
@@ -64,11 +60,8 @@ def predict():
         emailId = req['Emails']['email_address']
         emailPw = req['Emails']['password']
         result = fetch_emails(emailId , emailPw)
-        print("hhhh1")
         classification = result.to_json(orient = 'records',force_ascii=False)
-        print("hhhh2")
         res = make_response(classification)
-        print("hhhh3")
         return res
     except Exception as e: 
         return jsonify({
@@ -80,7 +73,6 @@ def predict():
 def delete():
     try:
         req = request.get_json()
-        print(req)
         email_address = req['Emails']['email_address']
         password = req['Emails']['password']
         emailList = req['Emails']['list']

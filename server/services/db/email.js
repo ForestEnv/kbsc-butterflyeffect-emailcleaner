@@ -3,17 +3,12 @@ const { Email } = require("../../models");
 const { hashingPw } = require("../../utils/bcrypt");
 
 exports.insertEmail = async ({ no, email_id, email_Pw }) => {
-  console.log(no);
-  console.log(email_id);
-  console.log(email_Pw);
   const emailData = {
     user_no: no,
     email_id,
     email_Pw,
   };
-  console.log(emailData);
   const result = await Email.create(emailData);
-  console.log(result);
   return result;
 };
 
@@ -42,7 +37,7 @@ exports.updateTotalNum = async ({ email_no, emailLen }) => {
   return result;
 };
 
-exports.getTotalNum = async (user_no) => {
+exports.getTotalNum = async ({ user_no }) => {
   const result = await Email.sum("total_no", { where: { user_no } });
   return result;
 };
@@ -55,10 +50,10 @@ exports.declineTotalNum = async ({ email_no, emailsLen }) => {
   return result;
 };
 
-exports.getEmailId = async(user_no) => {
+exports.getEmailId = async (user_no) => {
   const result = await Email.findOne({
-    attributes: ['email_id'],
-    where: {user_no},
+    attributes: ["email_id"],
+    where: { user_no },
   });
   return result;
-}
+};
