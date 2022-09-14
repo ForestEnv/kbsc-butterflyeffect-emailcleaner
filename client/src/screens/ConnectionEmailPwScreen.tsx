@@ -59,6 +59,11 @@ function ConnectionEmailPwScreen() {
                     </TouchableOpacity>
                 </View>
             </View>
+            <View style={styles.info}>
+                <Text style={{color:'#000000', fontFamily:'NotoSansKR-Medium', fontSize:16, lineHeight:20, textAlign:'center'}}>❗구글 이메일인 경우에 앞서 설정을</Text>
+                <Text style={{color:'#000000', fontFamily:'NotoSansKR-Medium', fontSize:16, lineHeight:20, textAlign:'center'}}>진행하고 발급받은 2차 인증번호로 입력</Text>
+                <Text style={{color:'#000000', fontFamily:'NotoSansKR-Medium', fontSize:16, lineHeight:20, textAlign:'center'}}>해주세요.</Text>
+            </View>
         </View>
     );
 };
@@ -100,6 +105,15 @@ const styles = StyleSheet.create({
         marginLeft: DEVICE_WIDTH * 32,
         lineHeight:30
     },
+    info: {
+        width: DEVICE_WIDTH * 294,
+        height: DEVICE_HEIGHT * 68,
+        marginTop: DEVICE_HEIGHT * 30,
+        marginLeft: DEVICE_WIDTH * 32,
+        padding: DEVICE_HEIGHT * 10,
+        borderRadius: 20,
+        backgroundColor: COLORS.white
+    }
 });
 
 export default ConnectionEmailPwScreen;

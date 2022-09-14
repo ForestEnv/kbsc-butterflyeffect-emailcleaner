@@ -36,6 +36,7 @@ export async function deleteEmail(params: EmailDeleteParams) {
 
 export async function getDeleteEmailNum(no: number) {
     const res = await client.get<DeleteNumber>(`api/email/${no}`);
+    console.log("yo",res.data.deleteNum)
     return res.data;
 }
 
