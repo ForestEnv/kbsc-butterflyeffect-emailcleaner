@@ -18,7 +18,6 @@ exports.selectID = async (id) => {
     attributes: ["no", "id", "name", "password"],
     where: { id },
   });
-  console.log(result);
 
   return result;
 };

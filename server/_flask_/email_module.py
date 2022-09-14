@@ -159,7 +159,6 @@ def emailClassification(subject_):
     """
     test_email = [{'email_title' : str(subject_)}]
     df_test_email = pd.DataFrame(test_email)
-    #print(df_test_email)
     lang = isEnglishOrKorean(str(subject_))
     if lang == 'k':
         test_x_email = df_test_email['email_title']
@@ -301,7 +300,6 @@ def send_email(email_address, emailList):
             smtp.sendmail(from_addr, to_addr, make(from_addr, to_addr, email["title"], email["body"]))
             suc_cnt += 1
         except Exception as e:
-            print(e)
             err_cnt += 1
 
     smtp.quit()
