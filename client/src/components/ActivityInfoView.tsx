@@ -17,6 +17,10 @@ interface ScreenStateProps {
     homeScreenState: boolean;
 }
 
+interface DeleteEmailCountProp {
+    deleteEmailCount: number;
+};
+
 function ActivityInfoView(homeScreenState: ScreenStateProps) {
     console.log("자식 상태", homeScreenState);
     if(homeScreenState.homeScreenState){console.log('wow')}
@@ -27,7 +31,6 @@ function ActivityInfoView(homeScreenState: ScreenStateProps) {
                 <View style={styles.container}>
                     <DeleteEmailCountBox/>
                     <CarbonInfoBox/>
-                    <AddEmailCountBox/>
                 </View>
             ) : (
                 <DeleteInfoBox/>
