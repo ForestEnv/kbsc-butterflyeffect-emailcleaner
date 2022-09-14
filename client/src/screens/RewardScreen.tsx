@@ -61,7 +61,7 @@ const member = [
     id:4,
     profile: <UserFive></UserFive>,
     lank: 4,
-    user: '현탁',
+    user: '동석',
     level: 'Lv.3',
     cnt: 13222
   },
@@ -69,7 +69,7 @@ const member = [
     id:5,
     profile: <UserOne></UserOne>,
     lank: 5,
-    user: '요한',
+    user: '지승',
     level: 'Lv.2',
     cnt: 7859
   },
@@ -184,7 +184,13 @@ function RewardScreen() {
             ) : (
                   <>
                     <View>
-                      <Text style={{marginTop:DEVICE_HEIGHT * 12, color:'#000000', fontSize:14, fontFamily:'NotoSansKR-Medium'}}>👨‍👩‍👦‍👦다른 회원들의 디지털 탄소 중립 활동을 확인해 보세요</Text>
+                      <Text style={{marginTop:DEVICE_HEIGHT * 12, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Bold'}}>👨‍👩‍👦‍👦다른 회원들의 디지털 탄소 중립 활동을 확인해 보세요</Text>
+                    </View>
+                    <View style={{flexDirection:'row'}}>
+                      <Text style={{justifyContent:'flex-end'}}>랭킹</Text>
+                      <Text>회원</Text>
+                      <Text>레벨</Text>
+                      <Text>이메일 삭제 수</Text>
                     </View>
                     <FlatList
                       data={member}
@@ -192,15 +198,15 @@ function RewardScreen() {
                         <>
                           <View style={{
                               flexDirection:'row',
-                              marginTop:25,
+                              marginTop:20,
                             }}
                           >
                             <Text style={{marginLeft: DEVICE_WIDTH * 23.6, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Bold', includeFontPadding:false,}}>{item.lank}</Text>
                             <View style={{width:DEVICE_WIDTH * 39.1, height: DEVICE_HEIGHT * 38, position:'absolute', left:45, top:1, }}>{item.profile}</View>
                             <Text style={{marginLeft: DEVICE_WIDTH * 53.6, color:'#8ABC88', fontSize:16, fontFamily:'NotoSansKR-Bold', includeFontPadding:false,}}>{item.user}</Text>
                             <Text style={{marginLeft: DEVICE_WIDTH * 87.4, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Bold', includeFontPadding:false,}}>{item.level}</Text>
-                            <Text style={{marginLeft: DEVICE_WIDTH * 42.9, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Bold', includeFontPadding:false,}}>{item.cnt}</Text>
-                          </View>
+                            <Text style={{marginLeft: DEVICE_WIDTH * 42.9, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Bold', includeFontPadding:false,}}>{item.cnt}P</Text>
+                            </View>
                           <View style={{width:DEVICE_WIDTH * 355, height: DEVICE_HEIGHT * 23, borderBottomWidth:1, borderColor:'#c3c1c1'}}/>
                         </>
                       )}

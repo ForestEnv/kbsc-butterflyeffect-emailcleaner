@@ -37,6 +37,7 @@ function MainTab() {
           },
           tabBarActiveTintColor: '#8ABC88',
           tabBarInactiveTintColor: '#000000',
+          tabBarHideOnKeyboard:true
         }}
       >
         <Tab.Screen 
