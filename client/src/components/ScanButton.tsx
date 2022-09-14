@@ -12,13 +12,14 @@ import Scan from '../assets/icons/icon_scan.svg';
 
 interface EventProps {
     onScanSubmit : any;
+    email_id: string;
 }
-function ScanButton({onScanSubmit}: EventProps) {
+function ScanButton({onScanSubmit, email_id}: EventProps) {
     return(
         <View style={styles.container}>
             <Text style={{color:'#a19f9f', fontFamily:'NotoSansKR-Bold' }}>아래 스캔 버튼을 클릭하세요.</Text>
             <TouchableOpacity
-                onPress={onScanSubmit}
+                onPress={() => onScanSubmit(email_id)}
                 style={[styles.button, styles.shadow]}
             >
                 <Scan/>

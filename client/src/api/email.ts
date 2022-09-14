@@ -26,7 +26,7 @@ export async function getEmailClassification(params: EmailScanParams) {
 
 //이메일 삭제 API
 export async function deleteEmail(params: EmailDeleteParams) {
-    console.log(params)
+    console.log('REQUEST DATA TO SERVER', params)
     const res = await client.post(
         'api/email/delete',
         params

@@ -15,7 +15,7 @@ router.post(
 );
 
 router.get(
-  "/userRewardInfo/:userNo",
+  "/userRewardInfo/:user_no",
   middlewares.jwtAuth,
   controller.showRewardInfo
 );
