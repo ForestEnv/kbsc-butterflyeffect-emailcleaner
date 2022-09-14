@@ -7,7 +7,6 @@ const emailServices = require("../../services/email");
 exports.showRewardInfo = async (req, res, next) => {
   try {
     let user_no = req.params.user_no;
-    console.log('server',user_no);
     const experience = await userServices.getUserExperience({ user_no });
     const miles = await userServices.getUserMiles({ user_no });
     res.status(CREATED).json({
@@ -61,7 +60,6 @@ exports.desclineUserMiles = async (req, res, next) => {
   try {
     let user_no = req.params.userNo;
     const miles = req.body;
-    console.log('server from data',miles)
     result = await userServices.declineMiles({ user_no, miles });
     res.status(CREATED).json({
       message: result,
