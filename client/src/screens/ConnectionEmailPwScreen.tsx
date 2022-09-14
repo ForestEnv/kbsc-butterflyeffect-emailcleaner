@@ -4,7 +4,8 @@ import {
     Text, 
     View, 
     TouchableOpacity, 
-    TextInput 
+    TextInput,
+    ActivityIndicator 
 } from 'react-native';
 
 import {COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS} from '../constants/theme';
@@ -55,7 +56,12 @@ function ConnectionEmailPwScreen() {
                 <View style={{marginTop:DEVICE_HEIGHT * 20, alignItems:'center'}}>
                     <TextInput style={styles.input}value={email_Pw} onChangeText={setEmailPassword} placeholder="비밀번호를 입력하세요."/>
                     <TouchableOpacity style={styles.button}onPress={onConnectionSubmit}>
-                        <Text style={styles.btnText}>완료</Text>
+                        {isLoading ? (
+                            <ActivityIndicator size="large" color="white"/>
+
+                        ) : (
+                            <Text style={styles.btnText}>완료</Text>
+                        )}
                     </TouchableOpacity>
                 </View>
             </View>
