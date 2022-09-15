@@ -97,6 +97,7 @@ exports.predictEmail = async (req, res, next) => {
 
 exports.deleteEmail = async (req, res, next) => {
   const { user_no, email_id, list } = req.body;
+  console.log('DATA FROM TEST', user_no, email_id, list)
   const email_info = await emailServices.getEmailInfo({
     user_no,
     email_id,

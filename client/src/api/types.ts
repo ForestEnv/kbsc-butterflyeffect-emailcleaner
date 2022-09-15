@@ -40,7 +40,7 @@ export interface EmailInfoArray {
 }
 
 export interface DeleteNumber {
-    deleteNum:number;
+    totalCount:number;
 }
 
 export interface IsConnectionEmail {
