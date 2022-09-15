@@ -15,22 +15,19 @@ import { COLORS, DEVICE_HEIGHT, DEVICE_WIDTH, FONTS } from '../constants/theme';
 
 interface ScreenStateProps {
     homeScreenState: boolean;
+    deleteEmailCount: number;
 }
 
-interface DeleteEmailCountProp {
-    deleteEmailCount: number;
-};
-
-function ActivityInfoView(homeScreenState: ScreenStateProps) {
-    console.log("자식 상태", homeScreenState);
-    if(homeScreenState.homeScreenState){console.log('wow')}
+function ActivityInfoView({homeScreenState, deleteEmailCount}: ScreenStateProps) {
+    console.log("자식 상태", deleteEmailCount);
+    if(homeScreenState){console.log('wow')}
     else{console.log('fuck')}
     return(
         <>
-            {homeScreenState.homeScreenState ? (
+            {homeScreenState? (
                 <View style={styles.container}>
-                    <DeleteEmailCountBox/>
-                    <CarbonInfoBox/>
+                    <DeleteEmailCountBox deleteEmailCount={deleteEmailCount}/>
+                    <CarbonInfoBox deleteEmailCount={deleteEmailCount}/>
                 </View>
             ) : (
                 <DeleteInfoBox/>

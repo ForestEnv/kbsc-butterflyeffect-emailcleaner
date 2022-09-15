@@ -54,7 +54,7 @@ function ConnectionEmailPwScreen() {
                 <Text style={styles.text}>입력해주세요.</Text>
                 <Text style={{color:'#484848', marginLeft:DEVICE_WIDTH * 32, fontSize:14, fontFamily:"NotoSansKR-Medium"}}>연동이 완료되기까지 특정 시간이 소요됩니다.</Text>
                 <View style={{marginTop:DEVICE_HEIGHT * 20, alignItems:'center'}}>
-                    <TextInput style={styles.input}value={email_Pw} onChangeText={setEmailPassword} placeholder="비밀번호를 입력하세요."/>
+                    <TextInput secureTextEntry style={styles.input}value={email_Pw} onChangeText={setEmailPassword} placeholder="비밀번호를 입력하세요."/>
                     <TouchableOpacity style={styles.button}onPress={onConnectionSubmit}>
                         {isLoading ? (
                             <ActivityIndicator size="large" color="white"/>

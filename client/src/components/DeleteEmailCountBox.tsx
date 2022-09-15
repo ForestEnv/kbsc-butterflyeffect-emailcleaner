@@ -12,7 +12,7 @@ interface DeleteEmailCountProp {
     deleteEmailCount: number;
 }
 
-function DeleteEmailCountBox() {
+function DeleteEmailCountBox({deleteEmailCount}: DeleteEmailCountProp) {
     return(
         <View style={[styles.container, styles.shadow]}>
             <Text style={{
@@ -26,16 +26,19 @@ function DeleteEmailCountBox() {
                 }}
             > 📜삭제한 총 메일 수
             </Text>
-            {/* <Text style={{
-                    marginLeft:DEVICE_WIDTH * 15.5, 
+            <View style={{
+                width: DEVICE_HEIGHT * 120, 
+                height: DEVICE_HEIGHT * 70, 
+                marginLeft: DEVICE_WIDTH * 12}}>
+                <Text style={{ 
+                    textAlign:'center',
                     color:'#000000', 
-                    fontSize:14,
-                    fontFamily:'NotoSansKR-Bold',
-                    lineHeight:20
-                }}
-            >메일 수
-            </Text> */}
-            
+                    fontSize: 35, 
+                    lineHeight:95,
+                    fontFamily:'NotoSansKR-Bold'
+                    }}
+                >{deleteEmailCount}개</Text>
+            </View>
         </View>
     );
 };

@@ -8,7 +8,8 @@ import {
     Text, 
     View,
     StatusBar,
-    ScrollView
+    ScrollView,
+    Alert
 } from 'react-native';
 
 import { useQuery } from '@tanstack/react-query';
@@ -65,6 +66,9 @@ function RestoreEmailScreen() {
             email_no,
             list
         })
+        setToggleCheckBox([]);
+        Alert.alert('체크하신 이메일에 대한 복구가 완료되었습니다🎊')
+
     };
 
     useEffect(() => {

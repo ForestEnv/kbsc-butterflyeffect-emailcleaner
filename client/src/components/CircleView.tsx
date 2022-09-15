@@ -31,9 +31,16 @@ function CircleView({emailCount, deletionEmailCount, onScanSubmit, onDeleteSubmi
             {isScanLoading || isDeleteLoading ? (
                 <>
                     <Fold size={85} color="#F4EAE6"/>
-                    <Text style={{marginTop: DEVICE_HEIGHT * 20, textAlign:'center',color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>
-                        회원님의 이메일을 스캔중입니다.
-                    </Text>
+                    {isScanLoading ? (
+                        <Text style={{marginTop: DEVICE_HEIGHT * 20, textAlign:'center',color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>
+                            회원님의 이메일을 스캔중입니다.
+                        </Text>
+
+                    ) : (
+                        <Text style={{marginTop: DEVICE_HEIGHT * 20, textAlign:'center',color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Medium'}}>
+                            회원님의 이메일을 삭제중입니다.
+                        </Text>
+                    )}
                 </>
                 ):(
                     <>
@@ -52,6 +59,7 @@ function CircleView({emailCount, deletionEmailCount, onScanSubmit, onDeleteSubmi
                                 <Text style={styles.countText}>{deletionEmailCount}</Text>
                                 <DeleteButton 
                                     onDeleteSubmit={onDeleteSubmit}
+                                    email_id={email_id}
                                     list={list}
                                 />
                             </View>
