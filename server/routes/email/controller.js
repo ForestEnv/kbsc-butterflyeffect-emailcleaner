@@ -147,7 +147,7 @@ exports.showDeleteEmail = async (req, res, next) => {
 
 exports.restoreEmailList = async (req, res, next) => {
   const { user_no, email_id, email_no, list } = req.body;
-  result = await deleteServices.removeDeleteEmails({
+  const result = await deleteServices.removeDeleteEmails({
     email_no,
     list,
   });

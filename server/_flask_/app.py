@@ -95,7 +95,7 @@ def restore():
         req = request.get_json()
         email_address = req['Emails']['email_address']
         emailList = req['Emails']['list']
-        msg, suc_cnt, err_cnt = send_email(email_address, emailList,total_no)
+        msg, suc_cnt, err_cnt = send_email(email_address, emailList)
         return jsonify({
             'success_message' : msg,
             'successCount' : suc_cnt,
