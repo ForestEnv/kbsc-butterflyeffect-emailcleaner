@@ -224,7 +224,7 @@ function HomeScreen()  {
           }
     };
     fetchData();
-  }, []);
+  }, [deleteNum]);
 
   useEffect(() => {
     const fetchData = async () => {
