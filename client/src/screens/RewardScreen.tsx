@@ -186,11 +186,11 @@ function RewardScreen() {
                     <View>
                       <Text style={{marginTop:DEVICE_HEIGHT * 12, color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Bold'}}>👨‍👩‍👦‍👦다른 회원들의 디지털 탄소 중립 활동을 확인해 보세요</Text>
                     </View>
-                    <View style={{flexDirection:'row'}}>
-                      <Text style={{justifyContent:'flex-end'}}>랭킹</Text>
-                      <Text>회원</Text>
-                      <Text>레벨</Text>
-                      <Text>이메일 삭제 수</Text>
+                    <View style={{backgroundColor:"pink"}}>
+                      <Text style={{color:"#000000", fontSize:14,position: 'absolute', right:160,}}>랭킹</Text>
+                      <Text style={{color:"#000000", fontSize:14, position: 'absolute', right:115, }}>회원</Text>
+                      <Text style={{color:"#000000", fontSize:14, position: 'absolute', left:25, }}>레벨</Text>
+                      <Text style={{color:"#000000", fontSize:14, position: 'absolute', left:95  }}>이메일 삭제 수</Text>
                     </View>
                     <FlatList
                       data={member}

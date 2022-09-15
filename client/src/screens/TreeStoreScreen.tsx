@@ -43,7 +43,7 @@ function TreeStoreScreen() {
     const [isLoading, setIsLoading] = useState(false);
     
     const {params} = useRoute<TreeStoreProp>();
-    const miles = params.miles;
+    const userMiles = params.miles;
 
     //경험치 확인 이후 바텀시트
     const sheetRef = useRef<BottomSheet>(null);
@@ -58,17 +58,25 @@ function TreeStoreScreen() {
     }, []);
 
     const onPurchaseSubmit = (miles: number) => {
-        setIsLoading(true);
-        setMilege(user_no, miles);
-        setIsLoading(false);
-        Alert.alert('나무 구매를 완료했습니다🌲');
+        console.log(miles)
+        console.log(userMiles)
+        if (miles > userMiles) {
+            Alert.alert('마일리지가 부족합니다❗')
+        }
+        else{
+            setIsLoading(true);
+            setMilege(user_no, miles);
+            setIsLoading(false);
+            Alert.alert('나무 구매를 완료했습니다🌲');
+
+        }
     };
 
     return(
         <View style={styles.container}>
             <View style={[styles.info, styles.shadow]}>
                 <Text style={{color:'#000000', fontSize:16, fontFamily:'NotoSansKR-Regular', position:'absolute', left:3, top:2 }}>🏆회원님의 마일리지</Text>
-                <Text style={{color:'#000000', fontSize:30, fontFamily:'NotoSansKR-Bold', includeFontPadding:false, position:'absolute', left:10, bottom:3}}>{miles}P</Text>
+                <Text style={{color:'#000000', fontSize:30, fontFamily:'NotoSansKR-Bold', includeFontPadding:false, position:'absolute', left:10, bottom:3}}>{userMiles}P</Text>
             </View>
             <FlatList
                 data={data}

@@ -99,10 +99,8 @@ function HomeScreen()  {
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
    //이메일 삭제 수 State
-  const [deleteNum, setDeleteNum] = useState<{totalCount:number;}|null>(null);
-  //console.log(deleteNum.totalCount);
-  //const deleteEmailCount: number = deleteNum.totalCount;
-  //console.log('s', deleteEmailCount)
+  const [deleteNum, setDeleteNum] = useState<{totalCount:number;}|null>({totalCount:0});
+  
   //체크박스 상태값
   //const [toggleCheckBox, setToggleCheckBox] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState([]);
@@ -166,6 +164,7 @@ function HomeScreen()  {
   const deleteSnapPoints = useMemo(() => ['1%', DEVICE_HEIGHT * 375], []);
   const deleteHandleSheetChanges = useCallback((index: number) => {}, []);
   
+  
   //스캔 API
   const fetchScanData = async (email_id: string) => {
     
@@ -193,9 +192,7 @@ function HomeScreen()  {
   }, []);
   
   //삭제 API
-  const fetchDeleteData = async (list: number[]) => {
-    const email_id = emailAddress;
-
+  const fetchDeleteData = async (email_id: string, list: number[]) => {
     setIsDeleteLoading(true);
     console.log('REQUEST DATA TO SERVER', user_no, email_id, list)
     //삭제 실행
@@ -206,11 +203,11 @@ function HomeScreen()  {
     deleteBottomSheetModalRef.current?.present();
     setHomeScreenState(true);
   }
-
+  console.log(deleteNum);
   //삭제 실행
-  const onDeleteSubmit = useCallback((list: number[]) => {
+  const onDeleteSubmit = useCallback((email_id: string, list: number[]) => {
     try{
-      fetchDeleteData(list);
+      fetchDeleteData(email_id, list);
     } catch(error){
       console.log(error);
     }
@@ -254,7 +251,6 @@ function HomeScreen()  {
       </>
     );
   };
-
   return (
     <>
       <StatusBar backgroundColor={'#F4EAE6'} barStyle={'dark-content'}/>
@@ -384,7 +380,7 @@ function HomeScreen()  {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> 
           </BottomSheetModal>
           { deleteNum ? (
               <ActivityInfoView homeScreenState={homeScreenState} deleteEmailCount={deleteNum.totalCount}/>

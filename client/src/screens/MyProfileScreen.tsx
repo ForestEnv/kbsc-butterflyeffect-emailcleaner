@@ -1,5 +1,17 @@
-import React, {useEffect} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { 
+    KeyboardAvoidingView, 
+    StyleSheet, 
+    ActivityIndicator,
+    Text, 
+    View, 
+    TouchableOpacity, 
+    TextInput,
+    Alert
+} from 'react-native';
+
+import useAddConnection from '../hooks/useAddConnection';
+import { setAddConnection } from '../api/connection';
 
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../stacks/types';
@@ -13,7 +25,27 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH, FONTS, COLORS } from '../constants/theme';
 function MyProfileScreen() {
     const [user, setUser] = useUserState();
     const navigation = useNavigation<RootStackNavigationProp>();
+
+    const [email, setEmail] = useState('');
+    const [email_Pw, setEmailPassword] = useState('');
+
+    const email_id = email;
+    const {mutate: setAddconnection, isLoading: addConnectionLoading} = useAddConnection();
     
+    const isLoading = addConnectionLoading;
+    
+    const onAddConnectionSubmit = () => {
+        if(isLoading) {
+            return;
+        }
+        setAddConnection({
+            no:user.no,
+            id:user?.id,
+            email_id,
+            email_Pw,
+        })
+        Alert.alert('추가 연동을 완료했습니다🎊')
+    }
     const onLogout = () => {
         setUser(null);
         clearToken();
@@ -62,8 +94,14 @@ function MyProfileScreen() {
                         secureTextEntry
                     />
             </KeyboardAvoidingView>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.text}>추가</Text>
+            <TouchableOpacity 
+                onPress={onAddConnectionSubmit}
+                style={styles.button}>
+                        {isLoading ? (
+                            <ActivityIndicator size="large" color="white"/>
+                        ) : (
+                            <Text style={styles.btnText}>완료</Text>
+                        )}
             </TouchableOpacity>            
         </View>
     )
@@ -109,7 +147,14 @@ const styles = StyleSheet.create({
         fontSize: FONTS.medium,
         textAlign: 'center',
         marginVertical: DEVICE_HEIGHT * 2
-    }
+    },
+    btnText:{
+        color:'#000000',
+        fontSize: FONTS.medium,
+        fontFamily: 'NotoSansKR-Bold',
+        textAlign: 'center',
+        marginVertical: DEVICE_HEIGHT * 2
+    },
 })
 
 export default MyProfileScreen;

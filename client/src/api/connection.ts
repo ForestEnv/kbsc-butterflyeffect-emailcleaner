@@ -7,6 +7,15 @@ export async function setConnection(params:EmailConnectionParams) {
         'api/email/connection',
         params
     )
+    return res.data;
+}
+
+//이메일 연동 API
+export async function setAddConnection(params:EmailConnectionParams) {
+    const res = await client.post<EmailConnectionResult>(
+        'api/email/connectionAdd',
+        params
+    )
     console.log('DATA FROM EXPRESS:', res.data);
     return res.data;
 }
