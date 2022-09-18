@@ -1,14 +1,23 @@
 <p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190887095-2abf0cf6-ec82-4a69-8350-c1b63f60bbf6.png" width = "50%"></p>
+
 <div align = "center">
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
-<img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=plastic&logo=javascript&logoColor=white">
+<img src="https://img.shields.io/badge/typescript-3178C6?style=plastic&logo=typescript&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=plastic&logo=mysql&logoColor=white">
+</div>
+<div align = "center">
+<img src="https://img.shields.io/badge/Flask-000000?style=plastic&logo=Flask&logoColor=white">
+<img src="https://img.shields.io/badge/ScikitLearn-F7931E?style=plastic&logo=scikit-learn&logoColor=white">
+<img src="https://img.shields.io/badge/Pandas-150458?style=plastic&logo=pandas&logoColor=white">
+<img src="https://img.shields.io/badge/Sequelize-52B0E7?style=plastic&logo=Sequelize&logoColor=white">
+<img src="https://img.shields.io/badge/Express-000000?style=plastic&logo=Express&logoColor=white">
+<img src="https://img.shields.io/badge/ReactNative-61DAFB?style=plastic&logo=React&logoColor=white">
+<img src="https://img.shields.io/badge/ReactQuery-FF4154?style=plastic&logo=React Query&logoColor=white">
 </div>
 
-
 # Product Branding
-## <p align="center">🦋ButterflyEffect(나비효과)🦋</p>
+### <p align="center">🦋ButterflyEffect(나비효과)🦋</p>
 <p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190891354-d613f137-1ecf-41a8-924b-c2e0d024b858.png" width = "50%"></p>
 
 > 어느 한 곳에서 일어난 작은 변화가 큰 변화를 일으킨다는 나비효과의 정의가 사용자로 하여금 작은 실천을 통해 거대한 목표를 달성할 수 있는 프로그램의 정체성과 
