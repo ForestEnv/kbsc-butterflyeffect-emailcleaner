@@ -1,7 +1,9 @@
 <p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190887095-2abf0cf6-ec82-4a69-8350-c1b63f60bbf6.png" width = "50%"></p>
 
 # Product Branding
-### 🦋ButterflyEffect(나비효과)🦋
+## <p align="center">🦋ButterflyEffect(나비효과)🦋</p>
+<p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190891354-d613f137-1ecf-41a8-924b-c2e0d024b858.png" width = "50%"></p>
+
 > 어느 한 곳에서 일어난 작은 변화가 큰 변화를 일으킨다는 나비효과의 정의가 사용자로 하여금 작은 실천을 통해 거대한 목표를 달성할 수 있는 프로그램의 정체성과 
 부합하다 판단하여 해당 단어를 채택했습니다.
 
