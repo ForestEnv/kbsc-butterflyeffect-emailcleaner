@@ -1,14 +1,10 @@
 <p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190887095-2abf0cf6-ec82-4a69-8350-c1b63f60bbf6.png" width = "50%"></p>
 
-## 🌲✋ Welcome ForestEnv ✋🌲
+# Product Branding
+### 🦋ButterflyEffect(나비효과)🦋
+> 어느 한 곳에서 일어난 작은 변화가 큰 변화를 일으킨다는 나비효과의 정의가 사용자로 하여금 작은 실천을 통해 거대한 목표를 달성할 수 있는 프로그램의 정체성과 
+부합하다 판단하여 해당 단어를 채택했습니다.
 
-> 우리들의 작은 씨앗이 숲을 이룰 때까지...
-
-### 🦋나비효과 (Butterfly Effect)🦋
-
-> **_"나비의 작은 날갯짓처럼 미세한 변화, 작은 차이, 사소한 사건이 추후 예상하지 못한 엄청난 결과나 파장으로 이어지게 되는 현상"_** <br>
-> ForestEnv팀이 만든 BotterflyEffect 웹은 사용자들의 이메일을 정리해줌으로써 탄소 중립을 실천하는 것입니다.<br>
-> 즉 _"이메일 삭제라는 작은 실천으로 지구에 엄청난 결과로 이어지게 됩니다."_
 
 # Overview
 - Butterfly Effect는 디지털 탄소를 절감시킬 수 있는 이메일 클리너 서비스입니다.
