@@ -1,4 +1,4 @@
-<p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190887095-2abf0cf6-ec82-4a69-8350-c1b63f60bbf6.png"></p>
+<p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190887095-2abf0cf6-ec82-4a69-8350-c1b63f60bbf6.png" width = "50%"></p>
 
 ## 🌲✋ Welcome ForestEnv ✋🌲
 
@@ -10,11 +10,8 @@
 > ForestEnv팀이 만든 BotterflyEffect 웹은 사용자들의 이메일을 정리해줌으로써 탄소 중립을 실천하는 것입니다.<br>
 > 즉 _"이메일 삭제라는 작은 실천으로 지구에 엄청난 결과로 이어지게 됩니다."_
 
-# Author
-|팀원1|팀원2|팀원3|팀원4|
-|----|----|----|----|
-|-사진-|-사진-|-사진-|-사진-|     
-|[이현탁](https://github.com/Takorean)🌳|[이현지](https://github.com/leehj24)🌲|[윤희열](https://github.com/dbsgmlduf)🎋|[홍윤걸](https://github.com/yoongul0928)🌴|
+# Overview
+
 
 # Introduction
 
