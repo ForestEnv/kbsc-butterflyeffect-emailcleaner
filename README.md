@@ -1,4 +1,11 @@
 <p align="center"><img src = "https://user-images.githubusercontent.com/104816234/190887095-2abf0cf6-ec82-4a69-8350-c1b63f60bbf6.png" width = "50%"></p>
+<div align = "center">
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
+<img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+</div>
+
 
 # Product Branding
 ## <p align="center">🦋ButterflyEffect(나비효과)🦋</p>
